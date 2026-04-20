@@ -1,0 +1,564 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="vi">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Quản lý Category</title>-->
+<!--    <style>-->
+<!--        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }-->
+<!--        h2 { color: #333; }-->
+<!--        input, select, button { padding: 10px; margin: 5px; font-size: 14px; }-->
+<!--        button { cursor: pointer; border: none; border-radius: 4px; padding: 10px 16px; }-->
+<!--        .btn-primary { background-color: #007bff; color: white; }-->
+<!--        .btn-secondary { background-color: #6c757d; color: white; }-->
+<!--        .btn-danger { background-color: #dc3545; color: white; }-->
+<!--        table { border-collapse: collapse; width: 100%; margin-top: 20px; background: white; }-->
+<!--        th, td { border: 1px solid #ccc; padding: 12px; text-align: center; }-->
+<!--        th { background-color: #f2f2f2; }-->
+<!--        .stt { font-weight: bold; color: #d32f2f; }-->
+<!--        .real-id { color: #666; font-size: 0.95em; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<h2>QUẢN LÝ DANH MỤC (CATEGORY)</h2>-->
+
+<!--&lt;!&ndash; Hidden field để lưu ID khi sửa &ndash;&gt;-->
+<!--<input type="hidden" id="categoryId">-->
+
+<!--<input type="text" id="name" placeholder="Tên danh mục" style="width: 280px;">-->
+<!--<input type="text" id="description" placeholder="Mô tả" style="width: 350px;">-->
+<!--<select id="status">-->
+<!--    <option value="active">Hoạt động</option>-->
+<!--    <option value="inactive">Không hoạt động</option>-->
+<!--</select>-->
+
+<!--<button onclick="addCategory()" class="btn-primary">Thêm mới</button>-->
+<!--<button onclick="updateCategory()" class="btn-primary">Cập nhật</button>-->
+<!--<button onclick="clearForm()" class="btn-secondary">Làm mới</button>-->
+
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>STT</th>-->
+<!--        <th>ID thật</th>-->
+<!--        <th>Tên danh mục</th>-->
+<!--        <th>Mô tả</th>-->
+<!--        <th>Trạng thái</th>-->
+<!--        <th>Hành động</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody id="tableBody"></tbody>-->
+<!--</table>-->
+
+<!--<script>-->
+<!--    const API = "http://localhost:8080/api/categories";-->
+
+<!--    function loadData() {-->
+<!--        fetch(API)-->
+<!--            .then(res => res.ok ? res.json() : Promise.reject("Lỗi server"))-->
+<!--            .then(data => {-->
+<!--                let html = "";-->
+<!--                data.forEach((c, index) => {-->
+<!--                    const realId = c.id || c.categoryId || c.category_id || 'N/A';-->
+<!--                    html += `-->
+<!--                        <tr>-->
+<!--                            <td class="stt">${index + 1}</td>-->
+<!--                            <td class="real-id">${realId}</td>-->
+<!--                            <td>${c.name || ''}</td>-->
+<!--                            <td>${c.description || ''}</td>-->
+<!--                            <td>${c.status === 'active' ? ' Hoạt động' : ' Không hoạt động'}</td>-->
+<!--                            <td>-->
+<!--                                <button onclick="editCategory(${realId}, '${(c.name || '').replace(/'/g, "\\'")}', '${(c.description || '').replace(/'/g, "\\'")}', '${c.status || 'active'}')">Sửa</button>-->
+<!--                                <button class="btn-danger" onclick="deleteCategory(${realId})">Xóa</button>-->
+<!--                            </td>-->
+<!--                        </tr>`;-->
+<!--                });-->
+<!--                document.getElementById("tableBody").innerHTML = html || "<tr><td colspan='6'>Không có dữ liệu</td></tr>";-->
+<!--            })-->
+<!--            .catch(err => {-->
+<!--                console.error(err);-->
+<!--                alert("Không tải được dữ liệu: " + err);-->
+<!--            });-->
+<!--    }-->
+
+<!--    function addCategory() {-->
+<!--        const data = {-->
+<!--            name: document.getElementById("name").value.trim(),-->
+<!--            description: document.getElementById("description").value.trim(),-->
+<!--            status: document.getElementById("status").value-->
+<!--        };-->
+
+<!--        if (!data.name) return alert("Vui lòng nhập tên danh mục!");-->
+
+<!--        fetch(API, {-->
+<!--            method: "POST",-->
+<!--            headers: { "Content-Type": "application/json" },-->
+<!--            body: JSON.stringify(data)-->
+<!--        })-->
+<!--            .then(() => {-->
+<!--                loadData();-->
+<!--                clearForm();-->
+<!--                alert("Thêm danh mục thành công!");-->
+<!--            })-->
+<!--            .catch(() => alert("Thêm thất bại!"));-->
+<!--    }-->
+
+<!--    function editCategory(id, name, description, status) {-->
+<!--        document.getElementById("categoryId").value = id;-->
+<!--        document.getElementById("name").value = name;-->
+<!--        document.getElementById("description").value = description;-->
+<!--        document.getElementById("status").value = status;-->
+<!--    }-->
+
+<!--    function updateCategory() {-->
+<!--        const id = document.getElementById("categoryId").value;-->
+<!--        if (!id) return alert("Vui lòng chọn danh mục cần sửa từ bảng!");-->
+
+<!--        const data = {-->
+<!--            name: document.getElementById("name").value.trim(),-->
+<!--            description: document.getElementById("description").value.trim(),-->
+<!--            status: document.getElementById("status").value-->
+<!--        };-->
+
+<!--        fetch(`${API}/${id}`, {-->
+<!--            method: "PUT",-->
+<!--            headers: { "Content-Type": "application/json" },-->
+<!--            body: JSON.stringify(data)-->
+<!--        })-->
+<!--            .then(() => {-->
+<!--                loadData();-->
+<!--                clearForm();-->
+<!--                alert("Cập nhật thành công!");-->
+<!--            })-->
+<!--            .catch(() => alert("Cập nhật thất bại!"));-->
+<!--    }-->
+
+<!--    function deleteCategory(id) {-->
+<!--        if (confirm(`Bạn chắc chắn muốn xóa danh mục ID ${id} không?`)) {-->
+<!--            fetch(`${API}/${id}`, { method: "DELETE" })-->
+<!--                .then(() => {-->
+<!--                    loadData();-->
+<!--                    alert("Xóa thành công!");-->
+<!--                })-->
+<!--                .catch(() => alert("Xóa thất bại!"));-->
+<!--        }-->
+<!--    }-->
+
+<!--    function clearForm() {-->
+<!--        document.getElementById("categoryId").value = "";-->
+<!--        document.getElementById("name").value = "";-->
+<!--        document.getElementById("description").value = "";-->
+<!--    }-->
+
+<!--    // Tự động tải dữ liệu khi mở trang-->
+<!--    window.onload = loadData;-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Danh mục - GiaDungShop Admin</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --primary-accent: #38bdf8;
+            --content-bg: #f1f5f9;
+        }
+
+        body {
+            background: var(--content-bg);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--sidebar-bg);
+            color: white;
+            min-height: 100vh;
+            position: fixed;
+            width: 250px;
+            padding: 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-brand {
+            padding: 25px 20px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--primary-accent);
+        }
+
+        .sidebar a {
+            color: #cbd5e1;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .sidebar a i { width: 25px; font-size: 1.1rem; }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: var(--sidebar-hover);
+            color: white;
+            transform: translateX(6px);
+        }
+
+        .sidebar a.active {
+            background: var(--primary-accent);
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .top-nav {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .content-body {
+            padding: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px -2px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 18px 24px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .table th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .stt-col { width: 60px; text-align: center; font-weight: 700; color: #64748b; }
+        .id-col { color: #64748b; font-size: 0.9rem; text-align: center; }
+
+        .action-btns .btn {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Kiểm tra quyền ADMIN -->
+<script>
+    const currentUser = JSON.parse(localStorage.getItem("currentLogin") || "{}");
+    if (!currentUser || currentUser.role !== "ADMIN") {
+        alert("Bạn không có quyền truy cập trang này!");
+        window.location.href = "login.html";
+        throw new Error("Unauthorized");
+    }
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar shadow">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-gauge-high me-2"></i> GIA DỤNG ADMIN
+            </div>
+            <div class="mt-3">
+                <a href="admin.html">
+                    <i class="fa-solid fa-chart-pie"></i> Tổng quan
+                </a>
+                <a href="product.html">
+                    <i class="fa-solid fa-boxes-stacked"></i> Sản phẩm
+                </a>
+                <a href="category.html" class="active">
+                    <i class="fa-solid fa-list-ul"></i> Danh mục
+                </a>
+                <a href="order.html">
+                    <i class="fa-solid fa-cart-shopping"></i> Đơn hàng
+                </a>
+                <hr class="mx-3 opacity-25 my-3">
+                <a href="index.html">
+                    <i class="fa-solid fa-house-user"></i> Về Trang Chủ
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 main-content">
+            <div class="top-nav">
+                <h5 class="mb-0 fw-bold text-secondary">Quản lý Danh mục</h5>
+                <div class="d-flex align-items-center">
+                    <span class="me-3 text-muted">Xin chào, <strong id="adminName">Admin</strong></span>
+                    <a href="#" onclick="logout()" class="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i>Thoát
+                    </a>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold text-dark">
+                        <i class="fa-solid fa-list-ul me-3 text-primary"></i> Quản lý Danh mục
+                    </h3>
+                    <button onclick="clearForm()" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-rotate-right me-1"></i> Làm mới form
+                    </button>
+                </div>
+
+                <!-- Form thêm/sửa -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fa-regular fa-pen-to-square me-2"></i> Thông tin danh mục
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" id="categoryId">
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-muted small">Tên danh mục <span class="text-danger">*</span></label>
+                                <input type="text" id="name" class="form-control" placeholder="Ví dụ: Nhà bếp">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label fw-bold text-muted small">Mô tả</label>
+                                <input type="text" id="description" class="form-control" placeholder="Mô tả ngắn gọn về danh mục">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold text-muted small">Trạng thái</label>
+                                <select id="status" class="form-select">
+                                    <option value="active">Hoạt động</option>
+                                    <option value="inactive">Tạm khóa</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <button onclick="addCategory()" class="btn btn-success px-4">
+                                <i class="fa-solid fa-plus me-2"></i> Thêm mới
+                            </button>
+                            <button onclick="updateCategory()" class="btn btn-primary px-4">
+                                <i class="fa-regular fa-floppy-disk me-2"></i> Lưu thay đổi
+                            </button>
+                            <button onclick="clearForm()" class="btn btn-secondary px-4">
+                                <i class="fa-solid fa-rotate-right me-2"></i> Hủy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bảng danh sách -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fa-solid fa-table me-2"></i> Danh sách danh mục</span>
+                        <button onclick="loadData()" class="btn btn-sm btn-outline-primary">
+                            <i class="fa-solid fa-rotate me-1"></i> Làm mới
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="text-center stt-col">STT</th>
+                                    <th class="text-center">ID</th>
+                                    <th>Tên danh mục</th>
+                                    <th>Mô tả</th>
+                                    <th class="text-center">Trạng thái</th>
+                                    <th class="text-center">Hành động</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tableBody" class="text-muted"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API = "http://localhost:8080/api/categories";
+
+    function loadData() {
+        fetch(API)
+            .then(res => res.ok ? res.json() : Promise.reject("Lỗi tải dữ liệu"))
+            .then(data => {
+                let html = "";
+                data.forEach((c, index) => {
+                    const id = c.id || c.categoryId || c.category_id || 'N/A';
+
+                    const statusBadge = c.status === 'active'
+                        ? `<span class="badge bg-success status-badge">Hoạt động</span>`
+                        : `<span class="badge bg-danger status-badge">Tạm khóa</span>`;
+
+                    html += `
+                        <tr>
+                            <td class="stt-col">${index + 1}</td>
+                            <td class="id-col">#${id}</td>
+                            <td class="fw-semibold">${c.name || ''}</td>
+                            <td class="small text-muted">${c.description || '<i class="text-secondary">Chưa có mô tả</i>'}</td>
+                            <td class="text-center">${statusBadge}</td>
+                            <td class="text-center action-btns">
+                                <button class="btn btn-outline-primary btn-sm me-1"
+                                    onclick="editCategory(${id}, '${(c.name || '').replace(/'/g, "\\'")}', '${(c.description || '').replace(/'/g, "\\'")}', '${c.status || 'active'}')">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm"
+                                    onclick="deleteCategory(${id})">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>`;
+                });
+
+                if (!html) {
+                    html = `<tr><td colspan="6" class="text-center py-5 text-muted">
+                        <i class="fa-regular fa-folder-open fa-3x mb-3 d-block"></i>
+                        Chưa có danh mục nào
+                    </td></tr>`;
+                }
+
+                document.getElementById("tableBody").innerHTML = html;
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Không thể tải dữ liệu danh mục. Vui lòng kiểm tra server.");
+            });
+    }
+
+    function addCategory() {
+        const name = document.getElementById("name").value.trim();
+        if (!name) return alert("Vui lòng nhập tên danh mục!");
+
+        const data = {
+            name: name,
+            description: document.getElementById("description").value.trim(),
+            status: document.getElementById("status").value
+        };
+
+        fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(() => {
+                loadData();
+                clearForm();
+                alert("Thêm danh mục thành công!");
+            })
+            .catch(() => alert(" Thêm danh mục thất bại!"));
+    }
+
+    function editCategory(id, name, description, status) {
+        document.getElementById("categoryId").value = id;
+        document.getElementById("name").value = name;
+        document.getElementById("description").value = description;
+        document.getElementById("status").value = status;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateCategory() {
+        const id = document.getElementById("categoryId").value;
+        if (!id) return alert("Vui lòng chọn danh mục cần sửa bằng nút chỉnh sửa!");
+
+        const data = {
+            name: document.getElementById("name").value.trim(),
+            description: document.getElementById("description").value.trim(),
+            status: document.getElementById("status").value
+        };
+
+        fetch(`${API}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(() => {
+                loadData();
+                clearForm();
+                alert("Cập nhật danh mục thành công!");
+            })
+            .catch(() => alert(" Cập nhật thất bại!"));
+    }
+
+    function deleteCategory(id) {
+        if (!confirm(`Bạn có chắc chắn muốn xóa danh mục #${id}?\n\nCảnh báo: Hành động này không thể hoàn tác!`)) return;
+
+        fetch(`${API}/${id}`, { method: "DELETE" })
+            .then(res => {
+                if (!res.ok) throw new Error();
+                loadData();
+                alert("Đã xóa danh mục thành công!");
+            })
+            .catch(() => alert(" Xóa thất bại! Danh mục này có thể đang được sử dụng bởi sản phẩm."));
+    }
+
+    function clearForm() {
+        document.getElementById("categoryId").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("status").value = "active";
+    }
+
+    function logout() {
+        if (confirm("Bạn muốn đăng xuất?")) {
+            localStorage.removeItem("currentLogin");
+            window.location.href = "login.html";
+        }
+    }
+
+    // Khởi tạo
+    window.onload = () => {
+        document.getElementById('adminName').innerText = currentUser.username || "Admin";
+        loadData();
+    };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

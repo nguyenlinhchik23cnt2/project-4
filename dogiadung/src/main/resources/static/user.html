@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Người dùng</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f8f9fa; }
+        h2 { color: #333; text-align: center; }
+        .form-container {
+            background: white; padding: 20px; border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;
+        }
+        input, select, button { padding: 10px; margin: 5px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
+        button { cursor: pointer; border: none; border-radius: 4px; padding: 10px 16px; }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-danger { background-color: #dc3545; color: white; }
+
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .search-box { width: 350px; padding: 10px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>QUẢN LÝ NGƯỜI DÙNG</h2>
+    <input type="hidden" id="userId">
+
+    <input type="text" id="username" placeholder="Tên đăng nhập *" style="width: 250px;">
+    <input type="password" id="passwordHash" placeholder="Mật khẩu" style="width: 250px;">
+    <input type="text" id="fullName" placeholder="Họ và tên" style="width: 300px;">
+
+    <select id="status">
+        <option value="active">Hoạt động</option>
+        <option value="inactive">Không hoạt động</option>
+    </select>
+
+    <div>
+        <button onclick="addUser()" class="btn-primary">Thêm mới</button>
+        <button onclick="updateUser()" class="btn-primary">Cập nhật</button>
+        <button onclick="clearForm()" class="btn-secondary">Làm mới</button>
+    </div>
+</div>
+
+<input type="text" id="searchInput" class="search-box"
+       placeholder="🔍 Tìm kiếm theo username hoặc họ tên..." onkeyup="searchUsers()">
+
+<table>
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>ID</th>
+        <th>Tên đăng nhập</th>
+        <th>Họ và tên</th>
+        <th>Trạng thái</th>
+        <th>Ngày tạo</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+    const API = "http://localhost:8080/api/users";
+    let currentEditId = null;
+    let allUsers = [];
+
+    function loadUsers() {
+        fetch(API)
+            .then(res => res.json())
+            .then(data => {
+                allUsers = data;
+                renderUsers(data);
+            });
+    }
+
+    function renderUsers(users) {
+        let html = "";
+        users.forEach((u, index) => {
+            html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${u.userId}</td>
+                    <td>${u.username}</td>
+                    <td>${u.fullName || ''}</td>
+                    <td>${u.status === 'active' ? ' Hoạt động' : ' Không hoạt động'}</td>
+                    <td>${u.createdAt ? new Date(u.createdAt).toLocaleString('vi-VN') : ''}</td>
+                    <td>
+                        <button onclick="editUser(${u.userId})">Sửa</button>
+                        <button class="btn-danger" onclick="deleteUser(${u.userId})">Xóa</button>
+                    </td>
+                </tr>`;
+        });
+        document.getElementById("tableBody").innerHTML = html || "<tr><td colspan='7'>Chưa có người dùng</td></tr>";
+    }
+
+    function searchUsers() {
+        const keyword = document.getElementById("searchInput").value.toLowerCase().trim();
+        if (!keyword) return renderUsers(allUsers);
+
+        const filtered = allUsers.filter(u =>
+            (u.username || '').toLowerCase().includes(keyword) ||
+            (u.fullName || '').toLowerCase().includes(keyword)
+        );
+        renderUsers(filtered);
+    }
+
+    function addUser() {
+        const user = {
+            username: document.getElementById("username").value.trim(),
+            passwordHash: document.getElementById("passwordHash").value.trim(),
+            fullName: document.getElementById("fullName").value.trim(),
+            status: document.getElementById("status").value
+        };
+
+        if (!user.username || !user.passwordHash) {
+            return alert("Vui lòng nhập tên đăng nhập và mật khẩu!");
+        }
+
+        fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(() => {
+                alert(" Thêm người dùng thành công!");
+                loadUsers();
+                clearForm();
+            })
+            .catch(() => alert("Thêm thất bại!"));
+    }
+
+    function editUser(id) {
+        fetch(`${API}/${id}`)
+            .then(res => res.json())
+            .then(u => {
+                currentEditId = u.userId;
+                document.getElementById("username").value = u.username;
+                document.getElementById("passwordHash").value = u.passwordHash;
+                document.getElementById("fullName").value = u.fullName || "";
+                document.getElementById("status").value = u.status;
+            });
+    }
+
+    function updateUser() {
+        if (!currentEditId) return alert("Không có người dùng đang sửa!");
+
+        const user = {
+            username: document.getElementById("username").value.trim(),
+            passwordHash: document.getElementById("passwordHash").value.trim(),
+            fullName: document.getElementById("fullName").value.trim(),
+            status: document.getElementById("status").value
+        };
+
+        fetch(`${API}/${currentEditId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(() => {
+                alert(" Cập nhật thành công!");
+                loadUsers();
+                clearForm();
+            })
+            .catch(() => alert("Cập nhật thất bại!"));
+    }
+
+    function deleteUser(id) {
+        if (!confirm("Xác nhận xóa người dùng này?")) return;
+        fetch(`${API}/${id}`, { method: "DELETE" })
+            .then(res => res.ok && loadUsers());
+    }
+
+    function clearForm() {
+        currentEditId = null;
+        document.getElementById("username").value = "";
+        document.getElementById("passwordHash").value = "";
+        document.getElementById("fullName").value = "";
+        document.getElementById("status").value = "active";
+    }
+
+    window.onload = loadUsers;
+</script>
+</body>
+</html>

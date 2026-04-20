@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Đơn hàng</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f8f9fa; }
+        h2 { color: #333; text-align: center; }
+        .form-container {
+            background: white; padding: 20px; border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;
+        }
+        input, select, button, textarea {
+            padding: 10px; margin: 5px; font-size: 14px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+        button { cursor: pointer; border: none; border-radius: 4px; padding: 10px 16px; }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-danger { background-color: #dc3545; color: white; }
+
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .search-box { width: 350px; padding: 10px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>QUẢN LÝ ĐƠN HÀNG</h2>
+    <input type="hidden" id="orderId">
+
+    <select id="customerId" style="width: 320px;">
+        <option value="">-- Chọn khách hàng --</option>
+    </select>
+
+    <select id="userId" style="width: 250px;">
+        <option value="">-- Người tạo đơn --</option>
+    </select>
+
+    <select id="status">
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="shipped">Shipped</option>
+        <option value="done">Done</option>
+        <option value="cancelled">Cancelled</option>
+    </select>
+
+    <input type="number" id="totalAmount" placeholder="Tổng tiền (VND)" step="1000" style="width: 200px;">
+
+    <textarea id="note" placeholder="Ghi chú đơn hàng" rows="3" style="width: 100%;"></textarea>
+
+    <div>
+        <button onclick="addOrder()" class="btn-primary">Tạo đơn hàng mới</button>
+        <button onclick="updateOrder()" class="btn-primary">Cập nhật đơn hàng</button>
+        <button onclick="clearForm()" class="btn-secondary">Làm mới form</button>
+    </div>
+</div>
+
+<input type="text" id="searchInput" class="search-box"
+       placeholder="🔍 Tìm kiếm theo khách hàng hoặc ghi chú..." onkeyup="searchOrders()">
+
+<table>
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Mã đơn</th>
+        <th>Khách hàng</th>
+        <th>Người tạo</th>
+        <th>Ngày đặt</th>
+        <th>Trạng thái</th>
+        <th>Tổng tiền</th>
+        <th>Ghi chú</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+    const API_ORDER = "http://localhost:8080/api/orders";
+    const API_CUSTOMER = "http://localhost:8080/api/customers";
+    const API_USER = "http://localhost:8080/api/users";
+
+    let currentEditId = null;
+    let allOrders = [];
+
+    // Tải dropdown Khách hàng
+    function loadCustomers() {
+        fetch(API_CUSTOMER)
+            .then(res => res.json())
+            .then(data => {
+                let html = '<option value="">-- Chọn khách hàng --</option>';
+                data.forEach(c => {
+                    html += `<option value="${c.customerId}">${c.fullName} (${c.phone || ''})</option>`;
+                });
+                document.getElementById("customerId").innerHTML = html;
+            });
+    }
+
+    // Tải dropdown Người dùng
+    function loadUsers() {
+        fetch(API_USER)
+            .then(res => res.json())
+            .then(data => {
+                let html = '<option value="">-- Người tạo đơn --</option>';
+                data.forEach(u => {
+                    html += `<option value="${u.userId}">${u.fullName || u.username}</option>`;
+                });
+                document.getElementById("userId").innerHTML = html;
+            });
+    }
+
+    // Tải danh sách đơn hàng
+    function loadOrders() {
+        fetch(API_ORDER)
+            .then(res => res.json())
+            .then(data => {
+                allOrders = data;
+                renderOrders(data);
+            });
+    }
+
+    function renderOrders(orders) {
+        let html = "";
+        orders.forEach((o, index) => {
+            html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>#${o.orderId}</td>
+                    <td>${o.customer ? o.customer.fullName : 'N/A'}</td>
+                    <td>${o.user ? (o.user.fullName || o.user.username) : 'N/A'}</td>
+                    <td>${o.orderDate ? new Date(o.orderDate).toLocaleString('vi-VN') : ''}</td>
+                    <td><strong>${o.status}</strong></td>
+                    <td>${Number(o.totalAmount).toLocaleString('vi-VN')} ₫</td>
+                    <td>${o.note || ''}</td>
+                    <td>
+                        <button onclick="editOrder(${o.orderId})">Sửa</button>
+                        <button class="btn-danger" onclick="deleteOrder(${o.orderId})">Xóa</button>
+                    </td>
+                </tr>`;
+        });
+        document.getElementById("tableBody").innerHTML = html ||
+            "<tr><td colspan='9'>Chưa có đơn hàng nào</td></tr>";
+    }
+
+    function searchOrders() {
+        const keyword = document.getElementById("searchInput").value.toLowerCase().trim();
+        if (!keyword) return renderOrders(allOrders);
+
+        const filtered = allOrders.filter(o =>
+            (o.customer && o.customer.fullName.toLowerCase().includes(keyword)) ||
+            (o.note && o.note.toLowerCase().includes(keyword))
+        );
+        renderOrders(filtered);
+    }
+
+    // ==================== THÊM ĐƠN HÀNG ====================
+    function addOrder() {
+        const order = {
+            customer: { customerId: parseInt(document.getElementById("customerId").value) },
+            user: { userId: parseInt(document.getElementById("userId").value) },
+            status: document.getElementById("status").value,
+            totalAmount: parseFloat(document.getElementById("totalAmount").value) || 0,
+            note: document.getElementById("note").value.trim()
+        };
+
+        if (!order.customer.customerId || !order.user.userId) {
+            return alert("Vui lòng chọn Khách hàng và Người tạo đơn!");
+        }
+
+        fetch(API_ORDER, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(() => {
+                alert("✅ Tạo đơn hàng thành công!");
+                loadOrders();
+                clearForm();
+            })
+            .catch(() => alert("Thêm đơn hàng thất bại!"));
+    }
+
+    // ==================== SỬA ĐƠN HÀNG ====================
+    function editOrder(id) {
+        fetch(`${API_ORDER}/${id}`)
+            .then(res => res.json())
+            .then(o => {
+                currentEditId = o.orderId;
+                document.getElementById("customerId").value = o.customer ? o.customer.customerId : "";
+                document.getElementById("userId").value = o.user ? o.user.userId : "";
+                document.getElementById("status").value = o.status;
+                document.getElementById("totalAmount").value = o.totalAmount;
+                document.getElementById("note").value = o.note || "";
+            });
+    }
+
+    function updateOrder() {
+        if (!currentEditId) return alert("Không có đơn hàng nào đang sửa!");
+
+        const order = {
+            customer: { customerId: parseInt(document.getElementById("customerId").value) },
+            user: { userId: parseInt(document.getElementById("userId").value) },
+            status: document.getElementById("status").value,
+            totalAmount: parseFloat(document.getElementById("totalAmount").value) || 0,
+            note: document.getElementById("note").value.trim()
+        };
+
+        fetch(`${API_ORDER}/${currentEditId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        })
+            .then(res => res.ok ? res.json() : Promise.reject())
+            .then(() => {
+                alert("✅ Cập nhật đơn hàng thành công!");
+                loadOrders();
+                clearForm();
+            })
+            .catch(() => alert("Cập nhật thất bại!"));
+    }
+
+    // ==================== XÓA & LÀM MỚI ====================
+    function deleteOrder(id) {
+        if (!confirm("Xác nhận xóa đơn hàng này?")) return;
+        fetch(`${API_ORDER}/${id}`, { method: "DELETE" })
+            .then(res => res.ok && loadOrders());
+    }
+
+    function clearForm() {
+        currentEditId = null;
+        document.getElementById("customerId").value = "";
+        document.getElementById("userId").value = "";
+        document.getElementById("status").value = "pending";
+        document.getElementById("totalAmount").value = "";
+        document.getElementById("note").value = "";
+    }
+
+    // Khởi chạy trang
+    window.onload = () => {
+        loadCustomers();
+        loadUsers();
+        loadOrders();
+    };
+</script>
+</body>
+</html>
