@@ -1,10 +1,10 @@
 package org.nguyenlinhchi.dogiadung.SERVICE;
 
+import jakarta.persistence.criteria.Order;
 import org.nguyenlinhchi.dogiadung.DTO.OrderItemResponse;
-import org.nguyenlinhchi.dogiadung.ENTITY.Order;
 import org.nguyenlinhchi.dogiadung.ENTITY.OrderItem;
 import org.nguyenlinhchi.dogiadung.ENTITY.OrderItemId;
-import org.nguyenlinhchi.dogiadung.ENTITY.Product;
+import org.nguyenlinhchi.dogiadung.ENTITY.TraProduct;
 import org.nguyenlinhchi.dogiadung.REPOSITORY.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,10 @@ public class OrderItemService {
     private OrderItemRepository repository;
 
     @Autowired
-    private OrderService orderService;
+    private Tra_orderService tra_orderService;
 
     @Autowired
-    private ProductService productService;
+    private tra_productService tra_productService;
 
     // ==================== CREATE ====================
     @Transactional
@@ -31,13 +31,13 @@ public class OrderItemService {
         OrderItem item = new OrderItem();
 
         // Lấy Order và Product
-        Order order = orderService.getById(req.getOrderId());
+        Order order = tra_orderService.getById(req.getOrderId());
         if (order == null) {
             throw new RuntimeException("Order not found with id: " + req.getOrderId());
         }
         item.setOrder(order);
 
-        Product product = productService.getById(req.getProductId());
+        TraProduct product = tra_productService.getById(req.getProductId());
         if (product == null) {
             throw new RuntimeException("Product not found with id: " + req.getProductId());
         }
@@ -89,5 +89,29 @@ public class OrderItemService {
             throw new RuntimeException("OrderItem not found with id: " + id);
         }
         repository.deleteById(id);
+    }
+
+    public Tra_orderService getTra_orderService() {
+        return tra_orderService;
+    }
+
+    public void setTra_orderService(Tra_orderService tra_orderService) {
+        this.tra_orderService = tra_orderService;
+    }
+
+    public tra_productService getTraProductService() {
+        return traProductService;
+    }
+
+    public void setTraProductService(tra_productService traProductService) {
+        this.traProductService = traProductService;
+    }
+
+    public tra_productService getTra_productService() {
+        return tra_productService;
+    }
+
+    public void setTra_productService(tra_productService tra_productService) {
+        this.tra_productService = tra_productService;
     }
 }

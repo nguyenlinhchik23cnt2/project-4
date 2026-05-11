@@ -39,14 +39,14 @@ public class CategoryService {
 
     public String delete(int id) {
         if (!repo.existsById(id)) {
-            return "❌ Không tồn tại ID";
+            return " Không tồn tại ID";
         }
 
         try {
             repo.deleteById(id);
-            return "✅ Xóa thành công";
+            return " Xóa thành công";
         } catch (Exception e) {
-            return "❌ Không thể xóa (có dữ liệu liên quan)";
+            return " Không thể xóa (có dữ liệu liên quan)";
         }
     }
 }
