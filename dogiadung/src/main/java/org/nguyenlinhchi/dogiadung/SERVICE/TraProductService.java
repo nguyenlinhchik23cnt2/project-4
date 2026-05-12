@@ -1,11 +1,10 @@
 package org.nguyenlinhchi.dogiadung.SERVICE;
 
-
 import org.nguyenlinhchi.dogiadung.ENTITY.TraProduct;
 import org.nguyenlinhchi.dogiadung.REPOSITORY.TraProductRepository;
+import org.nguyenlinhchi.dogiadung.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class Tra_productService {
+public class TraProductService {
 
     private final TraProductRepository repo;
 

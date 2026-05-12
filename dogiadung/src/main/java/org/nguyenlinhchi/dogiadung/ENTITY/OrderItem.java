@@ -23,7 +23,7 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false, insertable = false, updatable = false)
     @JsonIgnore
-    private tra_order order;
+    private TraOrder order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
@@ -39,7 +39,7 @@ public class OrderItem {
     // Constructors
     public OrderItem() {}
 
-    public OrderItem(tra_order order, TraProduct product, Integer quantity, BigDecimal unitPrice) {
+    public OrderItem(TraOrder order, TraProduct product, Integer quantity, BigDecimal unitPrice) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
@@ -56,8 +56,8 @@ public class OrderItem {
     public Integer getProductId() { return productId; }
     public void setProductId(Integer productId) { this.productId = productId; }
 
-    public tra_order getOrder() { return order; }
-    public void setOrder(tra_order order) { this.order = order; }
+    public TraOrder getOrder() { return order; }
+    public void setOrder(TraOrder order) { this.order = order; }
 
     public TraProduct getProduct() { return product; }
     public void setProduct(TraProduct product) { this.product = product; }

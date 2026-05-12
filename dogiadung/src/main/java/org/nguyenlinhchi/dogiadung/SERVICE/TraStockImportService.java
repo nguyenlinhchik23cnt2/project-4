@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class StockImportService {
+public class TraStockImportService {
 
     private final TraStockImportRepository repo;
 
