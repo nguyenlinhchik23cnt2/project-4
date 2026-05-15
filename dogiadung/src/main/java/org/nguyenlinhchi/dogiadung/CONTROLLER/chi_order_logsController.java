@@ -1,5 +1,6 @@
 package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
+import lombok.RequiredArgsConstructor;
 import org.nguyenlinhchi.dogiadung.ENTITY.chi_order_logs;
 import org.nguyenlinhchi.dogiadung.SERVICE.chi_order_logsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/order-logs")
-<<<<<<< HEAD
-@CrossOrigin(origins = "*")     // ← THÊM DÒNG NÀY
-=======
->>>>>>> 9b403e94984f5562804c51b1ef341cc3ce774374
+@RequestMapping("/api/order-logs")   // Nên thêm /api để dễ quản lý sau này
+@CrossOrigin(origins = "*")          // Production nên giới hạn origin cụ thể
+@RequiredArgsConstructor
 public class chi_order_logsController {
 
     @Autowired

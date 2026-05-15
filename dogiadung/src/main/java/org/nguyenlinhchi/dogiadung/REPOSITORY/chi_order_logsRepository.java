@@ -10,11 +10,9 @@ import java.util.List;
 public interface chi_order_logsRepository extends JpaRepository<chi_order_logs, Integer> {
 
     List<chi_order_logs> findByOrderIdOrderByUpdatedAtDesc(Integer orderId);
-<<<<<<< HEAD
     // Sắp xếp theo ID tăng dần
     List<chi_order_logs> findAllByOrderByIdAsc();
 
 
-=======
->>>>>>> 9b403e94984f5562804c51b1ef341cc3ce774374
+
 }

@@ -91,18 +91,24 @@
 </div>
 
 <script>
-    const API_URL = "http://localhost:8080/order-logs";
+    const API_URL = "http://localhost:8080/api/order-logs";
 
     async function loadAllLogs() {
         try {
             const res = await fetch(API_URL);
+
+            if (!res.ok) {
+                throw new Error('Lỗi server: ' + res.status);
+            }
+
             let data = await res.json();
 
-            // Sắp xếp theo ID
-            data.sort((a, b) => a.id - b.id);
+            // Sắp xếp theo ID giảm dần (log mới nhất lên trên)
+            data.sort((a, b) => b.id - a.id);
             renderTable(data);
         } catch (error) {
-            alert("Không thể tải dữ liệu!");
+            console.error(error);
+            alert("Không thể tải dữ liệu! Kiểm tra console (F12)");
         }
     }
 
@@ -113,25 +119,24 @@
         data.forEach((log, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                    <td><strong>${index + 1}</strong></td>
-                    <td>${log.id}</td>
-                    <td><strong>${log.orderId}</strong></td>
-                    <td>${log.oldStatus ? `<span style="background:#e2e8f0;padding:5px 10px;border-radius:20px;">${log.oldStatus}</span>` : ''}</td>
-                    <td><span style="background:#34d399;color:white;padding:5px 10px;border-radius:20px;">${log.newStatus}</span></td>
-                    <td>${log.changedBy || ''}</td>
-                    <td>${log.note || '<i>Không có</i>'}</td>
-                    <td>${log.updatedAt ? new Date(log.updatedAt).toLocaleString('vi-VN') : ''}</td>
-                    <td>
-                        <button class="btn-edit" onclick="editLog(${log.id})">Sửa</button>
-                        <button class="btn-delete" onclick="deleteLog(${log.id})">Xóa</button>
-                    </td>
-                `;
+                <td><strong>${index + 1}</strong></td>
+                <td>${log.id}</td>
+                <td><strong>${log.orderId}</strong></td>
+                <td>${log.oldStatus ? `<span style="background:#e2e8f0;padding:5px 10px;border-radius:20px;">${log.oldStatus}</span>` : ''}</td>
+                <td><span style="background:#34d399;color:white;padding:5px 10px;border-radius:20px;">${log.newStatus}</span></td>
+                <td>${log.changedBy || ''}</td>
+                <td>${log.note || '<i>Không có</i>'}</td>
+                <td>${log.updatedAt ? new Date(log.updatedAt).toLocaleString('vi-VN') : ''}</td>
+                <td>
+                    <button class="btn-edit" onclick="editLog(${log.id})">Sửa</button>
+                    <button class="btn-delete" onclick="deleteLog(${log.id})">Xóa</button>
+                </td>
+            `;
             tbody.appendChild(row);
         });
     }
 
-    // Các hàm còn lại giữ nguyên
-    async function createOrUpdateLog() { /* ... */
+    async function createOrUpdateLog() {
         const id = document.getElementById('logId').value;
         const log = {
             orderId: parseInt(document.getElementById('orderId').value) || 0,
@@ -144,33 +149,56 @@
         try {
             let res;
             if (id) {
-                res = await fetch(`${API_URL}/${id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(log)});
+                res = await fetch(`${API_URL}/${id}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(log)
+                });
             } else {
-                res = await fetch(API_URL, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(log)});
+                res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(log)
+                });
             }
+
             if (res.ok) {
                 alert(id ? "Cập nhật thành công!" : "Thêm mới thành công!");
                 resetForm();
                 loadAllLogs();
+            } else {
+                alert("Lỗi khi lưu dữ liệu!");
             }
-        } catch(e) { alert("Lỗi!"); }
+        } catch (e) {
+            console.error(e);
+            alert("Lỗi kết nối!");
+        }
     }
 
-    async function editLog(id) { /* giữ nguyên */
-        const res = await fetch(`${API_URL}/${id}`);
-        const log = await res.json();
-        document.getElementById('logId').value = log.id;
-        document.getElementById('orderId').value = log.orderId;
-        document.getElementById('oldStatus').value = log.oldStatus || '';
-        document.getElementById('newStatus').value = log.newStatus || '';
-        document.getElementById('changedBy').value = log.changedBy || '';
-        document.getElementById('note').value = log.note || '';
+    async function editLog(id) {
+        try {
+            const res = await fetch(`${API_URL}/${id}`);
+            const log = await res.json();
+
+            document.getElementById('logId').value = log.id;
+            document.getElementById('orderId').value = log.orderId;
+            document.getElementById('oldStatus').value = log.oldStatus || '';
+            document.getElementById('newStatus').value = log.newStatus || '';
+            document.getElementById('changedBy').value = log.changedBy || '';
+            document.getElementById('note').value = log.note || '';
+        } catch (e) {
+            alert("Không tìm thấy log!");
+        }
     }
 
     async function deleteLog(id) {
         if (confirm(`Xóa log ID ${id}?`)) {
-            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-            loadAllLogs();
+            try {
+                await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                loadAllLogs();
+            } catch (e) {
+                alert("Lỗi khi xóa!");
+            }
         }
     }
 
@@ -183,6 +211,7 @@
         document.getElementById('note').value = '';
     }
 
+    // Tự động load khi mở trang
     window.onload = loadAllLogs;
 </script>
 </body>
