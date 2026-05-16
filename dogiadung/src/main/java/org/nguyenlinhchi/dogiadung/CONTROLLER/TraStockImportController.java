@@ -1,8 +1,8 @@
 package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
-import com.example.product.service.StockImportService;
 import lombok.RequiredArgsConstructor;
 import org.nguyenlinhchi.dogiadung.ENTITY.TraStockImport;
+import org.nguyenlinhchi.dogiadung.SERVICE.TraStockImportService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class TraStockImportController {
 
-    private final StockImportService service;
+    private final TraStockImportService service;
 
     // GET /api/stock-imports
     @GetMapping
