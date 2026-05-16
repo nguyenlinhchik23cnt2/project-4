@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title> Quản Lý Giỏ Hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f9f4;
+            padding: 20px;
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            color: #1e7a5f;
+        }
+        .container {
+            width: 1150px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(45, 212, 191, 0.08);
+        }
+        input, select {
+            padding: 11px;
+            margin: 5px;
+            border: 1px solid #a1e2d1;
+            border-radius: 8px;
+            background: #f8fdfb;
+        }
+        button {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-add { background: #34d399; }
+        .btn-load { background: #22d3ee; }
+        .btn-all { background: #8b5cf6; }
+        .btn-edit { background: #a3e635; color: #1f2937; }
+        .btn-delete { background: #f87171; }
+        .btn-review { background: #14b8a6; }
+        .btn-approve { background: #4ade80; }
+        .btn-save { background: #34d399; }
+        .btn-cancel { background: #94a3b8; }
+        .btn-update { background: #eab308; color: black; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th {
+            background: #34d399;
+            color: white;
+            padding: 14px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #d1f0e6;
+            text-align: center;
+        }
+        button:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        .total {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1e7a5f;
+            text-align: right;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1> Quản Lý Giỏ Hàng</h1>
+<div class="container">
+
+    <!-- Thêm sản phẩm -->
+    <div class="card">
+        <h3> Thêm vào giỏ hàng</h3>
+        Customer ID: <input id="customerId" type="number" value="1">
+        Product ID: <input id="productId" type="number">
+        Số lượng: <input id="quantity" type="number" value="1">
+        <button class="btn-add" onclick="addToCart()">Thêm</button>
+    </div>
+
+    <!-- Xem giỏ hàng -->
+    <div class="card">
+        <h3>
+             Giỏ hàng
+            <button class="btn-load" onclick="loadCartByCustomer()"> Theo khách hàng</button>
+            <button class="btn-all" onclick="loadAllCarts()"> Xem TẤT CẢ giỏ hàng</button>
+        </h3>
+
+        <div style="margin-bottom: 10px;">
+            <strong>Customer ID:</strong>
+            <input id="viewCustomerId" type="number" value="1" style="width: 100px;">
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer ID</th>
+                <th>Product ID</th>
+                <th>Số lượng</th>
+                <th>Thời gian thêm</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody id="cartBody"></tbody>
+        </table>
+
+        <div class="total" id="totalInfo">Tổng số lượng: 0</div>
+    </div>
+
+</div>
+
+<script>
+    const API = "http://localhost:8080/api/cart";
+
+    async function addToCart() {
+        const customerId = document.getElementById("customerId").value.trim();
+        const productId = document.getElementById("productId").value.trim();
+        const quantity = document.getElementById("quantity").value.trim() || "1";
+
+        console.log("=== DEBUG ADD TO CART ===");
+        console.log("Customer ID:", customerId);
+        console.log("Product ID :", productId);
+        console.log("Quantity   :", quantity);
+
+        if (!customerId || !productId) {
+            alert(" Vui lòng nhập Customer ID và Product ID!");
+            return;
+        }
+
+        try {
+            const url = `${API}/add?customerId=${customerId}&productId=${productId}&quantity=${quantity}`;
+            console.log("Gọi API:", url);
+
+            const res = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            });
+
+            if (res.ok) {
+                console.log(" Thêm thành công");
+                alert(" Đã thêm vào giỏ hàng thành công!");
+                loadCartByCustomer();
+            } else {
+                const errorText = await res.text();
+                alert(" Lỗi: " + errorText);
+            }
+        } catch (err) {
+            console.error(err);
+            alert(" Lỗi kết nối: " + err.message);
+        }
+    }
+
+    // Xem giỏ theo
+    async function loadCartByCustomer() {
+        const customerId = document.getElementById("viewCustomerId").value;
+        if (!customerId) return alert("Nhập Customer ID");
+
+        try {
+            const res = await fetch(`${API}/${customerId}`);
+            const data = await res.json();
+            renderTable(data, `Giỏ hàng của khách ${customerId}`);
+        } catch (err) {
+            alert(" Lỗi: " + err.message);
+        }
+    }
+
+    // Xem TẤT CẢ giỏ hàng
+    async function loadAllCarts() {
+        try {
+            const res = await fetch(`${API}/all`);
+            const data = await res.json();
+            renderTable(data, "TẤT CẢ giỏ hàng của các khách");
+        } catch (err) {
+            alert(" Lỗi kết nối: " + err.message + "\n\nKiểm tra endpoint /api/cart/all đã có chưa?");
+        }
+    }
+
+
+    function renderTable(data, title) {
+        let html = "";
+        let totalQty = 0;
+
+        data.forEach(item => {
+            totalQty += item.quantity || 0;
+            html += `
+            <tr>
+                <td>${item.id}</td>
+                <td>${item.customerId}</td>
+                <td>${item.productId}</td>
+                <td><strong>${item.quantity}</strong></td>
+                <td>${item.addedAt ? new Date(item.addedAt).toLocaleString('vi-VN') : ''}</td>
+                <td>
+                    <button class="btn-update" onclick="updateQuantity(${item.customerId}, ${item.productId})">Sửa</button>
+                    <button class="btn-delete" onclick="removeItem(${item.customerId}, ${item.productId})">Xóa</button>
+                </td>
+            </tr>`;
+        });
+
+        document.getElementById("cartBody").innerHTML = html || `<tr><td colspan="6">Không có dữ liệu</td></tr>`;
+        document.getElementById("totalInfo").innerHTML = `Tổng số lượng: <strong>${totalQty}</strong>`;
+    }
+
+
+    async function updateQuantity(customerId, productId) {
+        const newQty = prompt("Nhập số lượng mới:");
+        if (newQty === null || newQty <= 0) return;
+
+        await fetch(`${API}/update?customerId=${customerId}&productId=${productId}&quantity=${newQty}`, { method: "PUT" });
+        alert(" Cập nhật thành công!");
+        loadCartByCustomer();   // reload theo customer hiện tại
+    }
+
+    async function removeItem(customerId, productId) {
+        if (confirm("Xóa sản phẩm này khỏi giỏ?")) {
+            await fetch(`${API}/remove?customerId=${customerId}&productId=${productId}`, { method: "DELETE" });
+            alert(" Đã xóa!");
+            loadCartByCustomer();
+        }
+    }
+
+
+    window.onload = loadCartByCustomer;
+</script>
+
+</body>
+</html>

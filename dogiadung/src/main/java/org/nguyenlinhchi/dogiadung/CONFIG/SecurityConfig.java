@@ -20,9 +20,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())           // Tắt CSRF
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()   // Cho phép TẤT CẢ các request
+                        .anyRequest().permitAll()        // Cách viết ngắn và rõ ràng nhất cho dev
                 )
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable());

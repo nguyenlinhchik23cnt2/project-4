@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title> TNC Shop Order-Items</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f9f4;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e7a5f;
+        }
+
+        .container {
+            width: 1150px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(45, 212, 191, 0.08);
+        }
+
+        input, select {
+            padding: 11px;
+            margin: 5px;
+            border: 1px solid #a1e2d1;
+            border-radius: 8px;
+            background: #f8fdfb;
+        }
+
+        button {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+
+        .btn-add { background: #34d399; }
+        .btn-load { background: #22d3ee; }
+        .btn-edit { background: #a3e635; color: #1f2937; }
+        .btn-delete { background: #f87171; }
+        .btn-review { background: #14b8a6; }
+        .btn-approve { background: #4ade80; }
+        .btn-save { background: #34d399; }
+        .btn-cancel { background: #94a3b8; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background: #34d399;
+            color: white;
+            padding: 14px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #d1f0e6;
+            text-align: center;
+        }
+
+        button:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>  TNC Shop Order-Items </h1>
+
+<div class="container">
+
+
+    <div class="card">
+        <h3> Thêm Order Item</h3>
+        <input id="orderId" placeholder="Order ID">
+        <input id="productId" placeholder="Product ID">
+        <input id="quantity" placeholder="Quantity">
+        <input id="price" placeholder="Unit Price">
+        <button class="btn-add" onclick="createItem()">Thêm</button>
+    </div>
+
+
+    <div class="card">
+        <h3> Đánh giá sản phẩm</h3>
+        <input id="r_orderId" placeholder="Order ID">
+        <input id="r_productId" placeholder="Product ID">
+        <input id="rating" placeholder="Rating (1-5)">
+        <input id="comment" placeholder="Comment">
+        <button class="btn-review" onclick="addReview()">Đánh giá</button>
+    </div>
+
+
+    <div class="card">
+        <h3> Duyệt đánh giá (Admin)</h3>
+        <input id="a_orderId" placeholder="Order ID" style="width: 120px;">
+        <input id="a_productId" placeholder="Product ID" style="width: 120px;">
+
+        <select id="approved" style="padding: 10px; margin: 5px; width: 180px;">
+            <option value="">Chọn trạng thái </option>
+            <option value="true"> Duyệt (Approved)</option>
+            <option value="false"> Từ chối (Rejected)</option>
+        </select>
+
+        <button class="btn-approve" onclick="approveReview()">Duyệt</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card">
+        <h3> Danh sách Order Items</h3>
+        <button class="btn-load" onclick="loadData()"> Load Data</button>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Order</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Approved</th>
+                <th>Reviewed At</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    const API = "http://127.0.0.1:8080/api/order-items";
+
+    // LOAD DATA
+    function loadData() {
+        fetch(API)
+            .then(res => res.json())
+            .then(data => {
+                let html = "";
+                data.forEach(item => {
+                    const approvedText = item.isApproved === true ?
+                        '<span style="color:green;font-weight:bold;"> Approved</span>' :
+                        item.isApproved === false ?
+                            '<span style="color:red;font-weight:bold;"> Rejected</span>' :
+                            '<span style="color:orange;"> Pending</span>';
+
+                    const reviewedTime = item.reviewedAt ? new Date(item.reviewedAt).toLocaleString('vi-VN') : '';
+
+                    html += `
+                    <tr>
+                        <td>${item.orderId}</td>
+                        <td>${item.productId}</td>
+                        <td>${item.quantity}</td>
+                        <td>${Number(item.unitPrice || 0).toLocaleString('vi-VN')} ₫</td>
+                        <td>${item.rating ?? ''}</td>
+                        <td>${item.reviewComment ?? ''}</td>
+                        <td>${approvedText}</td>
+                        <td>${reviewedTime}</td>
+                        <td>
+                            <button class="btn-delete" onclick="deleteItem(${item.orderId}, ${item.productId})">Xóa</button>
+                        </td>
+                    </tr>`;
+                });
+                document.getElementById("tableBody").innerHTML = html || `<tr><td colspan="9">Chưa có dữ liệu</td></tr>`;
+            })
+            .catch(err => alert(" Lỗi tải dữ liệu: " + err.message));
+    }
+
+    // CREATE
+    function createItem() {
+        const data = {
+            orderId: parseInt(document.getElementById("orderId").value),
+            productId: parseInt(document.getElementById("productId").value),
+            quantity: parseInt(document.getElementById("quantity").value),
+            unitPrice: parseFloat(document.getElementById("price").value)
+        };
+
+        if (!data.orderId || !data.productId) {
+            alert(" Order ID và Product ID là bắt buộc!");
+            return;
+        }
+
+        fetch(API + "/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+            .then(() => {
+                alert(" Thêm thành công!");
+                loadData();
+                // Clear inputs
+                document.getElementById("orderId").value = "";
+                document.getElementById("productId").value = "";
+                document.getElementById("quantity").value = "";
+                document.getElementById("price").value = "";
+            })
+            .catch(() => alert(" Thêm thất bại!"));
+    }
+
+    //  DELETE
+    function deleteItem(orderId, productId) {
+        if (confirm(" Xóa item này?")) {
+            fetch(`${API}/${orderId}/${productId}`, { method: "DELETE" })
+                .then(() => {
+                    alert(" Đã xóa thành công!");
+                    loadData();
+                })
+                .catch(() => alert(" Xóa thất bại!"));
+        }
+    }
+
+    // ADD REVIEW
+    // ADD REVIEW
+    function addReview() {
+        const data = {
+            orderId: parseInt(document.getElementById("r_orderId").value),
+            productId: parseInt(document.getElementById("r_productId").value),
+            rating: parseInt(document.getElementById("rating").value),
+            comment: document.getElementById("comment").value
+        };
+
+        // Kiểm tra dữ liệu trước khi gửi
+        if (!data.orderId || !data.productId || !data.rating) {
+            alert("Vui lòng nhập đầy đủ Order ID, Product ID và Rating!");
+            return;
+        }
+
+        fetch(API + "/review", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+            .then(res => {
+                if (res.ok) {
+                    alert(" Đánh giá thành công!");
+                    loadData();
+
+                    // ================== TỰ ĐỘNG XÓA INPUT ==================
+                    document.getElementById("r_orderId").value = "";
+                    document.getElementById("r_productId").value = "";
+                    document.getElementById("rating").value = "";
+                    document.getElementById("comment").value = "";
+                } else {
+                    alert(" Đánh giá thất bại! Kiểm tra lại thông tin.");
+                }
+            })
+            .catch(() => alert(" Đánh giá thất bại! Kết nối lỗi."));
+    }
+    // APPROVE REVIEW
+    function approveReview() {
+        const orderId = parseInt(document.getElementById("a_orderId").value);
+        const productId = parseInt(document.getElementById("a_productId").value);
+        const approvedSelect = document.getElementById("approved").value;
+
+        if (!orderId || !productId || !approvedSelect) {
+            alert(" Vui lòng nhập đầy đủ thông tin và chọn trạng thái!");
+            return;
+        }
+
+        const data = {
+            orderId: orderId,
+            productId: productId,
+            approved: approvedSelect === "true"
+        };
+
+        fetch(API + "/review/approve", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+            .then(res => {
+                if (res.ok) {
+                    alert(" Duyệt đánh giá thành công!");
+                    loadData();
+                    document.getElementById("a_orderId").value = "";
+                    document.getElementById("a_productId").value = "";
+                    document.getElementById("approved").value = "";
+                } else {
+                    throw new Error("Lỗi server");
+                }
+            })
+            .catch(err => alert(" Duyệt thất bại: " + err.message));
+    }
+
+    window.onload = loadData;
+</script>
+
+</body>
+</html>
