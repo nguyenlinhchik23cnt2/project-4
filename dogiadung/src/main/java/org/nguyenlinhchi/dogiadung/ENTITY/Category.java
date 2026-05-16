@@ -30,7 +30,7 @@ public class Category {
     // ==================== SỬA Ở ĐÂY ====================
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore   // ← THÊM DÒNG NÀY
-    private List<Product> products = new ArrayList<>();
+    private List<TraProduct> products = new ArrayList<>();
 
     // Getter & Setter
     public Integer getCategoryId() { return categoryId; }
@@ -48,6 +48,6 @@ public class Category {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public List<Product> getProducts() { return products; }
-    public void setProducts(List<Product> products) { this.products = products; }
+    public List<TraProduct> getProducts() { return products; }
+    public void setProducts(List<TraProduct> products) { this.products = products; }
 }

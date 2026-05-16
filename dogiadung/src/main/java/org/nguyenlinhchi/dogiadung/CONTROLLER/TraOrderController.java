@@ -1,9 +1,9 @@
 package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
 
-import com.example.product.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.nguyenlinhchi.dogiadung.ENTITY.TraOrder;
+import org.nguyenlinhchi.dogiadung.SERVICE.TraOrderService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class TraOrderController {
 
-    private final OrderService service;
+    private final TraOrderService service;
 
     // GET /api/orders
     @GetMapping
