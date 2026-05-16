@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Quản lý Chi Order Logs</title>
+=======
+    <title>TNC-Shop Quản lý Order Logs</title>
+>>>>>>> main
     <style>
         body { font-family: Arial, sans-serif; background: #f0f9f4; padding: 20px; color: #2c3e50; }
         h1 { text-align: center; color: #1e7a5f; }
@@ -25,7 +29,11 @@
 </head>
 <body>
 <div class="container">
+<<<<<<< HEAD
     <h1>📋 Quản lý Chi Order Logs</h1>
+=======
+    <h1> TNC-Shop Quản lý Order Logs</h1>
+>>>>>>> main
 
     <div class="card">
         <h4>Thêm / Cập nhật Log</h4>
@@ -63,13 +71,21 @@
             <textarea id="note" rows="3"></textarea>
         </div>
         <div style="margin-top:15px;">
+<<<<<<< HEAD
             <button class="btn-save" onclick="createOrUpdateLog()">💾 Lưu Log</button>
+=======
+            <button class="btn-save" onclick="createOrUpdateLog()"> Lưu Log</button>
+>>>>>>> main
             <button class="btn-reset" onclick="resetForm()">Reset</button>
         </div>
     </div>
 
     <div class="card">
+<<<<<<< HEAD
         <button class="btn-load" onclick="loadAllLogs()">🔄 Tải tất cả Logs</button>
+=======
+        <button class="btn-load" onclick="loadAllLogs()"> Tải tất cả Logs</button>
+>>>>>>> main
 
         <table id="logsTable">
             <thead>
@@ -91,11 +107,16 @@
 </div>
 
 <script>
+<<<<<<< HEAD
     const API_URL = "http://localhost:8080/api/order-logs";
+=======
+    const API_URL = "http://localhost:8080/order-logs";
+>>>>>>> main
 
     async function loadAllLogs() {
         try {
             const res = await fetch(API_URL);
+<<<<<<< HEAD
 
             if (!res.ok) {
                 throw new Error('Lỗi server: ' + res.status);
@@ -109,6 +130,15 @@
         } catch (error) {
             console.error(error);
             alert("Không thể tải dữ liệu! Kiểm tra console (F12)");
+=======
+            let data = await res.json();
+
+
+            data.sort((a, b) => a.id - b.id);
+            renderTable(data);
+        } catch (error) {
+            alert("Không thể tải dữ liệu!");
+>>>>>>> main
         }
     }
 
@@ -119,6 +149,7 @@
         data.forEach((log, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
+<<<<<<< HEAD
                 <td><strong>${index + 1}</strong></td>
                 <td>${log.id}</td>
                 <td><strong>${log.orderId}</strong></td>
@@ -132,11 +163,31 @@
                     <button class="btn-delete" onclick="deleteLog(${log.id})">Xóa</button>
                 </td>
             `;
+=======
+                    <td><strong>${index + 1}</strong></td>
+                    <td>${log.id}</td>
+                    <td><strong>${log.orderId}</strong></td>
+                    <td>${log.oldStatus ? `<span style="background:#e2e8f0;padding:5px 10px;border-radius:20px;">${log.oldStatus}</span>` : ''}</td>
+                    <td><span style="background:#34d399;color:white;padding:5px 10px;border-radius:20px;">${log.newStatus}</span></td>
+                    <td>${log.changedBy || ''}</td>
+                    <td>${log.note || '<i>Không có</i>'}</td>
+                    <td>${log.updatedAt ? new Date(log.updatedAt).toLocaleString('vi-VN') : ''}</td>
+                    <td>
+                        <button class="btn-edit" onclick="editLog(${log.id})">Sửa</button>
+                        <button class="btn-delete" onclick="deleteLog(${log.id})">Xóa</button>
+                    </td>
+                `;
+>>>>>>> main
             tbody.appendChild(row);
         });
     }
 
+<<<<<<< HEAD
     async function createOrUpdateLog() {
+=======
+
+    async function createOrUpdateLog() { /* ... */
+>>>>>>> main
         const id = document.getElementById('logId').value;
         const log = {
             orderId: parseInt(document.getElementById('orderId').value) || 0,
@@ -149,6 +200,7 @@
         try {
             let res;
             if (id) {
+<<<<<<< HEAD
                 res = await fetch(`${API_URL}/${id}`, {
                     method: 'PUT',
                     headers: {'Content-Type': 'application/json'},
@@ -162,10 +214,17 @@
                 });
             }
 
+=======
+                res = await fetch(`${API_URL}/${id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(log)});
+            } else {
+                res = await fetch(API_URL, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(log)});
+            }
+>>>>>>> main
             if (res.ok) {
                 alert(id ? "Cập nhật thành công!" : "Thêm mới thành công!");
                 resetForm();
                 loadAllLogs();
+<<<<<<< HEAD
             } else {
                 alert("Lỗi khi lưu dữ liệu!");
             }
@@ -189,16 +248,36 @@
         } catch (e) {
             alert("Không tìm thấy log!");
         }
+=======
+            }
+        } catch(e) { alert("Lỗi!"); }
+    }
+
+    async function editLog(id) {
+        const res = await fetch(`${API_URL}/${id}`);
+        const log = await res.json();
+        document.getElementById('logId').value = log.id;
+        document.getElementById('orderId').value = log.orderId;
+        document.getElementById('oldStatus').value = log.oldStatus || '';
+        document.getElementById('newStatus').value = log.newStatus || '';
+        document.getElementById('changedBy').value = log.changedBy || '';
+        document.getElementById('note').value = log.note || '';
+>>>>>>> main
     }
 
     async function deleteLog(id) {
         if (confirm(`Xóa log ID ${id}?`)) {
+<<<<<<< HEAD
             try {
                 await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
                 loadAllLogs();
             } catch (e) {
                 alert("Lỗi khi xóa!");
             }
+=======
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            loadAllLogs();
+>>>>>>> main
         }
     }
 
@@ -211,7 +290,10 @@
         document.getElementById('note').value = '';
     }
 
+<<<<<<< HEAD
     // Tự động load khi mở trang
+=======
+>>>>>>> main
     window.onload = loadAllLogs;
 </script>
 </body>

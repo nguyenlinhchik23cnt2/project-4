@@ -1,6 +1,10 @@
 package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
+<<<<<<< HEAD
 import org.nguyenlinhchi.dogiadung.SERVICE.StockImportService;
+=======
+import org.nguyenlinhchi.dogiadung.SERVICE.TraStockImportService;
+>>>>>>> main
 
 import lombok.RequiredArgsConstructor;
 import org.nguyenlinhchi.dogiadung.ENTITY.TraStockImport;
@@ -18,7 +22,11 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class TraStockImportController {
 
+<<<<<<< HEAD
     private final StockImportService service;
+=======
+    private final TraStockImportService service;
+>>>>>>> main
 
     // GET /api/stock-imports
     @GetMapping

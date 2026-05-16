@@ -14,5 +14,8 @@ public interface chi_order_logsRepository extends JpaRepository<chi_order_logs, 
     List<chi_order_logs> findAllByOrderByIdAsc();
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 }

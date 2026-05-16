@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/api/order-logs")   // Nên thêm /api để dễ quản lý sau này
 @CrossOrigin(origins = "*")          // Production nên giới hạn origin cụ thể
 @RequiredArgsConstructor
+=======
+@RequestMapping("/order-logs")
+@CrossOrigin(origins = "*")     // ← THÊM DÒNG NÀY
+>>>>>>> main
 public class chi_order_logsController {
 
     @Autowired

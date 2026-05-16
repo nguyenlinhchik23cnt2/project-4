@@ -18,6 +18,7 @@ public class chi_order_logsService {
         return repository.save(log);
     }
 
+<<<<<<< HEAD
 
 
     // READ ALL - Sắp xếp theo ID tăng dần
@@ -27,6 +28,17 @@ public class chi_order_logsService {
 
 
 
+=======
+    // READ ALL
+//    public List<chi_order_logs> getAll() {
+//        return repository.findAll();
+//    }
+
+    // READ ALL - Sắp xếp theo ID tăng dần
+    public List<chi_order_logs> getAll() {
+        return repository.findAllByOrderByIdAsc();
+    }
+>>>>>>> main
     // READ BY ID
     public chi_order_logs getById(Integer id) {
         return repository.findById(id)

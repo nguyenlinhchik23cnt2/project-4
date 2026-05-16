@@ -1,7 +1,5 @@
 package org.nguyenlinhchi.dogiadung.CONFIG;
 
-
-
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +12,7 @@ import java.nio.file.Paths;
 @Configuration
 public class FileStorageConfig {
 
-    @Value("${file.upload-dir}")
+    @Value("${file.upload-dir:uploads/products}")
     private String uploadDir;
 
     @PostConstruct
@@ -23,10 +21,19 @@ public class FileStorageConfig {
             Path path = Paths.get(uploadDir);
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
-                System.out.println("Đã tạo thư mục upload: " + uploadDir);
+                System.out.println("✅ Đã tạo thư mục upload: " + uploadDir);
             }
         } catch (IOException e) {
             throw new RuntimeException("Không thể tạo thư mục upload: " + uploadDir, e);
         }
+    }
+
+    // ================== GETTER ==================
+    public String getUploadDir() {
+        return uploadDir;
+    }
+
+    public void setUploadDir(String uploadDir) {
+        this.uploadDir = uploadDir;
     }
 }

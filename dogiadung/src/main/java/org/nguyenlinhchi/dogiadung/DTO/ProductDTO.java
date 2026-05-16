@@ -19,7 +19,11 @@ public class ProductDTO {
 
     @NotNull(message = "Danh mục không được để trống")
     private Integer categoryId;
+<<<<<<< HEAD
 
+=======
+    private String categoryName;
+>>>>>>> main
     // Thông tin nhà cung cấp
     private String suppName;
     private String suppContact;

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TNC-Shop Quản lý Sản phẩm</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --accent: #5b8dee;
+      --danger: #e05c5c;
+      --text: #e2e4ef;
+      --muted: #7a7f9a;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; }
+    header { background: var(--surface); padding: 16px 32px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+    main { max-width: 1300px; margin: 0 auto; padding: 24px 32px; }
+    .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .toolbar input { flex: 1; min-width: 280px; background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 10px; border-radius: 8px; }
+    .btn { padding: 9px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-ghost { background: var(--border); color: var(--text); }
+
+    table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 8px; overflow: hidden; }
+    th, td { padding: 12px; text-align: left; border-top: 1px solid var(--border); }
+    th { background: #161922; color: var(--muted); }
+    tr:hover { background: rgba(91,141,238,0.08); }
+    img.preview { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); }
+
+    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: var(--surface); padding: 25px; border-radius: 12px; width: 580px; max-height: 90vh; overflow-y: auto; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .full { grid-column: 1 / -1; }
+    label { display: block; margin-bottom: 5px; color: var(--muted); font-size: 13px; }
+    input, select, textarea { width: 100%; padding: 10px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; }
+    .image-upload { text-align: center; border: 2px dashed var(--border); padding: 15px; border-radius: 8px; }
+    .error-msg { color: #e05c5c; font-size: 13px; margin-top: 4px; }
+  </style>
+</head>
+<body>
+<header><span></span><h1>TNC-Shop Quản lý Sản phẩm</h1></header>
+<main>
+  <div class="toolbar">
+    <input id="searchInput" type="text" placeholder=" Tìm kiếm sản phẩm..."/>
+    <button class="btn btn-ghost" onclick="loadProducts()">Tải lại</button>
+    <button class="btn btn-primary" onclick="openCreateModal()"> Thêm sản phẩm mới</button>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Hình ảnh</th>
+      <th>Tên danh mục</th>
+      <th>Tên sản phẩm</th>
+      <th>Giá</th>
+      <th>Tồn kho</th>
+      <th>Trạng thái</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</main>
+
+<!-- Modal -->
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <h2 id="modalTitle">Thêm sản phẩm mới</h2>
+    <input type="hidden" id="productId">
+    <div class="form-grid">
+      <div class="full">
+        <label>Hình ảnh sản phẩm</label>
+        <div class="image-upload">
+          <input type="file" id="imageFile" accept="image/*">
+          <img id="imagePreview" class="preview" style="display:none; margin-top:10px;">
+        </div>
+      </div>
+      <div><label>Tên sản phẩm *</label><input id="name" required></div>
+      <div><label>Đơn vị *</label><input id="unit" required></div>
+      <div><label>Giá (VND) *</label><input id="price" type="number" required></div>
+
+      <div>
+        <label>Danh mục *</label>
+        <select id="categorySelect"></select>
+        <input type="number" id="categoryIdInput" placeholder="Hoặc nhập Category ID" style="margin-top:6px;">
+        <div id="categoryError" class="error-msg"></div>
+      </div>
+
+      <div><label>Tồn kho</label><input id="stockQty" type="number" value="0"></div>
+      <div><label>Tồn kho tối thiểu</label><input id="minStock" type="number" value="10"></div>
+      <div><label>Trạng thái</label>
+        <select id="status">
+          <option value="active">Hoạt động</option>
+          <option value="inactive">Ngừng</option>
+        </select>
+      </div>
+      <div><label>Nổi bật</label>
+        <select id="isFeatured">
+          <option value="false">Không</option>
+          <option value="true">Có</option>
+        </select>
+      </div>
+      <div class="full"><label>Mô tả</label><textarea id="description" rows="3"></textarea></div>
+    </div>
+
+    <div style="margin-top: 20px; text-align: right;">
+      <button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
+      <button class="btn btn-primary" onclick="saveProduct()">Lưu sản phẩm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API_URL = "http://localhost:8080/api/products";
+  const CATEGORY_API = "http://localhost:8080/categories";
+
+  let currentEditId = null;
+  let categories = [];
+
+  async function loadCategories() {
+    try {
+      const res = await fetch(CATEGORY_API);
+      if (res.ok) {
+        categories = await res.json();
+        populateCategorySelect();
+      }
+    } catch (e) {
+      document.getElementById('categoryError').innerHTML = "⚠️ Không tải được danh mục.";
+    }
+  }
+
+  function populateCategorySelect() {
+    const select = document.getElementById('categorySelect');
+    select.innerHTML = '<option value="">-- Chọn danh mục --</option>';
+    categories.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat.categoryId || cat.id;
+      opt.textContent = cat.name || cat.categoryName || 'Không tên';
+      select.appendChild(opt);
+    });
+  }
+
+  async function loadProducts(keyword = '') {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px">Đang tải...</td></tr>`;
+    try {
+      const url = keyword ? `${API_URL}/search?q=${encodeURIComponent(keyword)}` : API_URL;
+      const res = await fetch(url);
+      if (res.ok) {
+        renderTable(await res.json());
+      }
+    } catch (e) {
+      tbody.innerHTML = `<tr><td colspan="7" style="color:#e05c5c;text-align:center">Lỗi tải dữ liệu</td></tr>`;
+    }
+  }
+
+  function renderTable(products) {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = products.map(p => `
+        <tr>
+          <td>${p.imageUrl ? `<img src="${p.imageUrl}" class="preview">` : '—'}</td>
+          <td><strong>${p.categoryName || p.category?.name || 'Chưa phân loại'}</strong></td>
+          <td>${p.name}</td>
+          <td>${Number(p.price).toLocaleString('vi-VN')} ₫</td>
+          <td>${p.stockQty || 0}</td>
+          <td>${p.status}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="editProduct(${p.productId})">Sửa</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.productId})">Xóa</button>
+          </td>
+        </tr>
+      `).join('');
+  }
+
+  function openCreateModal() {
+    currentEditId = null;
+    document.getElementById('modalTitle').textContent = 'Thêm sản phẩm mới';
+    clearForm();
+    document.getElementById('productModal').style.display = 'flex';
+  }
+
+  async function editProduct(id) {
+    currentEditId = id;
+    try {
+      const res = await fetch(`${API_URL}/${id}`);
+      const p = await res.json();
+
+      document.getElementById('modalTitle').textContent = `Sửa sản phẩm #${id}`;
+      document.getElementById('productId').value = p.productId;
+      document.getElementById('name').value = p.name || '';
+      document.getElementById('unit').value = p.unit || '';
+      document.getElementById('price').value = p.price || '';
+      document.getElementById('stockQty').value = p.stockQty || 0;
+      document.getElementById('minStock').value = p.minStock || 10;
+      document.getElementById('status').value = p.status || 'active';
+      document.getElementById('isFeatured').value = p.isFeatured ? 'true' : 'false';
+      document.getElementById('description').value = p.description || '';
+
+      const catId = p.categoryId || p.category?.categoryId || p.category?.id || '';
+      document.getElementById('categorySelect').value = catId;
+      document.getElementById('categoryIdInput').value = catId;
+
+      document.getElementById('productModal').style.display = 'flex';
+    } catch (e) {
+      alert("Không tìm thấy sản phẩm!");
+    }
+  }
+
+  async function saveProduct() {
+    const categoryId = document.getElementById('categorySelect').value || document.getElementById('categoryIdInput').value;
+    if (!categoryId) return alert("Vui lòng chọn danh mục!");
+
+    const formData = new FormData();
+    formData.append('name', document.getElementById('name').value.trim());
+    formData.append('unit', document.getElementById('unit').value.trim());
+    formData.append('price', document.getElementById('price').value);
+    formData.append('categoryId', categoryId);
+    formData.append('stockQty', document.getElementById('stockQty').value || 0);
+    formData.append('minStock', document.getElementById('minStock').value || 10);
+    formData.append('status', document.getElementById('status').value);
+    formData.append('isFeatured', document.getElementById('isFeatured').value);
+    formData.append('description', document.getElementById('description').value.trim());
+
+    const imageFile = document.getElementById('imageFile').files[0];
+    if (imageFile) formData.append('imageFile', imageFile);
+
+    try {
+      const url = currentEditId ? `${API_URL}/${currentEditId}` : API_URL;
+      const method = currentEditId ? 'PUT' : 'POST';
+      const res = await fetch(url, { method: method, body: formData });
+
+      if (res.ok) {
+        alert(currentEditId ? " Cập nhật thành công!" : " Thêm sản phẩm thành công!");
+        closeModal();
+        await loadProducts();
+      } else {
+        alert("Lỗi khi lưu! Status: " + res.status);
+      }
+    } catch (e) {
+      alert("Lỗi kết nối. Vui lòng kiểm tra backend.");
+    }
+  }
+
+  function clearForm() {
+    document.getElementById('name').value = '';
+    document.getElementById('unit').value = '';
+    document.getElementById('price').value = '';
+    document.getElementById('stockQty').value = '0';
+    document.getElementById('minStock').value = '10';
+    document.getElementById('status').value = 'active';
+    document.getElementById('isFeatured').value = 'false';
+    document.getElementById('description').value = '';
+    document.getElementById('imageFile').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('categorySelect').value = '';
+    document.getElementById('categoryIdInput').value = '';
+  }
+
+  function closeModal() {
+    document.getElementById('productModal').style.display = 'none';
+  }
+
+  async function deleteProduct(id) {
+    if (!confirm(`Xóa sản phẩm #${id}?`)) return;
+    try {
+      await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      loadProducts();
+    } catch (e) {
+      alert("Lỗi khi xóa!");
+    }
+  }
+
+  document.getElementById('imageFile').addEventListener('change', function(e) {
+    const preview = document.getElementById('imagePreview');
+    if (e.target.files && e.target.files[0]) {
+      preview.src = URL.createObjectURL(e.target.files[0]);
+      preview.style.display = 'block';
+    }
+  });
+
+  document.getElementById('searchInput').addEventListener('input', function() {
+    clearTimeout(this.debounce);
+    this.debounce = setTimeout(() => loadProducts(this.value.trim()), 500);
+  });
+
+  window.onload = () => {
+    loadCategories();
+    loadProducts();
+  };
+</script>
+</body>
+</html>
