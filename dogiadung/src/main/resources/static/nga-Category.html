@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNC Shop-Quản Lý Danh Mục</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', system-ui, sans-serif; }
+        .card { transition: all 0.3s ease; }
+        .card:hover { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        input:focus, select:focus, textarea:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-7xl mx-auto p-6">
+    <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg"></div>
+            <h1 class="text-3xl font-bold text-gray-800"> TNC Shop-Quản Lý Danh Mục</h1>
+        </div>
+        <div class="flex gap-3">
+<!--            <button onclick="checkBackend()" class="px-5 py-2.5 bg-white border rounded-2xl hover:bg-gray-50 flex items-center gap-2">-->
+<!--                <i class="fas fa-plug"></i> Kiểm tra Backend-->
+<!--            </button>-->
+            <button onclick="loadAllCategories()" class="px-5 py-2.5 bg-emerald-600 text-white rounded-2xl hover:bg-emerald-700 flex items-center gap-2">
+                <i class="fas fa-sync"></i> Tải lại dữ liệu
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Form -->
+        <div class="lg:col-span-5">
+            <div class="card bg-white rounded-3xl shadow-xl p-8 sticky top-6">
+                <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-gray-800">
+                    <i class="fas fa-folder-plus text-emerald-600"></i>
+                    Thêm / Cập nhật Danh Mục
+                </h2>
+
+                <input type="hidden" id="categoryId">
+
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Tên danh mục <span class="text-red-500">*</span></label>
+                        <input type="text" id="name" class="w-full px-4 py-3 border border-gray-200 rounded-2xl">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Danh mục cha</label>
+                        <select id="parentId" class="w-full px-4 py-3 border border-gray-200 rounded-2xl"></select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Thứ tự</label>
+                            <input type="number" id="sortOrder" value="0" class="w-full px-4 py-3 border border-gray-200 rounded-2xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Trạng thái</label>
+                            <select id="status" class="w-full px-4 py-3 border border-gray-200 rounded-2xl">
+                                <option value="active">Hoạt động</option>
+                                <option value="inactive">Không hoạt động</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Hình ảnh (URL)</label>
+                        <input type="text" id="imageUrl" class="w-full px-4 py-3 border border-gray-200 rounded-2xl">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Mô tả</label>
+                        <textarea id="description" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-3xl"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 mt-8">
+                    <button onclick="createOrUpdateCategory()"
+                            class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-semibold flex items-center justify-center gap-2">
+                        <i ></i> Lưu Danh Mục
+                    </button>
+                    <button onclick="resetForm()"
+                            class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 rounded-2xl font-semibold flex items-center justify-center gap-2">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="lg:col-span-7">
+            <div class="card bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div class="px-8 py-5 bg-gray-50 border-b flex justify-between items-center">
+                    <h2 class="font-semibold text-lg">Danh sách danh mục</h2>
+                    <span id="totalCount" class="text-sm text-gray-500">0 danh mục</span>
+                </div>
+                <div class="overflow-x-auto min-h-[400px]">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+                        <tr>
+                            <th class="px-6 py-4 text-left">Tên danh mục</th>
+                            <th class="px-6 py-4 text-left">Danh mục cha</th>
+                            <th class="px-6 py-4 text-center">Thứ tự</th>
+                            <th class="px-6 py-4 text-center">Trạng thái</th>
+                            <th class="px-6 py-4 text-center">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody id="categoriesTable" class="divide-y"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8080/categories";
+
+
+    async function loadAllCategories() {
+        const tbody = document.getElementById('categoriesTable');
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-gray-400"><i class="fas fa-spinner fa-spin text-2xl"></i><br>Đang tải dữ liệu...</td></tr>`;
+
+        try {
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error('Lỗi server');
+
+            const data = await res.json();
+            console.log("Dữ liệu nhận được:", data); // Debug
+            renderTable(data);
+            loadParentOptions(data);
+        } catch (error) {
+            console.error(error);
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-red-500"> Không tải được dữ liệu</td></tr>`;
+        }
+    }
+
+    function renderTable(data) {
+        const tbody = document.getElementById('categoriesTable');
+        tbody.innerHTML = '';
+        document.getElementById('totalCount').textContent = `${data.length} danh mục`;
+
+        if (data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-gray-400">Chưa có danh mục nào. Hãy thêm danh mục đầu tiên!</td></tr>`;
+            return;
+        }
+
+        data.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+        data.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-emerald-50 transition-colors";
+            tr.innerHTML = `
+                    <td class="px-6 py-4 font-medium">${c.name}</td>
+                    <td class="px-6 py-4 text-gray-500">${c.parent ? c.parent.name : '<span class="text-emerald-600">Root</span>'}</td>
+                    <td class="px-6 py-4 text-center">${c.sortOrder || 0}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${c.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                            ${c.status === 'active' ? 'Hoạt động' : 'Không hoạt động'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center space-x-3">
+                        <button onclick="editCategory(${c.categoryId})" class="text-amber-600 hover:text-amber-700"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteCategory(${c.categoryId})" class="text-red-600 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function loadParentOptions(data) {
+        const select = document.getElementById('parentId');
+        select.innerHTML = '<option value="">-- Danh mục gốc (Root) --</option>';
+        data.forEach(cat => {
+            const opt = document.createElement('option');
+            opt.value = cat.categoryId;
+            opt.textContent = cat.name;
+            select.appendChild(opt);
+        });
+    }
+
+    async function createOrUpdateCategory() {
+        const id = document.getElementById('categoryId').value;
+        const category = {
+            name: document.getElementById('name').value.trim(),
+            description: document.getElementById('description').value.trim(),
+            imageUrl: document.getElementById('imageUrl').value.trim(),
+            sortOrder: parseInt(document.getElementById('sortOrder').value) || 0,
+            status: document.getElementById('status').value,
+            parent: document.getElementById('parentId').value ? { categoryId: parseInt(document.getElementById('parentId').value) } : null
+        };
+
+        if (!category.name) return alert("Vui lòng nhập tên danh mục!");
+
+        try {
+            const url = id ? `${API_URL}/${id}` : API_URL;
+            const res = await fetch(url, {
+                method: id ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(category)
+            });
+
+            if (res.ok) {
+                alert(id ? " Cập nhật thành công!" : " Thêm danh mục thành công!");
+                resetForm();
+                loadAllCategories();
+            } else {
+                alert(" Lỗi khi lưu!");
+            }
+        } catch (e) {
+            alert(" Lỗi kết nối!");
+        }
+    }
+
+    async function editCategory(id) {
+        try {
+            const res = await fetch(`${API_URL}/${id}`);
+            const c = await res.json();
+            document.getElementById('categoryId').value = c.categoryId;
+            document.getElementById('name').value = c.name || '';
+            document.getElementById('description').value = c.description || '';
+            document.getElementById('imageUrl').value = c.imageUrl || '';
+            document.getElementById('sortOrder').value = c.sortOrder || 0;
+            document.getElementById('status').value = c.status || 'active';
+            document.getElementById('parentId').value = c.parent ? c.parent.categoryId : '';
+        } catch (e) {
+            alert("Không tìm thấy danh mục!");
+        }
+    }
+
+    async function deleteCategory(id) {
+        if (!confirm("Xóa danh mục này?")) return;
+        try {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            alert(" Xóa thành công!");
+            loadAllCategories();
+        } catch (e) {
+            alert("Lỗi khi xóa!");
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('categoryId').value = '';
+        document.getElementById('name').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('imageUrl').value = '';
+        document.getElementById('sortOrder').value = '0';
+        document.getElementById('status').value = 'active';
+        document.getElementById('parentId').value = '';
+    }
+
+    window.onload = checkBackend;
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f54281fc-5fa7-4bcf-90d0-001d9b790289" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/dogiadung/src/main/resources/static/chi_order-logs.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dogiadung/src/main/java/org/nguyenlinhchi/dogiadung/CONTROLLER/chi_order_logsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/dogiadung/src/main/java/org/nguyenlinhchi/dogiadung/CONTROLLER/chi_order_logsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dogiadung/src/main/java/org/nguyenlinhchi/dogiadung/REPOSITORY/chi_order_logsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/dogiadung/src/main/java/org/nguyenlinhchi/dogiadung/REPOSITORY/chi_order_logsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dogiadung/src/main/java/org/nguyenlinhchi/dogiadung/SERVICE/chi_order_logsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dogiadung/src/main/java/org/nguyenlinhchi/dogiadung/SERVICE/chi_order_logsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1c2f308c-5238-4240-bb8f-d70c94f1516b.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/23d8b921-2366-4514-b0b1-b978b0b3ba3b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/25915200-1d50-4192-8d08-ac8fae77adc1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/28001b43-702b-4f71-99db-ae253ac87a56.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/3022de71-21b7-46dc-bd09-2ec872197dbc.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/34fd3d48-8007-4523-83bf-cf1196c420f9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/396f24aa-c081-4f75-88d0-4732b7d00cd2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/3ea36063-da7b-4424-a9ad-1b284b349335.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/47aca4f2-454b-4218-8192-531189a62c67.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/543391f2-3035-4d3a-8439-8a03ba14871d.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/5610e389-4018-4e47-8d99-f61270791a44.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/57e5b28f-4b15-4170-9078-e18342d8db64.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/5a1baf93-919a-4c1e-8599-c3ebc0367b0f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/6c49a9ac-fb59-4999-8fef-2f1a3d8497b4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/6d533626-d166-483b-a1a9-a53dcc5b03a9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/70292388-6649-415a-b4b1-2d9f32729a23.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/75530f1a-5442-4f1e-9710-e40dce0c17c5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/7bfeb952-7869-4660-ae97-00192a538644.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/7d50a943-88d6-4731-8ee2-acbffa2579ca.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/90d48daf-6253-436f-9df8-4ea533553b40.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/91b673ea-4584-4d34-b1bd-04382bad09d5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/97a8cc9a-c4a0-4f93-872e-03ab83459ae5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/9eb0bfe1-2c9e-4d6f-9cdd-1c52db655dc4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bàn chải vệ sinh bồn cầu.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Bàn chải vệ sinh bồn cầu.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bát sứ trắng 18cmg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bình Gốm Trang Trí Decor Đa Năng Màu Trắng Tinh Tế, Chất Lượng Cao, Thích Hợp Cho Phòng Khách &amp; Phòng Ngủ.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bình tưới cây 5L.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Bình tưới cây 5L.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bình tưới cây áp suất 5 lít Gardena 11130-20.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bình tưới hoa sen 5 lít.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bình xịt nước tưới cây bằng điện tiện dụng 2L.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bếp ga mini du lịch.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Bếp ga mini du lịch.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bộ 2 Cốc Súc Miệng Đánh Răng Gọn Gàng Ecoco Chính Hãng.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bộ Dụng Cụ Làm Vườn 9 Món Chuyên Nghiệp, Bền, Đẹp.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bộ dao nhà bếp 5 món.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Bộ dao nhà bếp 5 món.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bộ dụng cụ làm vườn 10 món bằng thép không gỉ S126.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bộ dụng cụ làm vườn mini 4 món cán dài.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Bộ dụng cụ nấu ăn nhà bếp, làm bánh 7 món bằng silicone chịu nhiệt cao, chống dính Mitomo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Chảo chống dính 28cm.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Chảo chống dính 28cm.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Chổi lau nhà cotton.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Chổi lau nhà cotton.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Dao làm bếp Thái 6 inch.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Dao làm bếp Thái 6 inch.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Ghế nhựa đa năng.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Ghế nhựa đa năng.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Gối bông cotton 50x70cm.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Gối bông cotton 50x70cm.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Hộp nhựa đựng thực phẩm 1.5L.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Hộp nhựa đựng thực phẩm 1.5L.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Khăn tắm cotton 70x140cm.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Khăn tắm cotton 70x140cm.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Kệ sách 5 tầng 80x180cm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Kệ đựng đồ dùng gắn tường không cần khoan tiện dụng cho phòng khách.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Muỗng gạo inox 30cm.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Máy xay sinh tố 500W.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Máy xay sinh tố 500W.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Móc treo quần áo 6 móc.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Móc treo quần áo 6 móc.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Nước lau sàn hương chanh 2L.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Nước lau sàn hương chanh 2L.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Nước rửa bát 750ml.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Nước rửa bát 750ml.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Nồi chiên không dầu Toshiba 7.4 lít.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Nồi inox 3 lít.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Nồi inox 3 lít.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Quạt trần 5 cánh 60W.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Quạt trần 5 cánh 60W.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Quạt đứng 3 cánh 40W.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Quạt đứng 3 cánh 40W.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Thảm trải sàn 160x230cm.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Thảm trải sàn 160x230cm.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Thớt gỗ cao su 40x30cm.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Thớt gỗ cao su 40x30cm.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Xẻng trồng cây inox.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Xẻng trồng cây inox.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/a3d4a796-8d48-4394-8867-89c816d39e98.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/a96487f1-68d3-4738-9762-40d294528e4f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/ad59be59-4eaf-4220-ac5e-cae4a2889ab8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/b31816e7-e971-4e7b-a636-2b26263f2b46.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/banner1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/banner2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/banner3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/banner4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/banner5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/bb020332-a10f-43ff-a153-9fab11015da4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/bbc51c27-b723-4152-ac74-806a3158df06.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/bcb05fc9-7dd2-4229-abb0-2cc5cededa4c.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/beaa8abb-157b-4a0e-8824-9b274a7637fd.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/bình gốm trang trí phòng ngủ.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/c3a2d9d1-7056-4ead-bb43-9cca88199e0e.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/c58c7b31-1936-4233-9ab7-997352dca704.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/cff76199-a819-4c58-9a33-6f9797740ab0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/cffe8599-7d09-437c-b2b0-c8d6e513ff4c.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/d580ceec-4862-4cae-abc7-616657118aa5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/db417003-68ad-4ec1-b441-79865cdfef20.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/db988f43-6b82-4bf7-92a9-bdcc8bed5301.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/e6d66330-9e7a-4d8d-bb47-4ac41dc833d6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/e74d0b40-bad2-44d7-b59d-92ac40f3e6a5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/ed67dad6-eb73-4019-a6bc-c936f0dc10d0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/f0f52c59-b263-4822-a78a-84c9c3ccdc30.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/f4fc4324-3987-4ea1-8a8d-d3beed041cc5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/f5188ee8-c0b7-4ff6-ab6a-c40a00ed00ad.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/f929e239-a95a-464e-8083-0bc77e5fb6c2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/kệ vuông trang trí phòng khách,ngủ.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Đèn bàn học LED 10W.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Đèn bàn học LED 10W.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Đèn ngủ LED cảm ứng.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Đèn ngủ LED cảm ứng.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/Ấm đun nước 1.7L 2200W.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploads/products/Ấm đun nước 1.7L 2200W.jpg" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3DoSv83dwDuhMAkJJWMYCldve7k" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/project4"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f54281fc-5fa7-4bcf-90d0-001d9b790289" name="Changes" comment="" />
+      <created>1778947157971</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778947157971</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
