@@ -11,7 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/order-logs")
+<<<<<<< HEAD
 @CrossOrigin(origins = "*")     // ← THÊM DÒNG NÀY
+=======
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 public class chi_order_logsController {
 
     @Autowired

@@ -8,10 +8,15 @@ import org.nguyenlinhchi.dogiadung.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+=======
+import java.time.LocalDateTime;
+import java.util.List;
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +25,7 @@ public class TraOrderService {
 
     private final TraOrderRepository repo;
 
+<<<<<<< HEAD
     private static final Set<String> ALLOWED_STATUSES = Set.of("pending", "confirmed", "shipped", "done", "cancelled");
     private static final Set<String> ALLOWED_PAY_STATUSES = Set.of("pending", "paid", "failed", "refunded");
     private static final Set<String> ALLOWED_PAY_METHODS = Set.of("COD", "Banking", "Momo", "VNPay");
@@ -80,6 +86,8 @@ public class TraOrderService {
         order.setDiscountAmount(discount);
     }
 
+=======
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
     // ───── READ ─────────────────────────────────────────────────
 
     public List<TraOrder> findAll() {
@@ -88,7 +96,12 @@ public class TraOrderService {
 
     public TraOrder findById(Integer id) {
         return repo.findById(id)
+<<<<<<< HEAD
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng với id=" + id));
+=======
+                   .orElseThrow(() -> new ResourceNotFoundException(
+                       "Không tìm thấy đơn hàng với id=" + id));
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
     }
 
     public List<TraOrder> findByCustomer(Integer customerId) {
@@ -127,6 +140,7 @@ public class TraOrderService {
 
     @Transactional
     public TraOrder create(TraOrder order) {
+<<<<<<< HEAD
         log.info("Tạo đơn hàng mới cho customer_id={}", order.getCustomerId());
 
         order.setOrderId(null);
@@ -141,6 +155,10 @@ public class TraOrderService {
             order.setPayAmount(total.subtract(discount).add(shipping));
         }
 
+=======
+        log.info("Tạo đơn hàng mới, customer_id={}", order.getCustomerId());
+        order.setOrderId(null);
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
         return repo.save(order);
     }
 
@@ -151,6 +169,7 @@ public class TraOrderService {
         log.info("Cập nhật đơn hàng id={}", id);
         TraOrder existing = findById(id);
 
+<<<<<<< HEAD
         // Cập nhật các trường được gửi lên
         if (incoming.getCustomerId() != null) existing.setCustomerId(incoming.getCustomerId());
         if (incoming.getUserId() != null) existing.setUserId(incoming.getUserId());
@@ -173,6 +192,26 @@ public class TraOrderService {
 
         validateOrder(existing);
         calculateDiscountAndTotal(existing);
+=======
+        if (incoming.getCustomerId()     != null) existing.setCustomerId(incoming.getCustomerId());
+        if (incoming.getUserId()         != null) existing.setUserId(incoming.getUserId());
+        if (incoming.getOrderDate()      != null) existing.setOrderDate(incoming.getOrderDate());
+        if (incoming.getStatus()         != null) existing.setStatus(incoming.getStatus());
+        if (incoming.getShippingAddress()!= null) existing.setShippingAddress(incoming.getShippingAddress());
+        if (incoming.getShippingFee()    != null) existing.setShippingFee(incoming.getShippingFee());
+        if (incoming.getNote()           != null) existing.setNote(incoming.getNote());
+        if (incoming.getTotalAmount()    != null) existing.setTotalAmount(incoming.getTotalAmount());
+        if (incoming.getDiscCode()       != null) existing.setDiscCode(incoming.getDiscCode());
+        if (incoming.getDiscType()       != null) existing.setDiscType(incoming.getDiscType());
+        if (incoming.getDiscValue()      != null) existing.setDiscValue(incoming.getDiscValue());
+        if (incoming.getDiscMinOrder()   != null) existing.setDiscMinOrder(incoming.getDiscMinOrder());
+        if (incoming.getDiscountAmount() != null) existing.setDiscountAmount(incoming.getDiscountAmount());
+        if (incoming.getPayMethod()      != null) existing.setPayMethod(incoming.getPayMethod());
+        if (incoming.getPayStatus()      != null) existing.setPayStatus(incoming.getPayStatus());
+        if (incoming.getPayAmount()      != null) existing.setPayAmount(incoming.getPayAmount());
+        if (incoming.getPayTxnId()       != null) existing.setPayTxnId(incoming.getPayTxnId());
+        if (incoming.getPayAt()          != null) existing.setPayAt(incoming.getPayAt());
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 
         return repo.save(existing);
     }
@@ -182,15 +221,24 @@ public class TraOrderService {
     @Transactional
     public void delete(Integer id) {
         log.info("Xóa đơn hàng id={}", id);
+<<<<<<< HEAD
         findById(id); // check tồn tại
         repo.deleteById(id);
     }
 
     // ───── BUSINESS METHODS ─────────────────────────────────────
+=======
+        findById(id);
+        repo.deleteById(id);
+    }
+
+    // ───── CHANGE STATUS ────────────────────────────────────────
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 
     @Transactional
     public TraOrder changeStatus(Integer id, String newStatus) {
         log.info("Đổi trạng thái đơn hàng id={} → {}", id, newStatus);
+<<<<<<< HEAD
 
         if (!ALLOWED_STATUSES.contains(newStatus)) {
             throw new IllegalArgumentException("Status không hợp lệ: " + newStatus);
@@ -224,3 +272,30 @@ public class TraOrderService {
         return repo.save(order);
     }
 }
+=======
+        List<String> allowed = List.of("pending", "confirmed", "shipped", "done", "cancelled");
+        if (!allowed.contains(newStatus)) {
+            throw new IllegalArgumentException(
+                "Status không hợp lệ: " + newStatus + ". Cho phép: " + allowed);
+        }
+        TraOrder existing = findById(id);
+        existing.setStatus(newStatus);
+        return repo.save(existing);
+    }
+
+    // ───── MARK PAID ────────────────────────────────────────────
+
+    @Transactional
+    public TraOrder markPaid(Integer id, String txnId) {
+        log.info("Xác nhận thanh toán đơn hàng id={}", id);
+        TraOrder existing = findById(id);
+        if ("paid".equals(existing.getPayStatus())) {
+            throw new IllegalArgumentException("Đơn hàng id=" + id + " đã được thanh toán trước đó");
+        }
+        existing.setPayStatus("paid");
+        existing.setPayTxnId(txnId);
+        existing.setPayAt(LocalDateTime.now());
+        return repo.save(existing);
+    }
+}
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0

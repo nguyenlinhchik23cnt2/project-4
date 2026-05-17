@@ -19,6 +19,7 @@ public class chi_order_logsService {
     }
 
     // READ ALL
+<<<<<<< HEAD
 //    public List<chi_order_logs> getAll() {
 //        return repository.findAll();
 //    }
@@ -27,6 +28,12 @@ public class chi_order_logsService {
     public List<chi_order_logs> getAll() {
         return repository.findAllByOrderByIdAsc();
     }
+=======
+    public List<chi_order_logs> getAll() {
+        return repository.findAll();
+    }
+
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
     // READ BY ID
     public chi_order_logs getById(Integer id) {
         return repository.findById(id)
@@ -57,5 +64,8 @@ public class chi_order_logsService {
         }
         repository.deleteById(id);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 }

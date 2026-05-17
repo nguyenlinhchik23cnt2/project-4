@@ -230,7 +230,11 @@
         }
     }
 
+<<<<<<< HEAD
 
+=======
+    // ADD REVIEW
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
     // ADD REVIEW
     function addReview() {
         const data = {
@@ -240,7 +244,11 @@
             comment: document.getElementById("comment").value
         };
 
+<<<<<<< HEAD
 
+=======
+        // Kiểm tra dữ liệu trước khi gửi
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
         if (!data.orderId || !data.productId || !data.rating) {
             alert("Vui lòng nhập đầy đủ Order ID, Product ID và Rating!");
             return;
@@ -256,6 +264,10 @@
                     alert(" Đánh giá thành công!");
                     loadData();
 
+<<<<<<< HEAD
+=======
+                    // ================== TỰ ĐỘNG XÓA INPUT ==================
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
                     document.getElementById("r_orderId").value = "";
                     document.getElementById("r_productId").value = "";
                     document.getElementById("rating").value = "";

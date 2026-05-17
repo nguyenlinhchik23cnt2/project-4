@@ -1,13 +1,21 @@
 package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
+<<<<<<< HEAD
 import org.nguyenlinhchi.dogiadung.SERVICE.TraStockImportService;
 
+=======
+import com.example.product.service.StockImportService;
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 import lombok.RequiredArgsConstructor;
 import org.nguyenlinhchi.dogiadung.ENTITY.TraStockImport;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+<<<<<<< HEAD
+=======
+
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +26,11 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class TraStockImportController {
 
+<<<<<<< HEAD
     private final TraStockImportService service;
+=======
+    private final StockImportService service;
+>>>>>>> ecc3aead0d9dbe4ca659da22d1b158672f4734f0
 
     // GET /api/stock-imports
     @GetMapping
