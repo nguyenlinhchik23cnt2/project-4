@@ -158,13 +158,12 @@
 <body>
 
 <header>
-  <span>📦</span>
   <h1>Quản lý Sản phẩm</h1>
 </header>
 
 <main>
   <div class="toolbar">
-    <input id="searchInput" type="text" placeholder="🔍  Tìm theo tên sản phẩm…" />
+    <input id="searchInput" type="text" placeholder="Tìm theo tên sản phẩm…" />
     <button class="btn btn-ghost"    onclick="loadProducts()">Tải lại</button>
     <button class="btn btn-primary"  onclick="openCreate()">+ Thêm mới</button>
   </div>
@@ -173,8 +172,13 @@
     <table>
       <thead>
       <tr>
-        <th>ID</th><th>Tên sản phẩm</th><th>Đơn vị</th>
-        <th>Giá</th><th>Tồn kho</th><th>Trạng thái</th><th>Thao tác</th>
+        <th>ID</th>
+        <th>Tên sản phẩm</th>
+        <th>Đơn vị</th>
+        <th>Giá</th>
+        <th>Tồn kho</th>
+        <th>Trạng thái</th>
+        <th>Thao tác</th>
       </tr>
       </thead>
       <tbody id="tableBody">
@@ -190,7 +194,6 @@
     <h2 id="modalTitle">Thêm sản phẩm</h2>
     <div class="form-grid">
       <input type="hidden"  id="fId" />
-
       <div>
         <label>Tên sản phẩm *</label>
         <input id="fName" placeholder="Tên…" />

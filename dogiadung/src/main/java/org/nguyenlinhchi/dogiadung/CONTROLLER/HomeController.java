@@ -25,9 +25,9 @@ public class HomeController {
     }
 
     // ================= PRODUCT PAGE =================
-    @GetMapping("/admin/products")
+    @GetMapping("/admin/TraProducts")
     public String products() {
-        return "redirect:/products.html";
+        return "redirect:/TraProduct.html";
     }
 
     // ================= LOGIN =================

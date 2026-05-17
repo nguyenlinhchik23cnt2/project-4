@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Khách Hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        table thead {
+            background: linear-gradient(to right, #10b981, #14b8a6);
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="max-w-7xl mx-auto p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">
+            </div>
+            <h1 class="text-3xl font-bold text-gray-800">TNC Shop Quản Lý Khách Hàng</h1>
+        </div>
+        <button onclick="loadAllCustomers()"
+                class="btn flex items-center gap-2 bg-white text-emerald-600 px-5 py-2.5 rounded-2xl border border-emerald-200 hover:border-emerald-300 font-medium">
+            <i class="fas fa-sync"></i>
+            <span>Tải lại dữ liệu</span>
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Form Card -->
+        <div class="lg:col-span-5">
+            <div class="card bg-white rounded-3xl shadow-xl p-8 sticky top-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                    <i class="fas fa-user-plus text-emerald-600"></i>
+                    Thêm / Cập nhật Khách Hàng
+                </h2>
+
+                <input type="hidden" id="customerId">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Username <span class="text-red-500">*</span></label>
+                        <input type="text" id="username" readonly
+                               class="w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-2xl focus:bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Họ và Tên <span class="text-red-500">*</span></label>
+                        <input type="text" id="fullName"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Số Điện Thoại</label>
+                        <input type="text" id="phone"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                        <input type="email" id="email"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Giới Tính</label>
+                        <select id="gender"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:border-emerald-500">
+                            <option value="">-- Chọn giới tính --</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Ngày Sinh</label>
+                        <input type="date" id="dob"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:border-emerald-500">
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Địa chỉ</label>
+                    <textarea id="address" rows="3"
+                              class="w-full px-4 py-3 border border-gray-200 rounded-3xl focus:border-emerald-500 resize-none"></textarea>
+                </div>
+
+                <div class="mt-5">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Lý do sửa (nếu có)</label>
+                    <textarea id="adminNote" rows="2" placeholder="Ghi chú cho admin..."
+                              class="w-full px-4 py-3 border border-gray-200 rounded-3xl focus:border-emerald-500 resize-none"></textarea>
+                </div>
+
+                <div class="flex gap-3 mt-8">
+                    <button onclick="createOrUpdateCustomer()"
+                            class="btn flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-semibold flex items-center justify-center gap-2">
+                        <i class="fas fa-save"></i>
+                        Lưu Thông Tin
+                    </button>
+                    <button onclick="resetForm()"
+                            class="btn flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-4 rounded-2xl font-semibold flex items-center justify-center gap-2">
+                        <i class="fas fa-undo"></i>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="lg:col-span-7">
+            <div class="card bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div class="px-8 py-5 border-b flex items-center justify-between bg-gray-50">
+                    <h2 class="font-semibold text-lg text-gray-800">Danh sách khách hàng</h2>
+                    <span id="totalCount" class="text-sm text-gray-500">0 khách hàng</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                        <tr class="text-white text-left">
+                            <th class="px-6 py-4 font-medium w-12">STT</th>
+                            <th class="px-6 py-4 font-medium">Username</th>
+                            <th class="px-6 py-4 font-medium">Họ và Tên</th>
+                            <th class="px-6 py-4 font-medium">SĐT</th>
+                            <th class="px-6 py-4 font-medium">Email</th>
+                            <th class="px-6 py-4 font-medium">Giới tính</th>
+                            <th class="px-6 py-4 font-medium">Ngày sinh</th>
+                            <th class="px-6 py-4 font-medium text-center">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody id="customersTable" class="divide-y text-gray-700"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8080/customers";
+
+    async function loadAllCustomers() {
+        try {
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error('Lỗi server');
+            const data = await res.json();
+            data.sort((a, b) => b.customerId - a.customerId);
+            renderTable(data);
+        } catch (error) {
+            console.error(error);
+            alert("Không thể tải dữ liệu!");
+        }
+    }
+
+    function renderTable(data) {
+        const tbody = document.getElementById('customersTable');
+        tbody.innerHTML = '';
+        document.getElementById('totalCount').textContent = `${data.length} khách hàng`;
+
+        data.forEach((c, i) => {
+            const row = document.createElement('tr');
+            row.className = "hover:bg-emerald-50 transition-colors";
+            row.innerHTML = `
+                    <td class="px-6 py-4 text-center font-medium text-gray-500">${i + 1}</td>
+                    <td class="px-6 py-4 font-medium">${c.username || '—'}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-800">${c.fullName}</td>
+                    <td class="px-6 py-4">${c.phone || ''}</td>
+                    <td class="px-6 py-4">${c.email || ''}</td>
+                    <td class="px-6 py-4">${c.gender || ''}</td>
+                    <td class="px-6 py-4">${c.dob ? new Date(c.dob).toLocaleDateString('vi-VN') : ''}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="editCustomer(${c.customerId})"
+                                class="btn bg-amber-100 hover:bg-amber-200 text-amber-700 px-5 py-2 rounded-2xl text-sm font-medium">
+                            <i class="fas fa-edit"></i> Sửa
+                        </button>
+                    </td>
+                `;
+            tbody.appendChild(row);
+        });
+    }
+
+    async function createOrUpdateCustomer() {
+        const id = document.getElementById('customerId').value;
+        const customer = {
+            username: document.getElementById('username').value.trim(),
+            fullName: document.getElementById('fullName').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            address: document.getElementById('address').value.trim(),
+            dob: document.getElementById('dob').value || null,
+            gender: document.getElementById('gender').value
+        };
+
+        try {
+            const url = id ? `${API_URL}/${id}` : API_URL;
+            const method = id ? 'PUT' : 'POST';
+
+            const res = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(customer)
+            });
+
+            if (res.ok) {
+                alert(id ? " Cập nhật thành công!" : " Thêm khách hàng thành công!");
+                resetForm();
+                loadAllCustomers();
+            } else {
+                alert(" Lỗi khi lưu dữ liệu!");
+            }
+        } catch (e) {
+            console.error(e);
+            alert(" Lỗi kết nối!");
+        }
+    }
+
+    async function editCustomer(id) {
+        try {
+            const res = await fetch(`${API_URL}/${id}`);
+            const c = await res.json();
+
+            document.getElementById('customerId').value = c.customerId;
+            document.getElementById('username').value = c.username || '';
+            document.getElementById('fullName').value = c.fullName || '';
+            document.getElementById('phone').value = c.phone || '';
+            document.getElementById('email').value = c.email || '';
+            document.getElementById('address').value = c.address || '';
+            document.getElementById('gender').value = c.gender || '';
+
+            if (c.dob) {
+                document.getElementById('dob').value = c.dob.split('T')[0];
+            }
+        } catch (e) {
+            alert("Không tìm thấy khách hàng!");
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('customerId').value = '';
+        document.getElementById('username').value = '';
+        document.getElementById('fullName').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('address').value = '';
+        document.getElementById('dob').value = '';
+        document.getElementById('gender').value = '';
+        document.getElementById('adminNote').value = '';
+    }
+
+    // Tự động tải dữ liệu khi mở trang
+    window.onload = loadAllCustomers;
+</script>
+</body>
+</html>

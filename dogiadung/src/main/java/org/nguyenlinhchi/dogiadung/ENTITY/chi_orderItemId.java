@@ -1,21 +1,19 @@
 package org.nguyenlinhchi.dogiadung.ENTITY;
-
 import java.io.Serializable;
 import java.util.Objects;
 
-public class OrderItemId implements Serializable {
+public class chi_orderItemId implements Serializable {
 
     private Integer orderId;
     private Integer productId;
 
-    public OrderItemId() {}
+    public chi_orderItemId() {}
 
-    public OrderItemId(Integer orderId, Integer productId) {
+    public chi_orderItemId(Integer orderId, Integer productId) {
         this.orderId = orderId;
         this.productId = productId;
     }
 
-    // Getters & Setters
     public Integer getOrderId() { return orderId; }
     public void setOrderId(Integer orderId) { this.orderId = orderId; }
 
@@ -25,8 +23,8 @@ public class OrderItemId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItemId that = (OrderItemId) o;
+        if (!(o instanceof chi_orderItemId)) return false;
+        chi_orderItemId that = (chi_orderItemId) o;
         return Objects.equals(orderId, that.orderId) &&
                 Objects.equals(productId, that.productId);
     }
