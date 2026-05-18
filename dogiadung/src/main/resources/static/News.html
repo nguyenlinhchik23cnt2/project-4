@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Tức – TNC Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{--olive:#4a7043;--olive-d:#3a5a34;--olive-l:#e8f0e6;--red:#e11d48;--bg:#f7f6f2;--white:#fff;--text:#1c1f1a;--sub:#5a6258;--dim:#9aa398;--border:#e0ddd7;--shadow:0 4px 20px rgba(74,112,67,.12);--r:14px}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+        a{text-decoration:none;color:inherit}
+        #topBar{background:var(--olive);color:#fff;text-align:center;font-size:13px;padding:8px 16px;position:relative}
+        #topBar b{color:#fde68a;margin:0 4px}
+        .topbar-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer}
+        header{background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.07);position:sticky;top:0;z-index:999}
+        .header-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:14px 24px}
+        .brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .brand-icon{width:42px;height:42px;background:var(--olive);border-radius:10px;display:flex;align-items:center;justify-content:center}
+        .brand-icon svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2}
+        .brand-name{font-size:20px;font-weight:800;color:var(--olive);letter-spacing:-.02em;line-height:1.1}
+        .brand-name small{display:block;font-size:10px;font-weight:500;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}
+        .header-icons{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto}
+        .icon-btn{position:relative;width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--sub);cursor:pointer;transition:all .2s}
+        .icon-btn:hover{border-color:var(--olive);color:var(--olive);background:var(--olive-l)}
+        .icon-btn .badge-count{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-size:10px;font-weight:700;border-radius:20px;padding:1px 5px;min-width:18px;text-align:center}
+        .account-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:50px;padding:7px 14px;background:#fff;cursor:pointer}
+        .account-btn span{font-size:13px;font-weight:600;color:var(--text)}
+        .nav-links{background:#fff;border-top:1px solid var(--border)}
+        .nav-links ul{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;list-style:none}
+        .nav-links li a{display:block;padding:12px 16px;font-size:13.5px;font-weight:600;color:var(--sub);transition:color .2s;position:relative}
+        .nav-links li a:hover,.nav-links li a.active{color:var(--olive)}
+        .nav-links li a.active::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--olive);border-radius:2px}
+        .sale-link a{color:var(--red)!important}
+        /* HERO */
+        .page-hero{background:linear-gradient(135deg,#2d4a2a,#4a7043);padding:40px 0;color:#fff}
+        .page-hero-inner{max-width:1280px;margin:0 auto;padding:0 24px}
+        .page-hero h1{font-size:clamp(22px,3.5vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+        .page-hero p{font-size:14px;opacity:.8}
+        .breadcrumb-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;font-size:12.5px;opacity:.7}
+        .breadcrumb-row a{color:#fff}
+        /* LAYOUT */
+        .page-wrap{max-width:1280px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 300px;gap:32px;align-items:start}
+        /* FEATURED NEWS */
+        .featured-news{background:#fff;border-radius:var(--r);border:1.5px solid var(--border);overflow:hidden;margin-bottom:24px;cursor:pointer;transition:all .3s;display:grid;grid-template-columns:1fr 1fr}
+        .featured-news:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+        .featured-img{height:100%;min-height:280px;overflow:hidden;background:#f0eeea}
+        .featured-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+        .featured-news:hover .featured-img img{transform:scale(1.05)}
+        .featured-body{padding:28px}
+        .news-tag{font-size:10px;font-weight:700;color:var(--olive);background:var(--olive-l);padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;display:inline-block;margin-bottom:12px}
+        .featured-title{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.35;color:var(--text);margin-bottom:10px}
+        .featured-excerpt{font-size:14px;color:var(--sub);line-height:1.7;margin-bottom:16px}
+        .news-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--dim)}
+        .read-more{margin-top:16px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--olive)}
+        .read-more:hover{color:var(--olive-d)}
+        /* NEWS GRID */
+        .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+        .news-card{background:#fff;border-radius:var(--r);border:1.5px solid var(--border);overflow:hidden;transition:all .3s;cursor:pointer}
+        .news-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--olive-l)}
+        .news-img{height:180px;overflow:hidden;background:#eee}
+        .news-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+        .news-card:hover .news-img img{transform:scale(1.06)}
+        .news-body{padding:16px}
+        .news-title{font-size:14px;font-weight:700;line-height:1.45;color:var(--text);margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .news-excerpt{font-size:12.5px;color:var(--sub);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .news-date{font-size:11px;color:var(--dim)}
+        .news-read{font-size:12.5px;font-weight:600;color:var(--olive);margin-top:10px;display:flex;align-items:center;gap:4px}
+        /* SIDEBAR */
+        .sidebar-widget{background:#fff;border-radius:var(--r);border:1.5px solid var(--border);margin-bottom:20px;overflow:hidden}
+        .widget-head{padding:14px 18px;border-bottom:1px solid var(--border);font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+        .widget-body{padding:16px 18px}
+        .tag-cloud{display:flex;flex-wrap:wrap;gap:7px}
+        .tag-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-family:inherit;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer;transition:all .15s}
+        .tag-btn:hover,.tag-btn.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+        .recent-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+        .recent-item{display:flex;gap:10px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--border)}
+        .recent-item:last-child{border-bottom:none;padding-bottom:0}
+        .recent-thumb{width:56px;height:56px;border-radius:8px;background:#f0eeea;overflow:hidden;flex-shrink:0}
+        .recent-thumb img{width:100%;height:100%;object-fit:cover}
+        .recent-title{font-size:12.5px;font-weight:600;line-height:1.4;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .recent-date{font-size:11px;color:var(--dim);margin-top:3px}
+        .nl-form{display:flex;flex-direction:column;gap:8px}
+        .nl-input{border:1.5px solid var(--border);border-radius:9px;padding:9px 12px;font-family:inherit;font-size:13px;color:var(--text)}
+        .nl-input:focus{outline:none;border-color:var(--olive)}
+        .nl-btn{background:var(--olive);color:#fff;border:none;border-radius:9px;padding:10px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+        .nl-btn:hover{background:var(--olive-d)}
+        /* PAGINATION */
+        .pagination-wrap{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:32px}
+        .page-btn{width:36px;height:36px;border-radius:9px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;color:var(--sub);display:flex;align-items:center;justify-content:center;transition:all .15s}
+        .page-btn:hover,.page-btn.active{background:var(--olive);border-color:var(--olive);color:#fff}
+        /* FOOTER */
+        footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
+        .footer-inner{max-width:1280px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px}
+        .footer-brand-name{font-size:20px;font-weight:800;color:#fff;display:block;margin-bottom:10px}
+        .footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:18px}
+        .footer-col h4{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:14px}
+        .footer-col ul{list-style:none}
+        .footer-col ul li{margin-bottom:9px}
+        .footer-col ul li a{font-size:13px;color:rgba(255,255,255,.5);transition:color .2s}
+        .footer-col ul li a:hover{color:#fff}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:18px 24px;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .footer-bottom p{font-size:12px;color:rgba(255,255,255,.3)}
+        #scrollTop{position:fixed;bottom:24px;right:24px;z-index:500;width:42px;height:42px;border-radius:50%;background:var(--olive);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(20px);transition:all .3s;box-shadow:0 4px 16px rgba(74,112,67,.4)}
+        #scrollTop.show{opacity:1;transform:translateY(0)}
+        @media(max-width:900px){.page-wrap{grid-template-columns:1fr}.featured-news{grid-template-columns:1fr}.featured-img{min-height:200px}.news-grid{grid-template-columns:1fr}.footer-inner{grid-template-columns:1fr 1fr}}
+        @media(max-width:600px){.news-grid{grid-template-columns:1fr}.footer-inner{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+
+<div id="topBar">
+    <span>🎉 Miễn phí vận chuyển cho đơn từ <b>500.000₫</b> · Ưu đãi Bộ sưu tập Olive Nature 2026</span>
+    <button class="topbar-close" onclick="this.closest('div').style.display='none'">×</button>
+</div>
+
+<header>
+    <div class="header-inner">
+        <a href="index.html" class="brand">
+            <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="brand-name">TNC Shop<small>Đồ Gia Dụng Thông Minh</small></div>
+        </a>
+        <div class="header-icons">
+            <button class="icon-btn"><i class="fa-solid fa-cart-shopping"></i><span class="badge-count" id="cartCount">0</span></button>
+            <div class="dropdown">
+                <button class="account-btn" type="button" data-bs-toggle="dropdown">
+                    <i class="fa-regular fa-user" style="font-size:16px;color:var(--sub)"></i>
+                    <span id="userDisplay">Tài khoản</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size:10px;color:var(--dim)"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2">
+                    <li><a class="dropdown-item py-2" href="login.html"><i class="fa-solid fa-right-to-bracket me-2 text-muted"></i>Đăng nhập</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
+                    <li id="adminMenu" style="display:none"><hr class="dropdown-divider"><a class="dropdown-item text-primary fw-bold py-2" href="admin.html"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Trang quản trị</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <nav class="nav-links">
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="TraProduct.html">Sản phẩm</a></li>
+            <li><a href="nga-Category.html">Danh mục</a></li>
+            <li><a href="News.html" class="active">Tin tức</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+            <li class="sale-link"><a href="flash-sale.html">Flash Sale</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="page-hero">
+    <div class="page-hero-inner">
+        <div class="breadcrumb-row"><a href="index.html">Trang chủ</a><span>›</span><span>Tin tức</span></div>
+        <h1>Tin tức & Mẹo hay</h1>
+        <p>Cập nhật xu hướng nội thất, mẹo trang trí và ưu đãi mới nhất</p>
+    </div>
+</div>
+
+<div class="page-wrap">
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- FEATURED -->
+        <div class="featured-news" id="featuredNews">
+            <div class="featured-img"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Featured"></div>
+            <div class="featured-body">
+                <span class="news-tag">Xu hướng</span>
+                <h2 class="featured-title">10 xu hướng đồ gia dụng nổi bật năm 2026</h2>
+                <p class="featured-excerpt">Năm 2026 chứng kiến sự trỗi dậy mạnh mẽ của các sản phẩm gia dụng thông minh, thân thiện môi trường và có thiết kế tối giản. Khám phá ngay những xu hướng đang làm mưa làm gió trong ngành nội thất...</p>
+                <div class="news-meta"><span><i class="fas fa-calendar me-1"></i>15/05/2026</span><span><i class="fas fa-eye me-1"></i>2.4k lượt xem</span><span><i class="fas fa-comment me-1"></i>18 bình luận</span></div>
+                <a class="read-more" href="#">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- TAG FILTER -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
+            <button class="tag-btn active" onclick="filterNews('all',this)">Tất cả</button>
+            <button class="tag-btn" onclick="filterNews('xu-huong',this)"> Xu hướng</button>
+            <button class="tag-btn" onclick="filterNews('meo-hay',this)"> Mẹo hay</button>
+            <button class="tag-btn" onclick="filterNews('khuyen-mai',this)">Khuyến mãi</button>
+            <button class="tag-btn" onclick="filterNews('san-pham',this)">Sản phẩm mới</button>
+            <button class="tag-btn" onclick="filterNews('trang-tri',this)">Trang trí</button>
+        </div>
+
+        <div class="news-grid" id="newsGrid"></div>
+        <div class="pagination-wrap">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">›</button>
+        </div>
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside>
+        <div class="sidebar-widget">
+            <div class="widget-head"><i class="fas fa-clock" style="color:var(--olive)"></i> Bài viết mới nhất</div>
+            <div class="widget-body">
+                <ul class="recent-list" id="recentList"></ul>
+            </div>
+        </div>
+        <div class="sidebar-widget">
+            <div class="widget-head"><i class="fas fa-tags" style="color:var(--olive)"></i> Chủ đề</div>
+            <div class="widget-body">
+                <div class="tag-cloud">
+                    <button class="tag-btn">Nhà bếp</button>
+                    <button class="tag-btn">Phòng ngủ</button>
+                    <button class="tag-btn">Tiết kiệm</button>
+                    <button class="tag-btn">Bền vững</button>
+                    <button class="tag-btn">Thông minh</button>
+                    <button class="tag-btn">Xu hướng</button>
+                    <button class="tag-btn">Flash Sale</button>
+                    <button class="tag-btn">Review</button>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-widget">
+            <div class="widget-head"><i class="fas fa-envelope" style="color:var(--olive)"></i> Đăng ký nhận tin</div>
+            <div class="widget-body">
+                <p style="font-size:13px;color:var(--sub);margin-bottom:12px;line-height:1.6">Nhận ngay ưu đãi và tin tức mới nhất từ TNC Shop.</p>
+                <div class="nl-form">
+                    <input class="nl-input" type="text" placeholder="Họ và tên">
+                    <input class="nl-input" type="email" placeholder="Địa chỉ email">
+                    <button class="nl-btn" onclick="showToast(' Đăng ký thành công!')">Đăng ký ngay</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <span class="footer-brand-name">TNC Shop</span>
+            <p>Chuyên cung cấp đồ gia dụng chất lượng cao, thiết kế hiện đại, thân thiện môi trường.</p>
+        </div>
+        <div class="footer-col"><h4>Sản phẩm</h4><ul><li><a href="#">Nhà bếp</a></li><li><a href="#">Phòng ngủ</a></li><li><a href="#">Điện gia dụng</a></li></ul></div>
+        <div class="footer-col"><h4>Hỗ trợ</h4><ul><li><a href="contact.html">Liên hệ</a></li><li><a href="#">Đổi trả</a></li><li><a href="#">FAQs</a></li></ul></div>
+        <div class="footer-col"><h4>Công ty</h4><ul><li><a href="#">Giới thiệu</a></li><li><a href="#">Tuyển dụng</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 TNC Shop. All rights reserved.</p></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const cart=JSON.parse(localStorage.getItem('tnc_cart')||'[]');
+    document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.quantity,0);
+
+    const NEWS_DATA=[
+        {id:1,tag:'xu-huong',tagLabel:'Xu hướng',title:'10 xu hướng đồ gia dụng nổi bật năm 2026',excerpt:'Khám phá những sản phẩm thông minh, thân thiện môi trường đang làm thay đổi không gian sống hiện đại.',date:'15/05/2026',views:'2.4k',img:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=70'},
+        {id:2,tag:'meo-hay',tagLabel:'Mẹo hay',title:'5 cách sắp xếp tủ bếp giúp tiết kiệm không gian tối đa',excerpt:'Những mẹo đơn giản nhưng cực kỳ hiệu quả để tối ưu hóa không gian tủ bếp của bạn.',date:'12/05/2026',views:'1.8k',img:'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=400&q=70'},
+        {id:3,tag:'khuyen-mai',tagLabel:'Khuyến mãi',title:'Flash Sale cuối tuần: Giảm đến 40% đồ điện gia dụng',excerpt:'Cơ hội vàng để sở hữu các thiết bị điện chất lượng cao với mức giá cực kỳ hấp dẫn.',date:'10/05/2026',views:'3.1k',img:'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=70'},
+        {id:4,tag:'san-pham',tagLabel:'Sản phẩm mới',title:'Ra mắt bộ nồi inox cao cấp dòng Olive Pro 2026',excerpt:'Bộ nồi inox 5 lớp với công nghệ nhiệt đa hướng, bảo hành 5 năm – đỉnh cao của ẩm thực gia đình.',date:'08/05/2026',views:'987',img:'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&q=70'},
+        {id:5,tag:'trang-tri',tagLabel:'Trang trí',title:'Xu hướng màu Olive xanh lá trong thiết kế nội thất 2026',excerpt:'Màu xanh lá olive đang trở thành màu chủ đạo của các không gian sống hiện đại, sang trọng.',date:'05/05/2026',views:'1.5k',img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=70'},
+        {id:6,tag:'meo-hay',tagLabel:'Mẹo hay',title:'Cách bảo quản đồ gia dụng bền đẹp hàng chục năm',excerpt:'Những bí quyết đơn giản giúp các sản phẩm gia dụng của bạn luôn bền đẹp và hoạt động hiệu quả.',date:'01/05/2026',views:'2.2k',img:'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400&q=70'},
+    ];
+
+    let currentTag='all';
+
+    function filterNews(tag,btn){
+        currentTag=tag;
+        document.querySelectorAll('.tag-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        renderNews();
+    }
+
+    function renderNews(){
+        const data=currentTag==='all'?NEWS_DATA:NEWS_DATA.filter(n=>n.tag===currentTag);
+        if(!data.length){
+            document.getElementById('newsGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim)"><i class="fas fa-newspaper" style="font-size:40px;display:block;margin-bottom:12px;opacity:.3"></i>Không có bài viết nào</div>';
+            return;
+        }
+        document.getElementById('newsGrid').innerHTML=data.map(n=>`
+    <div class="news-card">
+      <div class="news-img"><img src="${n.img}" alt="${n.title}" onerror="this.src='https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=70'"></div>
+      <div class="news-body">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <span class="news-tag">${n.tagLabel}</span>
+          <span class="news-date">${n.date}</span>
+        </div>
+        <div class="news-title">${n.title}</div>
+        <div class="news-excerpt">${n.excerpt}</div>
+        <div class="news-read">Đọc tiếp <i class="fas fa-arrow-right"></i></div>
+      </div>
+    </div>`).join('');
+    }
+
+    function renderRecent(){
+        document.getElementById('recentList').innerHTML=NEWS_DATA.slice(0,4).map(n=>`
+    <li class="recent-item">
+      <div class="recent-thumb"><img src="${n.img}" alt="${n.title}" onerror="this.src='https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&q=60'"></div>
+      <div><div class="recent-title">${n.title}</div><div class="recent-date">${n.date}</div></div>
+    </li>`).join('');
+    }
+
+    function showToast(msg){
+        const t=document.createElement('div');
+        t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c2c1a;color:#fff;padding:11px 20px;border-radius:50px;font-size:14px;font-weight:600;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:opacity .3s';
+        t.textContent=msg;document.body.appendChild(t);
+        setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},2500);
+    }
+    function logout(){if(confirm('Đăng xuất?')){localStorage.removeItem('currentLogin');location.reload();}}
+    window.addEventListener('scroll',()=>document.getElementById('scrollTop').classList.toggle('show',scrollY>400));
+    window.onload=()=>{
+        const user=JSON.parse(localStorage.getItem('currentLogin')||'null');
+        if(user){document.getElementById('userDisplay').textContent=user.username||'Tài khoản';if(user.role==='ADMIN')document.getElementById('adminMenu').style.display='block';}
+        renderNews();renderRecent();
+    };
+</script>
+</body>
+</html>

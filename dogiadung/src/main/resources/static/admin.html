@@ -191,23 +191,23 @@
     <nav class="sidebar-nav">
         <div class="nav-section-label">Tổng quan</div>
         <button class="nav-item active" onclick="showSection('dashboard',this)">
-            <div class="nav-icon">🏠</div> Dashboard
+            <div class="nav-icon"></div> Dashboard
         </button>
         <div class="nav-section-label">Quản lý</div>
         <button class="nav-item" onclick="showSection('products',this)">
-            <div class="nav-icon">📦</div> Sản phẩm
+            <div class="nav-icon"></div> Sản phẩm
             <span class="nav-badge" id="badge-products">—</span>
         </button>
         <button class="nav-item" onclick="showSection('orders',this)">
-            <div class="nav-icon">🛒</div> Đơn hàng
+            <div class="nav-icon"></div> Đơn hàng
             <span class="nav-badge" id="badge-orders">—</span>
         </button>
         <button class="nav-item" onclick="showSection('customers',this)">
-            <div class="nav-icon">👥</div> Khách hàng
+            <div class="nav-icon"></div> Khách hàng
             <span class="nav-badge" id="badge-customers">—</span>
         </button>
         <button class="nav-item" onclick="showSection('categories',this)">
-            <div class="nav-icon">🏷️</div> Danh mục
+            <div class="nav-icon"></div> Danh mục
             <span class="nav-badge" id="badge-categories">—</span>
         </button>
     </nav>
@@ -231,7 +231,7 @@
         </div>
         <div class="topbar-actions">
             <span style="font-size:12px;color:var(--text3)" id="clock"></span>
-            <button class="btn btn-secondary btn-sm" onclick="refreshCurrent()">🔄 Làm mới</button>
+            <button class="btn btn-secondary btn-sm" onclick="refreshCurrent()">Làm mới</button>
         </div>
     </div>
 
@@ -240,15 +240,21 @@
         <!-- DASHBOARD -->
         <div id="section-dashboard" class="section active">
             <div class="stats-grid" id="stats-grid">
-                <div class="stat-card blue"><div class="stat-icon">📦</div><div class="stat-value" id="stat-products">—</div><div class="stat-label">Sản phẩm</div></div>
-                <div class="stat-card green"><div class="stat-icon">🛒</div><div class="stat-value" id="stat-orders">—</div><div class="stat-label">Đơn hàng</div></div>
-                <div class="stat-card purple"><div class="stat-icon">👥</div><div class="stat-value" id="stat-customers">—</div><div class="stat-label">Khách hàng</div></div>
-                <div class="stat-card warn"><div class="stat-icon">🏷️</div><div class="stat-value" id="stat-categories">—</div><div class="stat-label">Danh mục</div></div>
+                <div class="stat-card blue"><div class="stat-icon"></div><div class="stat-value" id="stat-products">—</div><div class="stat-label">Sản phẩm</div></div>
+                <div class="stat-card green"><div class="stat-icon"></div><div class="stat-value" id="stat-orders">—</div><div class="stat-label">Đơn hàng</div></div>
+                <div class="stat-card purple"><div class="stat-icon"></div><div class="stat-value" id="stat-customers">—</div><div class="stat-label">Khách hàng</div></div>
+                <div class="stat-card warn"><div class="stat-icon"></div><div class="stat-value" id="stat-categories">—</div><div class="stat-label">Danh mục</div></div>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
                 <div class="card">
-                    <div class="card-header"><span class="card-title">Đơn hàng gần đây</span></div>
-                    <div class="table-wrap"><table><thead><tr><th>Mã</th><th>Khách</th><th>Tổng tiền</th><th>Trạng thái</th></tr></thead>
+                    <div class="card-header">
+                        <span class="card-title">Đơn hàng gần đây</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                        <thead>
+                        <tr>
+                            <th>Mã</th><th>Khách</th><th>Tổng tiền</th><th>Trạng thái</th></tr></thead>
                         <tbody id="recent-orders"><tr class="loading-row"><td colspan="4"><span class="spinner"></span>Đang tải...</td></tr></tbody></table></div>
                 </div>
                 <div class="card">
@@ -265,8 +271,8 @@
                 <div class="card-header">
                     <span class="card-title">Danh sách sản phẩm</span>
                     <div class="card-actions">
-                        <div class="search-box"><span>🔍</span><input id="search-products" placeholder="Tìm sản phẩm..." oninput="filterTable('products-tbody','search-products',[1,2])"></div>
-                        <button class="btn btn-primary btn-sm" onclick="openCreate('products')">＋ Thêm sản phẩm</button>
+                        <div class="search-box"><span></span><input id="search-products" placeholder="Tìm sản phẩm..." oninput="filterTable('products-tbody','search-products',[1,2])"></div>
+                        <button class="btn btn-primary btn-sm" onclick="openCreate('products')"> Thêm sản phẩm</button>
                     </div>
                 </div>
                 <div class="table-wrap">
@@ -285,13 +291,23 @@
                 <div class="card-header">
                     <span class="card-title">Danh sách đơn hàng</span>
                     <div class="card-actions">
-                        <div class="search-box"><span>🔍</span><input id="search-orders" placeholder="Tìm đơn hàng..." oninput="filterTable('orders-tbody','search-orders',[0,1])"></div>
+                        <div class="search-box"><span></span><input id="search-orders" placeholder="Tìm đơn hàng..." oninput="filterTable('orders-tbody','search-orders',[0,1])"></div>
                         <button class="btn btn-primary btn-sm" onclick="openCreate('orders')">＋ Tạo đơn hàng</button>
                     </div>
                 </div>
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Mã đơn</th><th>KH ID</th><th>Tổng tiền</th><th>Phương thức</th><th>Trạng thái</th><th>Thanh toán</th><th>Thao tác</th></tr></thead>
+                        <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>KH ID</th>
+                            <th>Tổng tiền</th>
+                            <th>Phương thức</th>
+                            <th>Trạng thái</th>
+                            <th>Thanh toán</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
                         <tbody id="orders-tbody"><tr class="loading-row"><td colspan="7"><span class="spinner"></span>Đang tải...</td></tr></tbody>
                     </table>
                 </div>
@@ -305,13 +321,21 @@
                 <div class="card-header">
                     <span class="card-title">Danh sách khách hàng</span>
                     <div class="card-actions">
-                        <div class="search-box"><span>🔍</span><input id="search-customers" placeholder="Tìm khách hàng..." oninput="filterTable('customers-tbody','search-customers',[0,1,2])"></div>
+                        <div class="search-box"><span></span><input id="search-customers" placeholder="Tìm khách hàng..." oninput="filterTable('customers-tbody','search-customers',[0,1,2])"></div>
                         <button class="btn btn-primary btn-sm" onclick="openCreate('customers')">＋ Thêm khách hàng</button>
                     </div>
                 </div>
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Họ tên</th><th>Email</th><th>Điện thoại</th><th>Địa chỉ</th><th>Thao tác</th></tr></thead>
+                        <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
                         <tbody id="customers-tbody"><tr class="loading-row"><td colspan="5"><span class="spinner"></span>Đang tải...</td></tr></tbody>
                     </table>
                 </div>
@@ -325,13 +349,18 @@
                 <div class="card-header">
                     <span class="card-title">Danh sách danh mục</span>
                     <div class="card-actions">
-                        <div class="search-box"><span>🔍</span><input id="search-categories" placeholder="Tìm danh mục..." oninput="filterTable('categories-tbody','search-categories',[0])"></div>
+                        <div class="search-box"><span></span><input id="search-categories" placeholder="Tìm danh mục..." oninput="filterTable('categories-tbody','search-categories',[0])"></div>
                         <button class="btn btn-primary btn-sm" onclick="openCreate('categories')">＋ Thêm danh mục</button>
                     </div>
                 </div>
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Tên danh mục</th><th>Parent ID</th><th>Thao tác</th></tr></thead>
+                        <thead>
+                        <tr><th>Tên danh mục</th>
+                            <th>Parent ID</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
                         <tbody id="categories-tbody"><tr class="loading-row"><td colspan="3"><span class="spinner"></span>Đang tải...</td></tr></tbody>
                     </table>
                 </div>
@@ -404,7 +433,7 @@
     function toast(msg, type='success') {
         const t = document.createElement('div');
         t.className = 'toast' + (type==='error'?' error':type==='warn'?' warn':'');
-        t.innerHTML = (type==='success'?'✅':type==='error'?'❌':'⚠️') + ' ' + msg;
+        t.innerHTML = (type==='success'?'':type==='error'?'':'') + ' ' + msg;
         document.getElementById('toast-container').appendChild(t);
         requestAnimationFrame(() => { requestAnimationFrame(() => t.classList.add('show')); });
         setTimeout(() => { t.classList.remove('show'); setTimeout(()=>t.remove(), 400); }, 3000);
@@ -511,15 +540,15 @@
     }
     function actionBtns(editFn, delFn) {
         return `<div class="td-actions">
-    <button class="btn btn-secondary btn-sm" onclick="${editFn}">✏️ Sửa</button>
-    <button class="btn btn-danger btn-sm" onclick="${delFn}">🗑️ Xóa</button>
+    <button class="btn btn-secondary btn-sm" onclick="${editFn}">️ Sửa</button>
+    <button class="btn btn-danger btn-sm" onclick="${delFn}">🗑 Xóa</button>
   </div>`;
     }
 
     // ── RENDER TABLES ──────────────────────────────────────
     function renderProducts(data) {
         const tbody = document.getElementById('products-tbody');
-        if (!data.length) { tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div>📦</div><p>Chưa có sản phẩm nào</p></div></td></tr>`; return; }
+        if (!data.length) { tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div></div><p>Chưa có sản phẩm nào</p></div></td></tr>`; return; }
         tbody.innerHTML = data.map(p => `<tr data-searchable>
     <td><div class="cell-product">
       <div class="thumb">${p.imageUrl?`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover">`:'📦'}</div>
@@ -546,10 +575,10 @@
     <td>${actionBtns(`editOrder(${o.orderId||o.id})`,`deleteItem('orders',${o.orderId||o.id},'đơn #${o.orderId||o.id}')`)}</td>
   </tr>`).join('');
     }
-
     function renderCustomers(data) {
         const tbody = document.getElementById('customers-tbody');
-        if (!data.length) { tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div>👥</div><p>Chưa có khách hàng nào</p></div></td></tr>`; return; }
+
+        if (!data.length) { tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div></div><p>Chưa có khách hàng nào</p></div></td></tr>`; return; }
         tbody.innerHTML = data.map(c => `<tr data-searchable>
     <td style="font-weight:600">${c.fullName||c.name||'—'}</td>
     <td>${c.email||'—'}</td>
@@ -561,7 +590,7 @@
 
     function renderCategories(data) {
         const tbody = document.getElementById('categories-tbody');
-        if (!data.length) { tbody.innerHTML = `<tr><td colspan="3"><div class="empty-state"><div>🏷️</div><p>Chưa có danh mục nào</p></div></td></tr>`; return; }
+        if (!data.length) { tbody.innerHTML = `<tr><td colspan="3"><div class="empty-state"><div></div><p>Chưa có danh mục nào</p></div></td></tr>`; return; }
         tbody.innerHTML = data.map(c => `<tr data-searchable>
     <td style="font-weight:600">${c.name||'—'}</td>
     <td>${c.parentId||'—'}</td>
@@ -592,7 +621,7 @@
         const titles = {products:'Thêm sản phẩm mới',orders:'Tạo đơn hàng mới',customers:'Thêm khách hàng',categories:'Thêm danh mục'};
         openModal(titles[type], forms[type],
             `<button class="btn btn-secondary" onclick="closeModal()">Hủy</button>
-     <button class="btn btn-primary" onclick="submitCreate('${type}')">💾 Lưu</button>`);
+     <button class="btn btn-primary" onclick="submitCreate('${type}')"> Lưu</button>`);
     }
 
     function getFormData(fields) {
@@ -648,12 +677,16 @@
         openModal('Sửa đơn hàng #' + id,
             `<div class="form-row"><div class="form-group"><label class="form-label">Trạng thái đơn</label><select class="form-control" id="f-status">
       ${['pending','confirmed','shipped','done','cancelled'].map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${s}</option>`).join('')}
-    </select></div><div class="form-group"><label class="form-label">Trạng thái TT</label><select class="form-control" id="f-payStatus"><option value="unpaid" ${o.payStatus==='unpaid'?'selected':''}>Chưa thanh toán</option><option value="paid" ${o.payStatus==='paid'?'selected':''}>Đã thanh toán</option></select></div></div>
+    </select></div><div class="form-group"><label class="form-label">Trạng thái TT</label>
+    <select class="form-control" id="f-payStatus">
+    <option value="unpaid" ${o.payStatus==='unpaid'?'selected':''}>Chưa thanh toán</option>
+    <option value="paid" ${o.payStatus==='paid'?'selected':''}>Đã thanh toán</option>
+    </select></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">Phương thức TT</label><select class="form-control" id="f-payMethod"><option value="COD" ${o.payMethod==='COD'?'selected':''}>COD</option><option value="banking" ${o.payMethod==='banking'?'selected':''}>Banking</option><option value="momo" ${o.payMethod==='momo'?'selected':''}>MoMo</option></select></div><div class="form-group"><label class="form-label">Tổng tiền</label><input class="form-control" id="f-totalAmount" type="number" value="${o.totalAmount||''}"></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Địa chỉ giao hàng</label><input class="form-control" id="f-shippingAddress" value="${o.shippingAddress||''}"></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label><textarea class="form-control" id="f-note">${o.note||''}</textarea></div></div>`,
             `<button class="btn btn-secondary" onclick="closeModal()">Hủy</button>
-     <button class="btn btn-primary" onclick="submitEdit('orders','${id}',['status','payStatus','payMethod','totalAmount','shippingAddress','note'])">💾 Cập nhật</button>`);
+     <button class="btn btn-primary" onclick="submitEdit('orders','${id}',['status','payStatus','payMethod','totalAmount','shippingAddress','note'])"> Cập nhật</button>`);
     }
 
     async function editCustomer(id) {
@@ -674,7 +707,7 @@
             `<div class="form-row full"><div class="form-group"><label class="form-label">Tên danh mục</label><input class="form-control" id="f-name" value="${c.name||''}"></div></div>
      <div class="form-row full"><div class="form-group"><label class="form-label">Parent ID</label><input class="form-control" id="f-parentId" type="number" value="${c.parentId||''}"></div></div>`,
             `<button class="btn btn-secondary" onclick="closeModal()">Hủy</button>
-     <button class="btn btn-primary" onclick="submitEdit('categories','${id}',['name','parentId'])">💾 Cập nhật</button>`);
+     <button class="btn btn-primary" onclick="submitEdit('categories','${id}',['name','parentId'])"> Cập nhật</button>`);
     }
 
     async function submitEdit(type, id, fields) {
@@ -691,9 +724,9 @@
     // ── DELETE ─────────────────────────────────────────────
     function deleteItem(type, id, name) {
         openModal('Xác nhận xóa',
-            `<div class="delete-confirm"><div class="di">🗑️</div><h3>Xóa "${name}"?</h3><p>Hành động này không thể hoàn tác.</p></div>`,
+            `<div class="delete-confirm"><div class="di"></div><h3>Xóa "${name}"?</h3><p>Hành động này không thể hoàn tác.</p></div>`,
             `<button class="btn btn-secondary" onclick="closeModal()">Hủy</button>
-     <button class="btn btn-danger" onclick="confirmDelete('${type}',${id})">🗑️ Xóa</button>`);
+     <button class="btn btn-danger" onclick="confirmDelete('${type}',${id})">️ Xóa</button>`);
     }
 
     async function confirmDelete(type, id) {
