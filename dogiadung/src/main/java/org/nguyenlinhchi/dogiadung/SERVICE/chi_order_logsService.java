@@ -19,10 +19,14 @@ public class chi_order_logsService {
     }
 
     // READ ALL
-    public List<chi_order_logs> getAll() {
-        return repository.findAll();
-    }
+//    public List<chi_order_logs> getAll() {
+//        return repository.findAll();
+//    }
 
+    // READ ALL - Sắp xếp theo ID tăng dần
+    public List<chi_order_logs> getAll() {
+        return repository.findAllByOrderByIdAsc();
+    }
     // READ BY ID
     public chi_order_logs getById(Integer id) {
         return repository.findById(id)
@@ -53,4 +57,5 @@ public class chi_order_logsService {
         }
         repository.deleteById(id);
     }
+
 }

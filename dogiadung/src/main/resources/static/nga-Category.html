@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNC Shop - Quản Lý Danh Mục</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tncGreen: '#1e4620',
+                        tncGreenHover: '#143016',
+                        tncBg: '#f4f7f4'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', system-ui, sans-serif; }
+        .card { transition: all 0.3s ease; }
+        .card:hover { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        input:focus, select:focus, textarea:focus {
+            border-color: #1e4620;
+            box-shadow: 0 0 0 3px rgba(30, 70, 32, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-tncBg min-h-screen">
+<div class="max-w-7xl mx-auto p-6">
+
+    <div class="flex items-center justify-between mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-tncGreen rounded-2xl flex items-center justify-center text-white text-2xl shadow-md">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-black text-tncGreen tracking-tight">TNC Shop</h1>
+                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Hệ thống quản lý danh mục đồ gia dụng</p>
+            </div>
+        </div>
+        <div class="flex gap-3">
+            <button onclick="loadAllCategories()" class="px-5 py-2.5 bg-tncGreen text-white rounded-2xl hover:bg-tncGreenHover transition flex items-center gap-2 font-medium shadow-sm">
+                <i class="fas fa-sync"></i> Tải lại dữ liệu
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="flex flex-1 w-full md:w-auto gap-3">
+            <div class="relative flex-1">
+                <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                <input type="text" id="searchKeyword" placeholder="Tìm kiếm theo tên danh mục hoặc mô tả..."
+                       class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none">
+            </div>
+            <select id="filterStatus" class="px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none bg-white font-medium text-gray-600">
+                <option value="">-- Tất cả trạng thái --</option>
+                <option value="active">Hoạt động</option>
+                <option value="inactive">Không hoạt động</option>
+            </select>
+        </div>
+        <button onclick="searchCategories()" class="w-full md:w-auto px-6 py-2.5 bg-slate-700 text-white font-bold rounded-xl hover:bg-slate-800 transition text-sm">
+            <i class="fa-solid fa-filter mr-1"></i> LỌC DỮ LIỆU
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-5">
+            <div class="card bg-white rounded-3xl shadow-md p-8 sticky top-6 border border-gray-100">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-tncGreen uppercase tracking-tight">
+                    <i class="fas fa-folder-plus"></i>
+                    Thêm / Cập nhật
+                </h2>
+
+                <input type="hidden" id="categoryId">
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Tên danh mục <span class="text-red-500">*</span></label>
+                        <input type="text" id="name" placeholder="Ví dụ: Nồi chiên không dầu" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Danh mục cha</label>
+                        <select id="parentId" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none bg-white"></select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Thứ tự hiển thị</label>
+                            <input type="number" id="sortOrder" value="0" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Trạng thái</label>
+                            <select id="status" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none bg-white">
+                                <option value="active">Hoạt động</option>
+                                <option value="inactive">Không hoạt động</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Hình ảnh (Đường dẫn URL)</label>
+                        <input type="text" id="imageUrl" placeholder="http://..." class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Mô tả tóm tắt</label>
+                        <textarea id="description" rows="3" placeholder="Thông tin mô tả danh mục sản phẩm đồ gia dụng..." class="w-full px-4 py-3 border border-gray-200 rounded-2xl text-sm focus:outline-none"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 mt-8">
+                    <button onclick="createOrUpdateCategory()"
+                            class="flex-1 bg-tncGreen hover:bg-tncGreenHover text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition text-sm shadow-sm shadow-green-900/10">
+                        <i class="fa-solid fa-floppy-disk"></i> LƯU LẠI
+                    </button>
+                    <button onclick="resetForm()"
+                            class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition text-sm">
+                        <i class="fas fa-undo"></i> LÀM MỚI
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-7">
+            <div class="card bg-white rounded-3xl shadow-md overflow-hidden border border-gray-100">
+                <div class="px-8 py-5 bg-gray-50 border-b flex justify-between items-center">
+                    <h2 class="font-bold text-gray-700 text-lg">Danh sách danh mục hiện có</h2>
+                    <span id="totalCount" class="text-xs bg-slate-200 text-slate-700 px-3 py-1 rounded-full font-bold">0 danh mục</span>
+                </div>
+                <div class="overflow-x-auto min-h-[400px]">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gradient-to-r from-tncGreen to-emerald-800 text-white">
+                        <tr>
+                            <th class="px-6 py-4 text-left font-bold uppercase tracking-wider">Tên danh mục</th>
+                            <th class="px-6 py-4 text-left font-bold uppercase tracking-wider">Danh mục cha</th>
+                            <th class="px-6 py-4 text-center font-bold uppercase tracking-wider">Thứ tự</th>
+                            <th class="px-6 py-4 text-center font-bold uppercase tracking-wider">Trạng thái</th>
+                            <th class="px-6 py-4 text-center font-bold uppercase tracking-wider">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody id="categoriesTable" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ĐÃ SỬA: Đồng bộ khớp đường dẫn với @RequestMapping("/api/categories") của Spring Boot
+    const API_URL = "http://localhost:8080/api/categories";
+
+    // 1. Hàm tải toàn bộ danh sách danh mục hoặc tìm kiếm lọc theo tham số
+    async function loadAllCategories(urlParams = "") {
+        const tbody = document.getElementById('categoriesTable');
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-gray-400"><i class="fas fa-spinner fa-spin text-2xl mb-2 text-tncGreen"></i><br>Đang đồng bộ dữ liệu...</td></tr>`;
+
+        try {
+            const res = await fetch(`${API_URL}${urlParams}`);
+            if (!res.ok) throw new Error('Lỗi server');
+
+            const data = await res.json();
+            renderTable(data);
+            loadParentOptions(data);
+        } catch (error) {
+            console.error(error);
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-red-500 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Không kết nối được Backend Spring Boot!</td></tr>`;
+        }
+    }
+
+    // 2. Xử lý tìm kiếm và lọc dữ liệu động đẩy lên URL Request
+    function searchCategories() {
+        const keyword = document.getElementById('searchKeyword').value.trim();
+        const status = document.getElementById('filterStatus').value;
+
+        let queryParams = `?keyword=${encodeURIComponent(keyword)}&status=${status}`;
+        loadAllCategories(queryParams);
+    }
+
+    // 3. Đổ dữ liệu vào bảng HTML
+    function renderTable(data) {
+        const tbody = document.getElementById('categoriesTable');
+        tbody.innerHTML = '';
+        document.getElementById('totalCount').textContent = `${data.length} danh mục`;
+
+        if (data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-gray-400">Không tìm thấy danh mục sản phẩm nào phù hợp.</td></tr>`;
+            return;
+        }
+
+        // Sắp xếp thứ tự ưu tiên hiển thị nhỏ đứng trước
+        data.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+        data.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-green-50/50 transition-colors";
+            tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-gray-800">${c.name}</td>
+                    <td class="px-6 py-4 text-gray-500 font-medium">${c.parent ? c.parent.name : '<span class="text-tncGreen font-semibold bg-green-100/60 px-2 py-0.5 rounded-md">Cấp gốc (Root)</span>'}</td>
+                    <td class="px-6 py-4 text-center font-semibold text-slate-600">${c.sortOrder || 0}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold ${c.status === 'active' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}">
+                            ${c.status === 'active' ? 'Hoạt động' : 'Tạm khóa'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center space-x-3">
+                        <button onclick="editCategory(${c.categoryId})" class="text-amber-600 hover:text-amber-700 p-1.5 transition" title="Sửa danh mục này"><i class="fas fa-edit text-base"></i></button>
+                        <button onclick="deleteCategory(${c.categoryId})" class="text-red-600 hover:text-red-700 p-1.5 transition" title="Xóa danh mục này"><i class="fas fa-trash text-base"></i></button>
+                    </td>
+                `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // 4. Đổ danh sách danh mục vào ô Chọn danh mục cha
+    function loadParentOptions(data) {
+        const select = document.getElementById('parentId');
+        const currentId = document.getElementById('categoryId').value;
+
+        select.innerHTML = '<option value="">-- Thuộc Danh mục gốc (Root) --</option>';
+        data.forEach(cat => {
+            // Không cho phép chọn chính nó làm danh mục cha của chính nó
+            if (currentId && cat.categoryId == currentId) return;
+
+            const opt = document.createElement('option');
+            opt.value = cat.categoryId;
+            opt.textContent = cat.name;
+            select.appendChild(opt);
+        });
+    }
+
+    // 5. THÊM HOẶC CẬP NHẬT DANH MỤC LÊN BACKEND (POST / PUT)
+    async function createOrUpdateCategory() {
+        const id = document.getElementById('categoryId').value;
+        const category = {
+            name: document.getElementById('name').value.trim(),
+            description: document.getElementById('description').value.trim(),
+            imageUrl: document.getElementById('imageUrl').value.trim(),
+            sortOrder: parseInt(document.getElementById('sortOrder').value) || 0,
+            status: document.getElementById('status').value,
+            parent: document.getElementById('parentId').value ? { categoryId: parseInt(document.getElementById('parentId').value) } : null
+        };
+
+        if (!category.name) return alert("Vui lòng nhập tên danh mục!");
+
+        try {
+            const url = id ? `${API_URL}/${id}` : API_URL;
+            const res = await fetch(url, {
+                method: id ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(category)
+            });
+
+            if (res.ok) {
+                alert(id ? "🎉 Cập nhật thông tin danh mục thành công!" : "🎉 Thêm mới danh mục thành công!");
+                resetForm();
+                loadAllCategories();
+            } else {
+                alert("Thao tác lưu thất bại. Vui lòng kiểm tra lại dữ liệu!");
+            }
+        } catch (e) {
+            alert(" Lỗi: Không thể kết nối tới máy chủ API!");
+        }
+    }
+
+    // 6. ĐỌC CHI TIẾT DANH MỤC LÊN FORM ĐỂ CHUẨN BỊ SỬA
+    async function editCategory(id) {
+        try {
+            const res = await fetch(`${API_URL}/${id}`);
+            const c = await res.json();
+
+            document.getElementById('categoryId').value = c.categoryId;
+            document.getElementById('name').value = c.name || '';
+            document.getElementById('description').value = c.description || '';
+            document.getElementById('imageUrl').value = c.imageUrl || '';
+            document.getElementById('sortOrder').value = c.sortOrder || 0;
+            document.getElementById('status').value = c.status || 'active';
+
+            // Đổ lại tùy chọn danh mục cha
+            document.getElementById('parentId').value = c.parent ? c.parent.categoryId : '';
+        } catch (e) {
+            alert(" Không tìm thấy thông tin danh mục này!");
+        }
+    }
+
+    // 7. XÓA DANH MỤC (DELETE)
+    async function deleteCategory(id) {
+        if (!confirm("Bạn có chắc chắn muốn xóa vĩnh viễn danh mục này khỏi hệ thống?")) return;
+        try {
+            const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            const result = await res.json();
+
+            if (res.ok && result.success) {
+                alert(result.message);
+                loadAllCategories();
+            } else {
+                alert(result.message || "Không thể xóa danh mục này!");
+            }
+        } catch (e) {
+            alert("Lỗi hệ thống khi xóa danh mục!");
+        }
+    }
+
+    // 8. ĐẶT LẠI TRẠNG THÁI FORM TRỐNG
+    function resetForm() {
+        document.getElementById('categoryId').value = '';
+        document.getElementById('name').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('imageUrl').value = '';
+        document.getElementById('sortOrder').value = '0';
+        document.getElementById('status').value = 'active';
+        document.getElementById('parentId').value = '';
+    }
+
+    // ĐÃ SỬA: Thay thế hàm checkBackend lỗi bằng hàm tự động lấy danh sách khi load trang hoàn tất
+    window.onload = function() {
+        loadAllCategories();
+    };
+</script>
+</body>
+</html>

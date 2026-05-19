@@ -230,7 +230,7 @@
         }
     }
 
-    // ADD REVIEW
+
     // ADD REVIEW
     function addReview() {
         const data = {
@@ -240,7 +240,7 @@
             comment: document.getElementById("comment").value
         };
 
-        // Kiểm tra dữ liệu trước khi gửi
+
         if (!data.orderId || !data.productId || !data.rating) {
             alert("Vui lòng nhập đầy đủ Order ID, Product ID và Rating!");
             return;
@@ -256,7 +256,6 @@
                     alert(" Đánh giá thành công!");
                     loadData();
 
-                    // ================== TỰ ĐỘNG XÓA INPUT ==================
                     document.getElementById("r_orderId").value = "";
                     document.getElementById("r_productId").value = "";
                     document.getElementById("rating").value = "";

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNC Shop - Đăng Nhập & Đăng Ký</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tncGreen: '#1e4620',
+                        tncGreenHover: '#143016',
+                        tncBg: '#f4f7f4'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .password-toggle {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .password-toggle:hover {
+            color: #1e4620;
+        }
+        .input-error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.7rem;
+            margin-top: 0.25rem;
+            display: block;
+        }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="bg-tncBg min-h-screen flex flex-col justify-between font-sans">
+
+<header class="bg-white shadow-sm border-b border-gray-100 py-4 px-6 md:px-16 flex justify-between items-center">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="bg-tncGreen p-2.5 rounded-xl text-white">
+            <i class="fa-solid fa-house-chimney text-xl"></i>
+        </div>
+        <div>
+            <span class="text-2xl font-black text-tncGreen tracking-tight block leading-none">TNC Shop</span>
+            <span class="text-[10px] text-gray-500 font-semibold tracking-widest uppercase">Đồ Gia Dụng Thông Minh</span>
+        </div>
+    </div>
+    <button onclick="window.location.href='index.html'" class="text-gray-500 hover:text-tncGreen transition text-sm font-medium">
+        <i class="fa-solid fa-arrow-left mr-1"></i> Về trang chủ
+    </button>
+</header>
+
+<main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="max-w-4xl w-full flex flex-col md:flex-row bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 min-h-[580px]">
+
+        <!-- Phần bên trái - Giới thiệu -->
+        <div class="w-full md:w-2/5 bg-gradient-to-br from-tncGreen to-tncGreenHover text-white p-8 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full"></div>
+            <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-white/10 rounded-full"></div>
+
+            <div class="z-10">
+                <div class="mb-6">
+                    <i class="fa-solid fa-store text-4xl opacity-80"></i>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-2 uppercase">Chào mừng bạn</h3>
+                <p class="text-xs opacity-80 leading-relaxed mb-6">Đăng nhập để trải nghiệm mua sắm thông minh cùng TNC Shop - Nơi cung cấp đồ gia dụng chất lượng cao.</p>
+
+                <div class="space-y-2 mt-8">
+                    <button onclick="switchTab('login-tab')" id="btn-login-tab" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm transition bg-white text-tncGreen shadow-md">
+                        <i class="fa-solid fa-right-to-bracket w-5 text-center"></i>
+                        <span>ĐĂNG NHẬP</span>
+                    </button>
+                    <button onclick="switchTab('register-tab')" id="btn-register-tab" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm transition hover:bg-white/10 text-white">
+                        <i class="fa-solid fa-user-plus w-5 text-center"></i>
+                        <span>ĐĂNG KÝ TÀI KHOẢN</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="z-10 mt-8 text-xs opacity-60">
+                <i class="fa-solid fa-shield-alt mr-1"></i> Bảo mật tuyệt đối
+            </div>
+        </div>
+
+        <!-- Phần bên phải - Form -->
+        <div class="w-full md:w-3/5 p-8 lg:p-12 flex flex-col justify-center bg-white">
+            <div id="alert-message" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold text-center transition-all"></div>
+
+            <!-- Form ĐĂNG NHẬP -->
+            <div id="login-tab-content">
+                <h2 class="text-3xl font-extrabold text-tncGreen mb-1 tracking-tight">ĐĂNG NHẬP</h2>
+                <p class="text-sm text-gray-400 mb-6">Vui lòng nhập thông tin tài khoản của bạn</p>
+
+                <form id="form-login" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tên đăng nhập *</label>
+                        <input type="text" id="login-username" required placeholder="Nhập tên tài khoản..."
+                               class="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Mật khẩu *</label>
+                        <div class="relative">
+                            <input type="password" id="login-password" required placeholder="••••••••"
+                                   class="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm pr-12">
+                            <i class="password-toggle fa-regular fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-tncGreen transition"
+                               onclick="togglePassword('login-password', this)"></i>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" id="rememberMe" class="rounded border-gray-300 text-tncGreen focus:ring-tncGreen">
+                            <span class="text-gray-500">Ghi nhớ đăng nhập</span>
+                        </label>
+                        <a href="#" class="text-tncGreen hover:underline">Quên mật khẩu?</a>
+                    </div>
+                    <button type="submit" class="w-full bg-tncGreen text-white py-3 rounded-xl font-bold hover:bg-tncGreenHover transition text-sm mt-2 shadow-md shadow-green-900/20">
+                        <i class="fa-solid fa-right-to-bracket mr-2"></i> ĐĂNG NHẬP
+                    </button>
+                </form>
+
+                <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+                    <p class="text-xs text-gray-400">
+                        Chưa có tài khoản?
+                        <a href="#" onclick="switchTab('register-tab'); return false;" class="text-tncGreen font-semibold hover:underline">Đăng ký ngay</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Form ĐĂNG KÝ -->
+            <div id="register-tab-content" class="hidden">
+                <h2 class="text-3xl font-extrabold text-tncGreen mb-1 tracking-tight">ĐĂNG KÝ</h2>
+                <p class="text-sm text-gray-400 mb-6">Tạo tài khoản để mua sắm dễ dàng hơn</p>
+
+                <form id="form-register" class="space-y-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tên đăng nhập *</label>
+                            <input type="text" id="reg-username" required placeholder="username"
+                                   class="w-full px-4 py-2.5 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm">
+                            <span class="error-message hidden" id="username-error"></span>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Họ và tên *</label>
+                            <input type="text" id="reg-fullname" required placeholder="Nguyễn Văn A"
+                                   class="w-full px-4 py-2.5 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm">
+                            <span class="error-message hidden" id="fullname-error"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Mật khẩu *</label>
+                        <div class="relative">
+                            <input type="password" id="reg-password" required placeholder="Tối thiểu 6 ký tự"
+                                   class="w-full px-4 py-2.5 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm pr-12">
+                            <i class="password-toggle fa-regular fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-tncGreen transition"
+                               onclick="togglePassword('reg-password', this)"></i>
+                        </div>
+                        <span class="error-message hidden" id="password-error"></span>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Xác nhận mật khẩu *</label>
+                        <div class="relative">
+                            <input type="password" id="reg-confirm-password" required placeholder="Nhập lại mật khẩu"
+                                   class="w-full px-4 py-2.5 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm pr-12">
+                            <i class="password-toggle fa-regular fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-tncGreen transition"
+                               onclick="togglePassword('reg-confirm-password', this)"></i>
+                        </div>
+                        <span class="error-message hidden" id="confirm-password-error"></span>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Địa chỉ Email</label>
+                        <input type="email" id="reg-email" placeholder="example@gmail.com"
+                               class="w-full px-4 py-2.5 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm">
+                        <span class="error-message hidden" id="email-error"></span>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Số điện thoại</label>
+                        <input type="tel" id="reg-phone" placeholder="0912345678"
+                               class="w-full px-4 py-2.5 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition text-sm">
+                        <span class="error-message hidden" id="phone-error"></span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 mt-2">
+                        <input type="checkbox" id="termsCheckbox" required class="rounded border-gray-300 text-tncGreen focus:ring-tncGreen">
+                        <label class="text-xs text-gray-500">
+                            Tôi đồng ý với
+                            <a href="#" class="text-tncGreen hover:underline">Điều khoản sử dụng</a>
+                            và
+                            <a href="#" class="text-tncGreen hover:underline">Chính sách bảo mật</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full bg-tncGreen text-white py-3 rounded-xl font-bold hover:bg-tncGreenHover transition text-sm mt-3 shadow-md shadow-green-900/20">
+                        <i class="fa-solid fa-user-plus mr-2"></i> ĐĂNG KÝ NGAY
+                    </button>
+                </form>
+
+                <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+                    <p class="text-xs text-gray-400">
+                        Đã có tài khoản?
+                        <a href="#" onclick="switchTab('login-tab'); return false;" class="text-tncGreen font-semibold hover:underline">Đăng nhập ngay</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white border-t border-gray-100 py-4 px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+    <div>TNC Shop © 2026 — Đồ Gia Dụng Thông Minh Cao Cấp. All rights reserved.</div>
+    <div class="flex space-x-4">
+        <a href="#" class="hover:text-tncGreen transition">Điều khoản sử dụng</a>
+        <a href="#" class="hover:text-tncGreen transition">Chính sách bảo mật</a>
+        <a href="#" class="hover:text-tncGreen transition">Liên hệ</a>
+    </div>
+</footer>
+
+<script>
+    const API_BASE_URL = 'http://localhost:8080/api/auth';
+    const alertBox = document.getElementById('alert-message');
+
+    // Hiển thị thông báo
+    function showAlert(text, isSuccess) {
+        alertBox.innerText = text;
+        alertBox.className = `mb-6 p-4 rounded-xl text-sm font-semibold text-center transition-all ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`;
+        alertBox.classList.remove('hidden');
+
+        // Tự động ẩn sau 3 giây
+        setTimeout(() => {
+            alertBox.classList.add('hidden');
+        }, 4000);
+    }
+
+    // Chuyển tab
+    function switchTab(tabName) {
+        alertBox.classList.add('hidden');
+        const btnLogin = document.getElementById('btn-login-tab');
+        const btnRegister = document.getElementById('btn-register-tab');
+        const loginContent = document.getElementById('login-tab-content');
+        const registerContent = document.getElementById('register-tab-content');
+
+        if (tabName === 'login-tab') {
+            btnLogin.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm transition bg-white text-tncGreen shadow-md";
+            btnRegister.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm transition hover:bg-white/10 text-white";
+            loginContent.classList.remove('hidden');
+            registerContent.classList.add('hidden');
+            // Reset form đăng nhập
+            document.getElementById('form-login').reset();
+        } else {
+            btnRegister.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm transition bg-white text-tncGreen shadow-md";
+            btnLogin.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-bold text-sm transition hover:bg-white/10 text-white";
+            registerContent.classList.remove('hidden');
+            loginContent.classList.add('hidden');
+            // Reset form đăng ký
+            document.getElementById('form-register').reset();
+            clearRegisterErrors();
+        }
+    }
+
+    // Toggle hiển thị mật khẩu
+    function togglePassword(inputId, iconElement) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            iconElement.classList.remove('fa-eye-slash');
+            iconElement.classList.add('fa-eye');
+        } else {
+            input.type = 'password';
+            iconElement.classList.remove('fa-eye');
+            iconElement.classList.add('fa-eye-slash');
+        }
+    }
+
+    // Xóa các lỗi validation
+    function clearRegisterErrors() {
+        const errorFields = ['username', 'fullname', 'password', 'confirm-password', 'email', 'phone'];
+        errorFields.forEach(field => {
+            const errorSpan = document.getElementById(`${field}-error`);
+            if (errorSpan) errorSpan.classList.add('hidden');
+            const input = document.getElementById(`reg-${field === 'confirm-password' ? 'confirm-password' : field}`);
+            if (input) input.classList.remove('input-error');
+        });
+    }
+
+    // Validation email
+    function isValidEmail(email) {
+        return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+    }
+
+    // Validation phone (Vietnam)
+    function isValidPhone(phone) {
+        return /^(0[3|5|7|8|9])[0-9]{8}$/.test(phone);
+    }
+
+    // Validation username (chỉ chữ và số, không dấu)
+    function isValidUsername(username) {
+        return /^[a-zA-Z0-9_]{3,20}$/.test(username);
+    }
+
+    // ==================== XỬ LÝ ĐĂNG NHẬP ====================
+    document.getElementById('form-login').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        if (!username || !password) {
+            showAlert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!", false);
+            return;
+        }
+
+        // Hiệu ứng loading
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> ĐANG XỬ LÝ...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, passwordHash: password })
+            });
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                const user = result.user;
+                const role = user.role ? user.role.toLowerCase() : 'user';
+
+                showAlert(`🎉 Chào mừng ${user.fullName || username} trở lại!`, true);
+
+                // Lưu thông tin user
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('userRole', role);
+
+                // Lưu ghi nhớ nếu checkbox được chọn
+                if (document.getElementById('rememberMe').checked) {
+                    localStorage.setItem('rememberedUser', username);
+                } else {
+                    localStorage.removeItem('rememberedUser');
+                }
+
+                // Chuyển hướng dựa trên vai trò
+                setTimeout(() => {
+                    if (role === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 1500);
+            } else {
+                showAlert(result.message || "Tài khoản hoặc mật khẩu không chính xác!", false);
+                // Hiệu ứng shake
+                document.querySelector('#form-login').classList.add('shake');
+                setTimeout(() => document.querySelector('#form-login').classList.remove('shake'), 500);
+            }
+        } catch (error) {
+            console.error(error);
+            showAlert("❌ Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại!", false);
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // ==================== XỬ LÝ ĐĂNG KÝ ====================
+    document.getElementById('form-register').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        let isValid = true;
+        clearRegisterErrors();
+
+        // Lấy giá trị
+        const username = document.getElementById('reg-username').value.trim();
+        const fullname = document.getElementById('reg-fullname').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const confirmPassword = document.getElementById('reg-confirm-password').value;
+        const email = document.getElementById('reg-email').value.trim();
+        const phone = document.getElementById('reg-phone').value.trim();
+        const termsAccepted = document.getElementById('termsCheckbox').checked;
+
+        // Validation username
+        if (!username) {
+            showFieldError('username', 'Vui lòng nhập tên đăng nhập');
+            isValid = false;
+        } else if (!isValidUsername(username)) {
+            showFieldError('username', 'Tên đăng nhập từ 3-20 ký tự (chữ, số, _)');
+            isValid = false;
+        }
+
+        // Validation fullname
+        if (!fullname) {
+            showFieldError('fullname', 'Vui lòng nhập họ và tên');
+            isValid = false;
+        } else if (fullname.length < 2) {
+            showFieldError('fullname', 'Họ tên phải có ít nhất 2 ký tự');
+            isValid = false;
+        }
+
+        // Validation password
+        if (!password) {
+            showFieldError('password', 'Vui lòng nhập mật khẩu');
+            isValid = false;
+        } else if (password.length < 6) {
+            showFieldError('password', 'Mật khẩu phải có ít nhất 6 ký tự');
+            isValid = false;
+        }
+
+        // Validation confirm password
+        if (password !== confirmPassword) {
+            showFieldError('confirm-password', 'Mật khẩu xác nhận không khớp');
+            isValid = false;
+        }
+
+        // Validation email (nếu có)
+        if (email && !isValidEmail(email)) {
+            showFieldError('email', 'Email không hợp lệ');
+            isValid = false;
+        }
+
+        // Validation phone (nếu có)
+        if (phone && !isValidPhone(phone)) {
+            showFieldError('phone', 'Số điện thoại không hợp lệ (đầu 03,05,07,08,09)');
+            isValid = false;
+        }
+
+        // Validation terms
+        if (!termsAccepted) {
+            showAlert("Vui lòng đồng ý với Điều khoản sử dụng và Chính sách bảo mật!", false);
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        // Hiệu ứng loading
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> ĐANG XỬ LÝ...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username,
+                    passwordHash: password,
+                    fullName: fullname,
+                    email: email || null,
+                    phone: phone || null,
+                    role: 'USER',
+                    status: 'active'
+                })
+            });
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                showAlert("🎉 Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.", true);
+                document.getElementById('form-register').reset();
+                document.getElementById('termsCheckbox').checked = false;
+
+                // Tự động chuyển sang tab đăng nhập sau 1.5 giây
+                setTimeout(() => {
+                    switchTab('login-tab');
+                    // Điền username vừa đăng ký vào form login
+                    document.getElementById('login-username').value = username;
+                }, 1500);
+            } else {
+                showAlert(result.message || "Đăng ký không thành công! Tên đăng nhập có thể đã tồn tại.", false);
+            }
+        } catch (error) {
+            console.error(error);
+            showAlert("❌ Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại!", false);
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Hiển thị lỗi field
+    function showFieldError(fieldId, message) {
+        const errorSpan = document.getElementById(`${fieldId}-error`);
+        const input = document.getElementById(`reg-${fieldId === 'confirm-password' ? 'confirm-password' : fieldId}`);
+        if (errorSpan) {
+            errorSpan.textContent = message;
+            errorSpan.classList.remove('hidden');
+        }
+        if (input) {
+            input.classList.add('input-error');
+            input.addEventListener('input', function onInput() {
+                input.classList.remove('input-error');
+                if (errorSpan) errorSpan.classList.add('hidden');
+                input.removeEventListener('input', onInput);
+            }, { once: true });
+        }
+    }
+
+    // Tự động điền username đã ghi nhớ
+    window.onload = function() {
+        const rememberedUser = localStorage.getItem('rememberedUser');
+        if (rememberedUser) {
+            document.getElementById('login-username').value = rememberedUser;
+            document.getElementById('rememberMe').checked = true;
+        }
+    };
+
+    // Export functions
+    window.switchTab = switchTab;
+    window.togglePassword = togglePassword;
+</script>
+</body>
+</html>

@@ -1,5 +1,4 @@
-﻿Trải nghiệm AI ngay trong các ứng dụng bạn yêu thích … Dùng Gemini để tạo bản nháp và tinh chỉnh nội dung, đồng thời sử dụng Gemini Pro để khai thác AI thế hệ mới của Google
-﻿--  9 BẢNG:
+﻿﻿--  9 BẢNG:
 --  1. nga_users          
 --  2. nga_customers     
 --  3. nga_categories 
