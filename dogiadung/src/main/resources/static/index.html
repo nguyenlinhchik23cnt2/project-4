@@ -245,7 +245,7 @@ footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
 <body>
 
 <div id="topBar">
-  <span>🎉 Miễn phí vận chuyển cho đơn từ <b>500.000₫</b> · Ưu đãi Bộ sưu tập Olive Nature 2026</span>
+  <span>Miễn phí vận chuyển cho đơn từ <b>500.000₫</b> · Ưu đãi Bộ sưu tập Olive Nature 2026</span>
   <button class="topbar-close" onclick="this.closest('div').style.display='none'">×</button>
 </div>
 
@@ -291,10 +291,12 @@ footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
   <nav class="nav-links">
     <ul>
       <li><a href="index.html" class="active">Trang chủ</a></li>
-      <li><a href="#TraProduct.html" class ="active">Sản phẩm</a></li>
-      <li><a href="#danh-muc">Danh mục</a></li>
+      <li><a href="Product.html" >Sản phẩm</a></li>
+      <li><a href="Category.html">Danh mục</a></li>
       <li><a href="News.html">Tin tức</a></li>
       <li><a href="Contact.html">Liên hệ</a></li>
+      <li><a href="About.html">Về chúng tôi</a> </li>
+      <li><a href="Privacy.html">Chính sách bảo mật</a></li>
       <li class="sale-link"><a href="#">Flash Sale</a></li>
     </ul>
   </nav>
@@ -303,11 +305,16 @@ footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
 <!-- SLIDER -->
 <div class="slider-wrap">
   <div class="slides" id="slides">
+
+    <!-- Slide 1 -->
     <div class="slide" id="sl0">
-      <div class="slide-bg" id="bg0" style="background:linear-gradient(135deg,#2d4a2a 0%,#4a7043 55%,#6b9960 100%)"></div>
+      <div class="slide-bg"
+           style="background-image: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=2000&q=80');
+                  background-size: cover; background-position: center;">
+      </div>
       <div class="slide-overlay"></div>
       <div class="slide-content">
-        <span class="slide-badge"> Bộ sưu tập mới 2026</span>
+        <span class="slide-badge">Bộ sưu tập mới 2026</span>
         <h1 class="slide-title">Không gian sống xanh cho gia đình bạn</h1>
         <p class="slide-desc">Hơn 200+ sản phẩm đồ gia dụng chất lượng cao, thiết kế hiện đại, thân thiện môi trường.</p>
         <div class="slide-btns">
@@ -316,12 +323,16 @@ footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
         </div>
       </div>
     </div>
+
+    <!-- Slide 2 -->
     <div class="slide" id="sl1">
-      <div class="slide-bg" style="background:linear-gradient(135deg,#7c2d12 0%,#c2410c 50%,#f97316 100%)">
+      <div class="slide-bg"
+           style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=2000&q=80');
+                  background-size: cover; background-position: center;">
       </div>
       <div class="slide-overlay"></div>
       <div class="slide-content">
-        <span class="slide-badge" style="background:#fff;color:#c2410c"> Flash Sale</span>
+        <span class="slide-badge" style="background:#fff;color:#c2410c">Flash Sale</span>
         <h1 class="slide-title">Giảm đến 40% thiết bị điện gia dụng</h1>
         <p class="slide-desc">Quạt đứng, ấm điện, máy xay sinh tố – tất cả đang sale lớn! Nhanh tay kẻo hết.</p>
         <div class="slide-btns">
@@ -330,11 +341,16 @@ footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
         </div>
       </div>
     </div>
+
+    <!-- Slide 3 -->
     <div class="slide" id="sl2">
-      <div class="slide-bg" style="background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 50%,#60a5fa 100%)"></div>
+      <div class="slide-bg"
+           style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a9c?w=2000&q=80');
+                  background-size: cover; background-position: center;">
+      </div>
       <div class="slide-overlay"></div>
       <div class="slide-content">
-        <span class="slide-badge" style="background:#fde68a;color:#92400e"> Bộ sưu tập</span>
+        <span class="slide-badge" style="background:#fde68a;color:#92400e">Bộ sưu tập</span>
         <h1 class="slide-title">Nâng tầm căn bếp với đồ dùng cao cấp</h1>
         <p class="slide-desc">Nồi áp suất, chảo chống dính, bộ dao nhà bếp – cho một gian bếp hoàn hảo.</p>
         <div class="slide-btns">
@@ -364,15 +380,58 @@ footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
   </div>
 </div>
 
-<!-- CATEGORIES -->
+<!-- DANH MỤC SẢN PHẨM -->
 <div class="section" id="danh-muc">
   <div class="section-head">
-    <div><h2 class="section-title">Danh mục sản phẩm</h2>
+    <div>
+      <h2 class="section-title">Danh mục sản phẩm</h2>
       <p class="section-sub">Chọn danh mục để xem sản phẩm phù hợp</p>
     </div>
   </div>
+
   <div class="cat-grid" id="catGrid">
-    <div class="cat-card active" onclick="filterByCategory('all')"><span class="cat-emoji"></span><div class="cat-name">Tất cả</div></div>
+    <!-- Tất cả -->
+    <div class="cat-card active" onclick="filterByCategory('all')">
+      <span class="cat-emoji"></span>
+      <div class="cat-name">Tất cả</div>
+    </div>
+
+    <!-- Nhà bếp -->
+    <div class="cat-card" onclick="filterByCategory('Nhà bếp')">
+      <span class="cat-emoji"></span>
+      <div class="cat-name">Nhà bếp</div>
+    </div>
+
+    <!-- Điện gia dụng -->
+    <div class="cat-card" onclick="filterByCategory('Điện gia dụng')">
+      <span class="cat-emoji"></span>
+      <div class="cat-name">Điện gia dụng</div>
+    </div>
+
+    <!-- Phòng ngủ -->
+    <div class="cat-card" onclick="filterByCategory('Phòng ngủ')">
+      <span class="cat-emoji"></span>
+      <div class="cat-name">Phòng ngủ</div>
+    </div>
+
+    <!-- Phòng khách -->
+    <div class="cat-card" onclick="filterByCategory('Phòng khách')">
+      <span class="cat-emoji"></span>
+      <div class="cat-name">Phòng khách</div>
+    </div>
+
+    <!-- Vệ sinh -->
+    <div class="cat-card" onclick="filterByCategory('Vệ sinh')">
+      <span class="cat-emoji"></span>
+      <div class="cat-name">Vệ sinh</div>
+    </div>
+
+    <!-- Làm vườn -->
+    <div class="cat-card" onclick="filterByCategory('Làm vườn')">
+      <span class="cat-emoji"></span>
+      <div class="cat-name">Làm vườn</div>
+    </div>
+
   </div>
 </div>
 
