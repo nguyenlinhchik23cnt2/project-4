@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNC Shop - Đăng Nhập</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tncGreen: '#1e4620',
+                        tncGreenHover: '#143016',
+                        tncBg: '#f4f7f4'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .password-toggle { cursor: pointer; transition: all 0.2s ease; }
+        .password-toggle:hover { color: #1e4620; }
+        .shake { animation: shake 0.5s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="bg-tncBg min-h-screen flex flex-col justify-between font-sans">
+
+<header class="bg-white shadow-sm border-b border-gray-100 py-4 px-6 md:px-16 flex justify-between items-center">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="bg-tncGreen p-2.5 rounded-xl text-white">
+            <i class="fa-solid fa-house-chimney text-xl"></i>
+        </div>
+        <div>
+            <span class="text-2xl font-black text-tncGreen tracking-tight">TNC Shop</span>
+            <span class="text-[10px] text-gray-500 font-semibold tracking-widest uppercase block">Đồ Gia Dụng Thông Minh</span>
+        </div>
+    </div>
+    <button onclick="window.location.href='index.html'" class="text-gray-500 hover:text-tncGreen transition text-sm font-medium">
+        <i class="fa-solid fa-arrow-left mr-1"></i> Về trang chủ
+    </button>
+</header>
+
+<main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="max-w-4xl w-full flex flex-col md:flex-row bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 min-h-[580px]">
+
+        <!-- Phần bên trái -->
+        <div class="w-full md:w-2/5 bg-gradient-to-br from-tncGreen to-tncGreenHover text-white p-8 flex flex-col justify-between">
+            <div>
+                <div class="mb-6">
+                    <i class="fa-solid fa-store text-4xl opacity-80"></i>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-2">Chào mừng trở lại!</h3>
+                <p class="text-sm opacity-80">Đăng nhập để tiếp tục mua sắm và quản lý tài khoản.</p>
+            </div>
+            <div class="text-xs opacity-60">
+                <i class="fa-solid fa-shield-alt mr-1"></i> Bảo mật tuyệt đối
+            </div>
+        </div>
+
+        <!-- Phần form đăng nhập -->
+        <div class="w-full md:w-3/5 p-8 lg:p-12 flex flex-col justify-center">
+            <div id="alert-message" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold text-center"></div>
+
+            <h2 class="text-3xl font-extrabold text-tncGreen mb-1">ĐĂNG NHẬP</h2>
+            <p class="text-sm text-gray-400 mb-8">Vui lòng nhập thông tin tài khoản</p>
+
+            <form id="form-login" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Tên đăng nhập *</label>
+                    <input type="text" id="login-username" required placeholder="Nhập tên tài khoản"
+                           class="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Mật khẩu *</label>
+                    <div class="relative">
+                        <input type="password" id="login-password" required placeholder="••••••••"
+                               class="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-tncGreen transition pr-12">
+                        <i class="password-toggle fa-regular fa-eye-slash absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+                           onclick="togglePassword('login-password', this)"></i>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center text-sm">
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" id="rememberMe" class="rounded">
+                        <span class="text-gray-500">Ghi nhớ tôi</span>
+                    </label>
+                    <a href="#" class="text-tncGreen hover:underline">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="w-full bg-tncGreen text-white py-3.5 rounded-xl font-bold hover:bg-tncGreenHover transition">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> ĐĂNG NHẬP
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-500">
+                    Chưa có tài khoản?
+                    <a href="register.html" class="text-tncGreen font-semibold hover:underline">Đăng ký ngay</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white border-t border-gray-100 py-4 px-6 text-xs text-gray-500 text-center">
+    TNC Shop © 2026 — Đồ Gia Dụng Thông Minh. All rights reserved.
+</footer>
+
+<script>
+    const API_BASE_URL = 'http://localhost:8080/api/auth';
+    const alertBox = document.getElementById('alert-message');
+
+    function showAlert(text, isSuccess) {
+        alertBox.innerText = text;
+        alertBox.className = `mb-6 p-4 rounded-xl text-sm font-semibold text-center ${isSuccess ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`;
+        alertBox.classList.remove('hidden');
+        setTimeout(() => alertBox.classList.add('hidden'), 4000);
+    }
+
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    }
+
+    document.getElementById('form-login').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        if (!username || !password) {
+            showAlert("Vui lòng nhập đầy đủ thông tin!", false);
+            return;
+        }
+
+        const submitBtn = e.target.querySelector('button');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> ĐANG ĐĂNG NHẬP...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: username, password: password })
+            });
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                showAlert(`🎉 Đăng nhập thành công!`, true);
+
+                // ✅ Lưu toàn bộ thông tin user vào localStorage (1 lần duy nhất, không trùng)
+                localStorage.setItem('currentUser', JSON.stringify(result.user));
+                localStorage.setItem('userRole', result.user.role?.toLowerCase() || 'customer');
+                localStorage.setItem('customerId', result.user.userId ?? result.user.customerId ?? result.user.id ?? '');
+                localStorage.setItem('fullName', result.user.fullName || '');
+                localStorage.setItem('username', result.user.username || '');
+
+                setTimeout(() => {
+                    const role = result.user.role?.toLowerCase();
+                    if (role === 'admin' || role === 'staff') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 1200);
+
+            } else {
+                showAlert(result.message || "Tài khoản hoặc mật khẩu không đúng!", false);
+            }
+        } catch (error) {
+            showAlert("Không thể kết nối đến server!", false);
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+</script>
+</body>
+</html>
