@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TNC Shop - Đăng nhập & Đăng ký</title>
+    <title>TNC Shop - Đăng Nhập</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-        // Cấu hình mã màu chủ đề của TNC Shop để dùng trong Tailwind
         tailwind.config = {
             theme: {
                 extend: {
@@ -24,7 +23,7 @@
 <body class="bg-tncBg min-h-screen flex flex-col justify-between font-sans">
 
 <header class="bg-white shadow-sm border-b border-gray-100 py-4 px-6 md:px-16 flex justify-between items-center">
-    <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='/'">
+    <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
         <div class="bg-tncGreen p-2.5 rounded-xl text-white">
             <i class="fa-solid fa-house-chimney text-xl"></i>
         </div>
@@ -33,249 +32,114 @@
             <span class="text-[10px] text-gray-500 font-semibold tracking-widest uppercase">Đồ Gia Dụng Thông Minh</span>
         </div>
     </div>
-
-    <div class="flex items-center space-x-4">
-        <div class="relative bg-gray-100 text-tncGreen p-2 rounded-full cursor-pointer hover:bg-gray-200 transition">
-            <i class="fa-solid fa-shopping-cart text-lg"></i>
-            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-        </div>
-        <button class="flex items-center space-x-2 bg-tncGreen text-white px-4 py-2 rounded-full font-medium hover:bg-tncGreenHover transition shadow-sm text-sm">
-            <i class="fa-solid fa-user-circle text-base"></i>
-            <span>Tài khoản</span>
-            <i class="fa-solid fa-chevron-down text-xs opacity-80"></i>
-        </button>
-    </div>
 </header>
 
 <main class="flex-grow flex items-center justify-center px-4 py-12">
-    <div class="max-w-4xl w-full flex flex-col md:flex-row bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 min-h-[500px]">
-
-        <div class="w-full md:w-3/5 p-8 lg:p-12 flex flex-col justify-center">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+        <div class="p-8 lg:p-12">
             <div id="alert-box" class="hidden mb-4 p-3 rounded-xl text-sm font-semibold text-center"></div>
 
-            <div id="login-section">
-                <h2 class="text-3xl font-extrabold text-tncGreen mb-2 tracking-tight">ĐĂNG NHẬP</h2>
-                <p class="text-sm text-gray-500 mb-6">Vui lòng đăng nhập để tiếp tục mua sắm</p>
+            <h2 class="text-3xl font-extrabold text-tncGreen mb-2 tracking-tight">ĐĂNG NHẬP</h2>
+            <p class="text-sm text-gray-500 mb-6">Vui lòng đăng nhập để tiếp tục</p>
 
-                <form id="login-form" class="space-y-4">
-                    <div>
-                        <input type="text" id="login-username" placeholder="Tên đăng nhập" required
-                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition placeholder-gray-400">
-                    </div>
-                    <div class="relative">
-                        <input type="password" id="login-password" placeholder="Mật khẩu" required
-                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition placeholder-gray-400">
-                        <span class="absolute right-4 top-3.5 text-gray-400 hover:text-tncGreen cursor-pointer" onclick="togglePassword('login-password')">
-                                <i class="fa-solid fa-eye" id="eye-login-password"></i>
-                            </span>
-                    </div>
-                    <div class="text-right">
-                        <a href="#" class="text-xs font-semibold text-gray-500 hover:text-tncGreen transition">Quên mật khẩu?</a>
-                    </div>
+            <form id="login-form" class="space-y-4">
+                <input type="text" id="login-username" placeholder="Tên đăng nhập" required
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition">
 
-                    <button type="submit" class="w-full bg-tncGreen text-white py-3 rounded-xl font-bold hover:bg-tncGreenHover transition duration-200 shadow-md shadow-green-900/10 tracking-wide mt-2">
-                        Đăng Nhập
-                    </button>
-                </form>
-
-                <div class="relative flex py-4 items-center">
-                    <div class="flex-grow border-t border-gray-200"></div>
-                    <span class="flex-shrink mx-4 text-gray-400 text-xs uppercase font-bold tracking-wider">Hoặc tiếp tục với</span>
-                    <div class="flex-grow border-t border-gray-200"></div>
+                <div class="relative">
+                    <input type="password" id="login-password" placeholder="Mật khẩu" required
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition">
+                    <span class="absolute right-4 top-3.5 text-gray-400 hover:text-tncGreen cursor-pointer" onclick="togglePassword('login-password')">
+                        <i class="fa-solid fa-eye" id="eye-login-password"></i>
+                    </span>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <button class="flex items-center justify-center space-x-2 border-2 border-gray-100 rounded-xl py-2.5 hover:bg-gray-50 font-medium text-sm text-gray-600 transition">
-                        <i class="fa-brands fa-google text-red-500"></i>
-                        <span>Google</span>
-                    </button>
-                    <button class="flex items-center justify-center space-x-2 border-2 border-gray-100 rounded-xl py-2.5 hover:bg-gray-50 font-medium text-sm text-gray-600 transition">
-                        <i class="fa-brands fa-facebook text-blue-600"></i>
-                        <span>Facebook</span>
-                    </button>
-                </div>
+                <button type="submit" class="w-full bg-tncGreen text-white py-3 rounded-xl font-bold hover:bg-tncGreenHover transition">
+                    Đăng Nhập
+                </button>
+            </form>
 
-                <p class="text-sm text-center text-gray-600 mt-6 md:hidden">Chưa có tài khoản? <a href="#" onclick="toggleView(false)" class="text-tncGreen font-bold hover:underline">Đăng ký ngay</a></p>
-            </div>
-
-            <div id="register-section" class="hidden">
-                <h2 class="text-3xl font-extrabold text-tncGreen mb-2 tracking-tight">ĐĂNG KÝ MỚI</h2>
-                <p class="text-sm text-gray-500 mb-6">Tạo tài khoản để nhận nhiều ưu đãi hấp dẫn</p>
-
-                <form id="register-form" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-3">
-                        <input type="text" id="reg-username" placeholder="Tên đăng nhập *" required
-                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition placeholder-gray-400">
-                        <input type="text" id="reg-fullname" placeholder="Họ và tên *" required
-                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition placeholder-gray-400">
-                    </div>
-                    <div class="relative">
-                        <input type="password" id="reg-password" placeholder="Mật khẩu *" required
-                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition placeholder-gray-400">
-                        <span class="absolute right-4 top-3.5 text-gray-400 hover:text-tncGreen cursor-pointer" onclick="togglePassword('reg-password')">
-                                <i class="fa-solid fa-eye" id="eye-reg-password"></i>
-                            </span>
-                    </div>
-                    <div>
-                        <input type="email" id="reg-email" placeholder="Địa chỉ Email"
-                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition placeholder-gray-400">
-                    </div>
-                    <div>
-                        <input type="text" id="reg-phone" placeholder="Số điện thoại"
-                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-tncGreen transition placeholder-gray-400">
-                    </div>
-
-                    <button type="submit" class="w-full bg-tncGreen text-white py-3 rounded-xl font-bold hover:bg-tncGreenHover transition duration-200 shadow-md shadow-green-900/10 tracking-wide mt-2">
-                        Tạo Tài Khoản
-                    </button>
-                </form>
-
-                <p class="text-sm text-center text-gray-600 mt-6 md:hidden">Đã có tài khoản? <a href="#" onclick="toggleView(true)" class="text-tncGreen font-bold hover:underline">Đăng nhập</a></p>
-            </div>
+            <p class="text-sm text-center text-gray-600 mt-6">
+                Chưa có tài khoản?
+                <a href="register.html" class="text-tncGreen font-bold hover:underline">Đăng ký ngay</a>
+            </p>
         </div>
-
-        <div class="w-full md:w-2/5 bg-gradient-to-br from-tncGreen to-tncGreenHover text-white p-8 lg:p-12 flex flex-col justify-between items-center text-center relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/5 rounded-full blur-xl"></div>
-            <div class="absolute -left-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-xl"></div>
-
-            <div class="my-auto space-y-6 z-10">
-                <div id="side-banner-login" class="space-y-4">
-                    <h3 class="text-2xl font-black tracking-tight">BẠN LÀ THÀNH VIÊN MỚI?</h3>
-                    <div class="text-sm opacity-90 space-y-3 max-w-[240px] mx-auto text-left py-2">
-                        <p class="flex items-center"><i class="fa-solid fa-circle-check text-xs mr-2 text-green-300"></i> Nhận ngay mã giảm giá ưu đãi</p>
-                        <p class="flex items-center"><i class="fa-solid fa-circle-check text-xs mr-2 text-green-300"></i> Theo dõi lịch trình đơn hàng</p>
-                        <p class="flex items-center"><i class="fa-solid fa-circle-check text-xs mr-2 text-green-300"></i> Quản lý lịch sử giao dịch sạch sẽ</p>
-                    </div>
-                    <button onclick="toggleView(false)" class="border-2 border-white text-white px-8 py-2.5 rounded-full font-bold bg-white/10 hover:bg-white hover:text-tncGreen transition duration-300 text-sm tracking-wide shadow-sm">
-                        ĐĂNG KÝ NGAY
-                    </button>
-                </div>
-
-                <div id="side-banner-reg" class="space-y-4 hidden">
-                    <h3 class="text-2xl font-black tracking-tight">ĐÃ CÓ TÀI KHOẢN?</h3>
-                    <p class="text-sm opacity-80 max-w-[240px] mx-auto">Đăng nhập ngay để tiếp tục đồng hành và sử dụng các dịch vụ gia dụng tiện ích của TNC Shop.</p>
-                    <button onclick="toggleView(true)" class="border-2 border-white text-white px-8 py-2.5 rounded-full font-bold bg-white/10 hover:bg-white hover:text-tncGreen transition duration-300 text-sm tracking-wide shadow-sm">
-                        ĐĂNG NHẬP NGAY
-                    </button>
-                </div>
-            </div>
-        </div>
-
     </div>
 </main>
 
-<footer class="bg-white border-t border-gray-100 py-4 px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 md:px-16 space-y-2 md:space-y-0">
-    <div>TNC Shop © 2026 — Đồ Gia Dụng Thông Minh Cao Cấp. All rights reserved.</div>
-    <div class="flex space-x-4">
-        <a href="#" class="hover:text-tncGreen transition">Điều khoản sử dụng</a>
-        <a href="#" class="hover:text-tncGreen transition">Chính sách bảo mật</a>
-        <a href="#" class="hover:text-tncGreen transition">Hỗ trợ kỹ thuật</a>
-    </div>
-</footer>
-
 <script>
     const API_BASE_URL = 'http://localhost:8080/api/auth';
+
     const alertBox = document.getElementById('alert-box');
 
-    // 1. Hàm hiển thị thông báo động dạng hộp thông báo
     function showNotification(text, isSuccess) {
         alertBox.innerText = text;
-        alertBox.className = `mb-4 p-3 rounded-xl text-sm font-semibold text-center ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`;
+        alertBox.className = `mb-4 p-3 rounded-xl text-sm font-semibold text-center
+            ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`;
         alertBox.classList.remove('hidden');
+
+        setTimeout(() => {
+            alertBox.classList.add('hidden');
+        }, 5000);
     }
 
-    // 2. Hàm ẩn/hiện mật khẩu
     function togglePassword(inputId) {
-        const passwordInput = document.getElementById(inputId);
-        const eyeIcon = document.getElementById(`eye-${inputId}`);
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById('eye-' + inputId);
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.replace("fa-eye", "fa-eye-slash");
         } else {
-            passwordInput.type = "password";
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye");
+            input.type = "password";
+            icon.classList.replace("fa-eye-slash", "fa-eye");
         }
     }
 
-    // 3. Hàm mượt mà chuyển đổi qua lại giữa form Đăng ký & Đăng nhập
-    function toggleView(showLogin) {
-        alertBox.classList.add('hidden');
-        if (showLogin) {
-            document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('register-section').classList.add('hidden');
-            document.getElementById('side-banner-login').classList.remove('hidden');
-            document.getElementById('side-banner-reg').classList.add('hidden');
-        } else {
-            document.getElementById('login-section').classList.add('hidden');
-            document.getElementById('register-section').classList.remove('hidden');
-            document.getElementById('side-banner-login').classList.add('hidden');
-            document.getElementById('side-banner-reg').classList.remove('hidden');
-        }
-    }
-
-    // 4. LẮP RÁP API ĐĂNG NHẬP (POST)
+    // ====================== LOGIN ======================
     document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const username = document.getElementById('login-username').value;
+
+        const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value;
+
+        if (!username || !password) {
+            showNotification("Vui lòng nhập đầy đủ thông tin!", false);
+            return;
+        }
 
         try {
             const response = await fetch(`${API_BASE_URL}/login`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify({ username, password })
             });
+
             const result = await response.json();
 
-            if (response.ok && result.success) {
-                showNotification(result.message, true);
-                localStorage.setItem('currentUser', JSON.stringify(result.user));
+            if (result.success) {
+                showNotification(result.message || "Đăng nhập thành công!", true);
 
-                // Delay 1 giây để người dùng thấy thông báo rồi chuyển về trang chủ /
+                // Lưu thông tin user
+                localStorage.setItem('currentUser', JSON.stringify(result.user || result));
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', username);
+
+                // Chuyển trang sau 1 giây
                 setTimeout(() => {
-                    window.location.href = '/';
+                    window.location.href = 'index.html';
                 }, 1000);
             } else {
                 showNotification(result.message || "Tài khoản hoặc mật khẩu không đúng!", false);
             }
         } catch (error) {
-            showNotification("Lỗi: Không kết nối được tới máy chủ Spring Boot (Port 8080)!", false);
-        }
-    });
-
-    // 5. LẮP RÁP API ĐĂNG KÝ (POST)
-    document.getElementById('register-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const username = document.getElementById('reg-username').value;
-        const passwordHash = document.getElementById('reg-password').value;
-        const fullName = document.getElementById('reg-fullname').value;
-        const email = document.getElementById('reg-email').value;
-        const phone = document.getElementById('reg-phone').value;
-
-        const userData = { username, passwordHash, fullName, email, phone };
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData)
-            });
-            const result = await response.json();
-
-            if (response.ok && result.success) {
-                showNotification(result.message, true);
-                document.getElementById('register-form').reset();
-                // Tự động đá người dùng về form đăng nhập sau 1.5 giây
-                setTimeout(() => toggleView(true), 1500);
-            } else {
-                showNotification(result.message || "Đăng ký không thành công!", false);
-            }
-        } catch (error) {
-            showNotification("Lỗi: Không kết nối được tới máy chủ Spring Boot (Port 8080)!", false);
+            console.error("Login error:", error);
+            showNotification("Không thể kết nối đến server. Vui lòng kiểm tra backend đang chạy chưa!", false);
         }
     });
 </script>
 </body>
-</html>ư1
+</html>

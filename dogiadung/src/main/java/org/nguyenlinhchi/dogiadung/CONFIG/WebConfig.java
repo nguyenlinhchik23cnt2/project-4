@@ -22,6 +22,6 @@ public class WebConfig implements WebMvcConfigurer {
 
         // Debug: cho phép truy cập trực tiếp
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:D:/project4/uploads/");
+                .addResourceLocations("file:C:/projec-t4/uploads/");
     }
 }

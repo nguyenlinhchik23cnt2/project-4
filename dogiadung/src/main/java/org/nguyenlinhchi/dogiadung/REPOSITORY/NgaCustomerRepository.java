@@ -16,7 +16,6 @@ public interface NgaCustomerRepository extends JpaRepository<NgaCustomer, Intege
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
 
-    // HÀM TÌM KIẾM & LỌC ĐỘNG: Tìm theo Tên, SĐT, Email, Địa chỉ và lọc theo Giới tính
     @Query("SELECT c FROM NgaCustomer c WHERE " +
             "(:keyword IS NULL OR c.fullName LIKE %:keyword% OR c.phone LIKE %:keyword% " +
             "OR c.email LIKE %:keyword% OR c.address LIKE %:keyword%) AND " +

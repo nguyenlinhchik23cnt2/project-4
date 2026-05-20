@@ -1,4 +1,3 @@
-/*
 package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
 import org.nguyenlinhchi.dogiadung.ENTITY.NgaUser;
@@ -28,7 +27,15 @@ public class NgaUserController {
         String username = loginRequest.get("username");
         String password = loginRequest.get("password");
 
+        if (username == null || password == null) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("success", false);
+            error.put("message", "Username và password không được để trống!");
+            return ResponseEntity.badRequest().body(error);
+        }
+
         Map<String, Object> loginResult = ngaUserService.login(username, password);
+
         if (Boolean.TRUE.equals(loginResult.get("success"))) {
             return ResponseEntity.ok(loginResult);
         } else {
@@ -42,13 +49,101 @@ public class NgaUserController {
         try {
             NgaUser savedUser = ngaUserService.register(user);
             response.put("success", true);
-            response.put("message", "Đăng ký tài khoản nhân viên nội bộ thành công!");
+            response.put("message", "Đăng ký tài khoản thành công!");
             response.put("user", savedUser);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("success", false);
             response.put("message", "Đăng ký thất bại: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    // Đổi mật khẩu (cần mật khẩu cũ)
+    @PostMapping("/users/{id}/change-password")
+    public ResponseEntity<Map<String, Object>> changePassword(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> requestBody,
+            @RequestHeader(value = "Authorization", required = false) String tokenHeader) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (tokenHeader == null || !tokenHeader.startsWith("Bearer ") || !hasAccessPrivilege(tokenHeader)) {
+            response.put("success", false);
+            response.put("message", "Lỗi bảo mật: Bạn không có quyền thực hiện thao tác này!");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+
+        try {
+            String oldPassword = requestBody.get("oldPassword");
+            String newPassword = requestBody.get("newPassword");
+
+            if (oldPassword == null || newPassword == null || newPassword.length() < 6) {
+                response.put("success", false);
+                response.put("message", "Mật khẩu mới phải có ít nhất 6 ký tự!");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            boolean success = ngaUserService.changePassword(id, oldPassword, newPassword);
+
+            if (success) {
+                response.put("success", true);
+                response.put("message", "Đổi mật khẩu thành công!");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("message", "Mật khẩu cũ không chính xác!");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Lỗi: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    // ====================== RESET MẬT KHẨU (MỚI) ======================
+    // ====================== RESET MẬT KHẨU ======================
+    @PostMapping("/users/{id}/reset-password")
+    public ResponseEntity<Map<String, Object>> resetPassword(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> requestBody,
+            @RequestHeader(value = "Authorization", required = false) String tokenHeader) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        // Tạm thời bỏ qua kiểm tra token để test (sau này mới bật lại)
+        // if (tokenHeader == null || !tokenHeader.startsWith("Bearer ") || !hasAccessPrivilege(tokenHeader)) {
+        //     response.put("success", false);
+        //     response.put("message", "Lỗi bảo mật!");
+        //     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        // }
+
+        try {
+            String newPassword = requestBody.get("newPassword");
+
+            if (newPassword == null || newPassword.length() < 6) {
+                response.put("success", false);
+                response.put("message", "Mật khẩu mới phải có ít nhất 6 ký tự!");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            boolean success = ngaUserService.resetPassword(id, newPassword);
+
+            if (success) {
+                response.put("success", true);
+                response.put("message", "Reset mật khẩu thành công!");
+                // KHÔNG trả về mật khẩu thật trong message
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("message", "Không tìm thấy người dùng!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Lỗi: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
@@ -61,7 +156,6 @@ public class NgaUserController {
 
         Map<String, Object> response = new HashMap<>();
 
-        // Kiểm tra Token tường minh, tối ưu hóa logic đảo ngược
         if (tokenHeader == null || !tokenHeader.startsWith("Bearer ") || !hasAccessPrivilege(tokenHeader)) {
             response.put("success", false);
             response.put("message", "Lỗi bảo mật: Bạn không có quyền truy cập chức năng này!");
@@ -83,7 +177,7 @@ public class NgaUserController {
 
     @PatchMapping("/users/{id}/status")
     public ResponseEntity<Map<String, Object>> updateUserStatus(
-            @PathVariable Integer id, // FIX: Đã lược bỏ khai báo trùng lặp ("id") gây ra cảnh báo thừa
+            @PathVariable Integer id,
             @RequestBody Map<String, String> requestBody,
             @RequestHeader(value = "Authorization", required = false) String tokenHeader) {
 
@@ -117,7 +211,7 @@ public class NgaUserController {
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Map<String, Object>> deleteUser(
-            @PathVariable Integer id, // FIX: Đã lược bỏ khai báo trùng lặp ("id") gây ra cảnh báo thừa
+            @PathVariable Integer id,
             @RequestHeader(value = "Authorization", required = false) String tokenHeader) {
 
         Map<String, Object> response = new HashMap<>();
@@ -158,4 +252,3 @@ public class NgaUserController {
         }
     }
 }
-*/

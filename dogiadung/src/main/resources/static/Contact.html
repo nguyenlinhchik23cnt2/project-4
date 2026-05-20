@@ -239,7 +239,7 @@
 
 <!-- TOP BAR -->
 <div id="topBar">
-    <span>💬 Hotline hỗ trợ <b>1800 1234</b> · Miễn phí gọi · 8:00 – 22:00 mỗi ngày</span>
+    <span> Hotline hỗ trợ <b>1800 1234</b> · Miễn phí gọi · 8:00 – 22:00 mỗi ngày</span>
     <button class="topbar-close" onclick="this.closest('div').style.display='none'">×</button>
 </div>
 
@@ -292,12 +292,14 @@
     </div>
     <nav class="nav-links">
         <ul>
-            <li><a href="index.html"> Trang chủ</a></li>
-            <li><a href="Product.html"> Sản phẩm</a></li>
-            <li><a href="index.html#danh-muc"> Danh mục</a></li>
-            <li><a href="index.html#tin-tuc"> Tin tức</a></li>
-            <li><a href="Contact.html" class="active"> Liên hệ</a></li>
-            <li class="sale-link"><a href="#"> Flash Sale</a></li>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="Product.html" >Sản phẩm</a></li>
+            <li><a href="Category.html">Danh mục</a></li>
+            <li><a href="News.html" >Tin tức</a></li>
+            <li><a href="Contact.html" class="active">Liên hệ</a></li>
+            <li><a href="About.html">Về chúng tôi</a> </li>
+            <li><a href="Guarantee.html">Chính sách bảo hành</a></li>
+            <li class="sale-link"><a href="#">Flash Sale</a></li>
         </ul>
     </nav>
 </header>
@@ -357,11 +359,11 @@
             <div style="margin-bottom:14px">
                 <div style="font-size:12px;font-weight:700;color:var(--sub);margin-bottom:8px;letter-spacing:.04em">CHỦ ĐỀ</div>
                 <div class="topic-chips">
-                    <div class="topic-chip active" onclick="selectTopic(this)">🛒 Tư vấn mua hàng</div>
-                    <div class="topic-chip" onclick="selectTopic(this)">🔄 Đổi trả sản phẩm</div>
-                    <div class="topic-chip" onclick="selectTopic(this)">🚚 Vận chuyển</div>
-                    <div class="topic-chip" onclick="selectTopic(this)">🛡️ Bảo hành</div>
-                    <div class="topic-chip" onclick="selectTopic(this)">💡 Góp ý khác</div>
+                    <div class="topic-chip active" onclick="selectTopic(this)"> Tư vấn mua hàng</div>
+                    <div class="topic-chip" onclick="selectTopic(this)"> Đổi trả sản phẩm</div>
+                    <div class="topic-chip" onclick="selectTopic(this)"> Vận chuyển</div>
+                    <div class="topic-chip" onclick="selectTopic(this)">Bảo hành</div>
+                    <div class="topic-chip" onclick="selectTopic(this)">Góp ý khác</div>
                 </div>
             </div>
             <!-- Name + Phone -->
@@ -401,7 +403,7 @@
                 </select>
             </div>
             <button class="btn-submit" onclick="submitForm()">
-                <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                 Gửi tin nhắn
             </button>
             <div class="form-note">
                 <i class="fas fa-lock me-1"></i>
@@ -519,7 +521,7 @@
 <div class="hours-section">
     <div class="hours-inner">
         <div class="hours-left">
-            <h2>⏰ Giờ làm việc</h2>
+            <h2> Giờ làm việc</h2>
             <p>Cửa hàng mở cửa hầu hết các ngày trong tuần. Hotline hỗ trợ hoạt động từ 8:00 đến 22:00 kể cả cuối tuần và lễ Tết.</p>
             <button class="btn-chat" onclick="alert('Tính năng chat trực tuyến sẽ sớm ra mắt!')">
                 <i class="fas fa-comments"></i> Chat ngay với tư vấn viên
@@ -544,7 +546,7 @@
 <footer>
     <div class="footer-inner">
         <div class="footer-brand">
-            <span class="footer-brand-name">🛋 TNC Shop</span>
+            <span class="footer-brand-name"> TNC Shop</span>
             <p>Chuỗi cửa hàng đồ gia dụng thông minh hàng đầu Việt Nam. Cam kết sản phẩm chất lượng, giá cả hợp lý.</p>
             <div style="margin-bottom:10px;font-size:12px;color:rgba(255,255,255,.35)">Đăng ký nhận ưu đãi độc quyền</div>
             <div class="footer-nl">
@@ -588,7 +590,7 @@
 <!-- CART -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-head"><h3>🛒 Giỏ hàng</h3><button class="cart-close" onclick="toggleCart()">×</button></div>
+    <div class="cart-head"><h3> Giỏ hàng</h3><button class="cart-close" onclick="toggleCart()">×</button></div>
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-foot" id="cartFoot"></div>
 </div>
