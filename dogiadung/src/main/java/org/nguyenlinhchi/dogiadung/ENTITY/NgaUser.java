@@ -1,16 +1,18 @@
 package org.nguyenlinhchi.dogiadung.ENTITY;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "nga_users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class NgaUser {
 
     @Id
@@ -18,7 +20,7 @@ public class NgaUser {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "username", nullable = false, length = 60)
+    @Column(name = "username", nullable = false, unique = true, length = 60)
     private String username;
 
     @Column(name = "password_hash", nullable = false, length = 255)
@@ -30,10 +32,12 @@ public class NgaUser {
     @Column(name = "email", length = 100)
     private String email;
 
+    @Column(name = "phone", length = 20)
     private String phone;
 
     @Column(name = "role", length = 20)
     private String role = "staff";
+
     @Column(name = "status", length = 20)
     private String status = "active";
 
@@ -43,13 +47,7 @@ public class NgaUser {
     @Column(name = "avatar_url", length = 255)
     private String avatarUrl;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        if (this.createdAt == null) {
-            this.createdAt = LocalDateTime.now();
-        }
-    }
 }

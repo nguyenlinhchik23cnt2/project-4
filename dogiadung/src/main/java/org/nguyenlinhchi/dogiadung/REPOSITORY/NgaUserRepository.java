@@ -13,19 +13,16 @@ import java.util.Optional;
 public interface NgaUserRepository extends JpaRepository<NgaUser, Integer> {
 
     Optional<NgaUser> findByUsername(String username);
-
     boolean existsByUsername(String username);
 
-    boolean existsByEmail(String email);
-
-    // Thuật toán tìm kiếm nâng cao theo từ khóa, vai trò và trạng thái
     @Query("SELECT u FROM NgaUser u WHERE " +
-            "(:keyword IS NULL OR LOWER(u.username) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "(:keyword = '' OR LOWER(u.username) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(u.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
-            "AND (:role = 'all' OR u.role = :role) " +
-            "AND (:status = 'all' OR u.status = :status)")
-    List<NgaUser> searchAndFilterUsers(@Param("keyword") String keyword,
-                                       @Param("status") String status,
-                                       @Param("role") String role);
+            "AND (:status IS NULL OR u.status = :status) " +
+            "AND (:role IS NULL OR u.role = :role) " +
+            "ORDER BY u.createdAt DESC")
+    List<NgaUser> searchUsers(@Param("keyword") String keyword,
+                              @Param("status") String status,
+                              @Param("role") String role);
 }
