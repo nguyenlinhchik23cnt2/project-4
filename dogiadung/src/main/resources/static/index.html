@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TNC Shop – Đồ Gia Dụng Thông Minh</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<<<<<<< HEAD
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+=======
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -86,12 +90,21 @@
     .see-all{font-size:13px;font-weight:600;color:var(--olive);display:flex;align-items:center;gap:5px;white-space:nowrap;border:1.5px solid var(--olive);padding:7px 16px;border-radius:50px;transition:all .2s}
     .see-all:hover{background:var(--olive);color:#fff}
     /* CAT GRID */
+<<<<<<< HEAD
     .cat-grid{display:flex;flex-wrap:wrap;gap:10px}
     .cat-card{background:#fff;border-radius:50px;border:1.5px solid var(--border);padding:10px 18px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .25s;white-space:nowrap}
     .cat-card:hover{border-color:var(--olive);box-shadow:0 4px 14px rgba(74,112,67,.15);background:var(--olive-l)}
     .cat-card.active{border-color:var(--olive);background:var(--olive);color:#fff}
     .cat-card .cat-emoji{font-size:18px;line-height:1}
     .cat-card .cat-name{font-size:13px;font-weight:600;color:var(--sub)}
+=======
+    .cat-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;justify-items:center}
+    .cat-card{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:18px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .25s;width:100%}
+    .cat-card:hover{border-color:var(--olive);box-shadow:0 6px 18px rgba(74,112,67,.18);background:var(--olive-l);transform:translateY(-3px)}
+    .cat-card.active{border-color:var(--olive);background:var(--olive);color:#fff}
+    .cat-card .cat-emoji{font-size:28px;line-height:1}
+    .cat-card .cat-name{font-size:12px;font-weight:700;color:var(--sub);text-align:center;letter-spacing:.01em}
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     .cat-card.active .cat-name{color:#fff}
     .cat-card.active .cat-emoji{filter:brightness(10)}
     /* PRODUCT */
@@ -285,21 +298,22 @@
       <select class="search-cat" id="headerCatSelect" onchange="syncCat()">
         <option value="all">Tất cả</option>
       </select>
-      <input type="text" id="headerSearch" placeholder="Bạn cần tìm gì hôm nay?" onkeyup="filterProducts()">
-      <button class="search-btn" onclick="filterProducts()"><i class="fas fa-search"></i></button>
+      <input type="text" id="headerSearch" placeholder="Bạn cần tìm gì hôm nay?" onkeydown="if(event.key==='Enter')goSearch()">
+      <button class="search-btn" onclick="goSearch()"><i class="ri-search-line"></i></button>
     </div>
     <div class="header-icons">
-      <button class="icon-btn" onclick="toggleCart()" title="Giỏ hàng">
-        <i class="fa-solid fa-cart-shopping"></i>
+      <button class="icon-btn" id="cartIcon" onclick="toggleCart()" title="Giỏ hàng">
+        <i class="ri-shopping-cart-line"></i>
         <span class="badge-count" id="cartCount">0</span>
       </button>
       <div class="dropdown">
         <button class="account-btn" type="button" data-bs-toggle="dropdown">
-          <i class="fa-regular fa-user" style="font-size:16px;color:var(--sub)"></i>
+          <i class="ri-user-line" style="font-size:16px;color:var(--sub)"></i>
           <span id="userDisplay">Tài khoản</span>
-          <i class="fa-solid fa-chevron-down" style="font-size:10px;color:var(--dim)"></i>
+          <i class="ri-arrow-down-s-line" style="font-size:10px;color:var(--dim)"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2" id="menuAccount">
+<<<<<<< HEAD
           <li><a class="dropdown-item py-2" href="login.html"><i class="fa-solid fa-right-to-bracket me-2 text-muted"></i>Đăng nhập</a></li>
           <li><a class="dropdown-item py-2" href="register.html"><i class="fa-solid fa-user-plus me-2 text-muted"></i>Đăng ký</a></li>
           <li><hr class="dropdown-divider"></li>
@@ -308,6 +322,24 @@
             <hr class="dropdown-divider">
             <a class="dropdown-item text-primary fw-bold py-2" href="admin.html"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Trang quản trị</a>
           </li>
+=======
+          <!-- Chưa đăng nhập -->
+          <li id="menuLogin"><a class="dropdown-item py-2" href="login.html"><i class="ri-login-box-line me-2 text-muted"></i>Đăng nhập</a></li>
+          <li id="menuRegister"><a class="dropdown-item py-2" href="register.html"><i class="ri-user-line-plus me-2 text-muted"></i>Đăng ký</a></li>
+          <!-- Khách hàng (CUSTOMER) -->
+          <li id="menuProfile" style="display:none"><a class="dropdown-item py-2" href="profile.html"><i class="ri-user-line me-2 text-muted"></i>Tài khoản của tôi</a></li>
+          <li id="menuOrders" style="display:none"><a class="dropdown-item py-2" href="my-orders.html"><i class="ri-box-3-line me-2 text-muted"></i>Đơn hàng của tôi</a></li>
+          <li id="menuDividerLogout" style="display:none"><hr class="dropdown-divider"></li>
+          <li id="menuLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="ri-logout-box-line me-2"></i>Đăng xuất</a></li>
+          <!-- Admin -->
+          <li id="adminMenu" style="display:none"><a class="dropdown-item text-primary fw-bold py-2" href="admin.html"><i class="ri-tools-line me-2"></i>Trang quản trị</a></li>
+          <li id="adminLogoutDivider" style="display:none"><hr class="dropdown-divider"></li>
+          <li id="adminLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="ri-logout-box-line me-2"></i>Đăng xuất</a></li>
+          <!-- Staff -->
+          <li id="staffMenu" style="display:none"><a class="dropdown-item text-success fw-bold py-2" href="admin.html"><i class="ri-user-tie me-2"></i>Trang nhân viên</a></li>
+          <li id="staffLogoutDivider" style="display:none"><hr class="dropdown-divider"></li>
+          <li id="staffLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="ri-logout-box-line me-2"></i>Đăng xuất</a></li>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
         </ul>
       </div>
     </div>
@@ -404,6 +436,7 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <!-- PROMO -->
 <div style="max-width:1280px;margin:0 auto;padding:32px 24px 0">
   <div class="promo-grid">
@@ -424,6 +457,72 @@
           <h3>Flash Sale Cuối Tuần </h3>
           <p>Giảm đến 40% điện gia dụng — Số lượng có hạn, nhanh tay kẻo hết!</p>
           <span class="promo-btn">Flash Sale →</span>
+=======
+<!-- BỘ SƯU TẬP MỚI -->
+<div style="background:#fff;padding:48px 0 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px">
+    <div style="text-align:center;margin-bottom:32px">
+      <span style="display:inline-block;background:var(--olive-l);color:var(--olive);font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Mới nhất 2025</span>
+      <h2 style="font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--text);letter-spacing:-.02em;margin-bottom:8px">Bộ sưu tập mới ra mắt</h2>
+      <p style="font-size:14px;color:var(--sub);max-width:500px;margin:0 auto;line-height:1.7">Những thiết kế mới nhất – kết hợp hoàn hảo giữa thẩm mỹ và công năng cho không gian sống hiện đại</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:16px;padding-bottom:52px">
+      <!-- Card lớn -->
+      <div onclick="filterByCategory('Nhà bếp')" style="position:relative;border-radius:18px;overflow:hidden;cursor:pointer;min-height:360px;background:#1c2c1a">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80" alt="Bộ sưu tập Bếp Olive" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.75;transition:transform .5s,opacity .3s;position:absolute;inset:0" onmouseover="this.style.transform='scale(1.05)';this.style.opacity='.6'" onmouseout="this.style.transform='scale(1)';this.style.opacity='.75'">
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,25,10,.85) 0%,rgba(10,25,10,.1) 60%)"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 26px">
+          <span style="display:inline-block;background:var(--olive);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Bộ sưu tập chủ đạo</span>
+          <h3 style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.3;margin-bottom:8px">Bếp Olive Nature – Tươi Xanh & Bền Vững</h3>
+          <p style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:16px">Trọn bộ đồ dùng nhà bếp gam Olive – thiết kế tối giản, chất liệu cao cấp, thân thiện môi trường.</p>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:50px;padding:9px 20px;font-size:13px;font-weight:700;backdrop-filter:blur(4px)">Khám phá ngay <i class="ri-arrow-right-line" style="font-size:11px"></i></span>
+        </div>
+      </div>
+      <!-- Card nhỏ 1 -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div onclick="filterByCategory('Điện gia dụng')" style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;flex:1;min-height:170px;background:#0f2027">
+          <img src="https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=700&q=80" alt="Điện gia dụng" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.7;position:absolute;inset:0;transition:transform .4s" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,30,20,.8) 0%,transparent 60%)"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 20px">
+            <span style="display:inline-block;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">Mới ra mắt</span>
+            <h3 style="font-size:15px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:4px">Điện gia dụng thế hệ mới</h3>
+            <p style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px">Tiết kiệm điện, công nghệ thông minh</p>
+            <span style="font-size:12px;font-weight:700;color:#fde68a">Xem bộ sưu tập →</span>
+          </div>
+        </div>
+        <div onclick="filterByCategory('Phòng khách')" style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;flex:1;min-height:170px;background:#1a1a2e">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80" alt="Phòng khách" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.65;position:absolute;inset:0;transition:transform .4s" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,20,40,.85) 0%,transparent 60%)"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 20px">
+            <span style="display:inline-block;background:#7c3aed;color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">Phong cách sống</span>
+            <h3 style="font-size:15px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:4px">Phòng khách hiện đại</h3>
+            <p style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px">Nội thất tinh tế, không gian sang trọng</p>
+            <span style="font-size:12px;font-weight:700;color:#c4b5fd">Xem bộ sưu tập →</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card nhỏ 2 -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div onclick="filterByCategory('Làm vườn')" style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;flex:1;min-height:170px;background:#1a2e1a">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&q=80" alt="Làm vườn" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.7;position:absolute;inset:0;transition:transform .4s" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,30,10,.85) 0%,transparent 60%)"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 20px">
+            <span style="display:inline-block;background:#16a34a;color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">Mùa xuân 2025</span>
+            <h3 style="font-size:15px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:4px">Dụng cụ làm vườn</h3>
+            <p style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px">Chăm sóc cây xanh dễ dàng hơn</p>
+            <span style="font-size:12px;font-weight:700;color:#86efac">Xem bộ sưu tập →</span>
+          </div>
+        </div>
+        <div onclick="filterByCategory('Vệ sinh')" style="position:relative;border-radius:16px;overflow:hidden;cursor:pointer;flex:1;min-height:170px;background:#1e2030">
+          <img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?w=700&q=80" alt="Vệ sinh" style="width:100%;height:100%;object-fit:cover;display:block;opacity:.65;position:absolute;inset:0;transition:transform .4s" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,15,35,.85) 0%,transparent 60%)"></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 20px">
+            <span style="display:inline-block;background:#0891b2;color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">Tinh tế & gọn gàng</span>
+            <h3 style="font-size:15px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:4px">Bộ vệ sinh cao cấp</h3>
+            <p style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px">Không gian sạch sẽ, ngăn nắp mỗi ngày</p>
+            <span style="font-size:12px;font-weight:700;color:#7dd3fc">Xem bộ sưu tập →</span>
+          </div>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
         </div>
       </div>
     </div>
@@ -432,11 +531,9 @@
 
 <!-- DANH MỤC SẢN PHẨM -->
 <div class="section" id="danh-muc">
-  <div class="section-head">
-    <div>
-      <h2 class="section-title">Danh mục sản phẩm</h2>
-      <p class="section-sub">Chọn danh mục để xem sản phẩm phù hợp</p>
-    </div>
+  <div style="text-align:center;margin-bottom:32px">
+    <h2 class="section-title">Danh mục sản phẩm</h2>
+    <p class="section-sub">Chọn danh mục để xem sản phẩm phù hợp</p>
   </div>
 
   <div class="cat-grid" id="catGrid">
@@ -503,7 +600,11 @@
     </div>
     <div class="new-grid" id="newGrid"><div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim)">Đang tải...</div></div>
     <div style="text-align:center;margin-top:28px">
+<<<<<<< HEAD
       <a class="see-all" href="Product.html">Xem tất cả sản phẩm <i class="fas fa-arrow-right"></i></a>
+=======
+      <a class="see-all" href="Product.html">Xem tất cả sản phẩm <i class="ri-arrow-right-line"></i></a>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     </div>
   </div>
 </div>
@@ -519,33 +620,37 @@
       <div class="news-card">
         <div class="news-img"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt=""></div>
         <div class="news-body">
-          <div class="news-meta"><span class="news-tag">Review</span><span class="news-date"><i class="fas fa-calendar-alt me-1"></i>12/05/2025</span></div>
+          <div class="news-meta"><span class="news-tag">Review</span><span class="news-date"><i class="ri-calendar-line me-1"></i>12/05/2025</span></div>
           <h3 class="news-title">Top 5 nồi áp suất đáng mua nhất 2025 — Review chi tiết từ chuyên gia</h3>
           <p class="news-excerpt">Chúng tôi đã thử nghiệm 10 mẫu nồi áp suất và chọn ra 5 sản phẩm xuất sắc nhất về độ bền, an toàn và hiệu quả nấu nướng.</p>
-          <div class="news-read">Đọc tiếp <i class="fas fa-arrow-right"></i></div>
+          <div class="news-read">Đọc tiếp <i class="ri-arrow-right-line"></i></div>
         </div>
       </div>
       <div class="news-card">
         <div class="news-img"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80" alt=""></div>
         <div class="news-body">
-          <div class="news-meta"><span class="news-tag">Mẹo hay</span><span class="news-date"><i class="fas fa-calendar-alt me-1"></i>05/05/2025</span></div>
+          <div class="news-meta"><span class="news-tag">Mẹo hay</span><span class="news-date"><i class="ri-calendar-line me-1"></i>05/05/2025</span></div>
           <h3 class="news-title">7 cách sắp xếp đồ dùng nhà bếp giúp không gian gọn gàng hơn</h3>
           <p class="news-excerpt">Một căn bếp ngăn nắp không chỉ giúp bạn nấu ăn nhanh hơn mà còn tạo cảm giác thoải mái, dễ chịu mỗi khi vào bếp.</p>
-          <div class="news-read">Đọc tiếp <i class="fas fa-arrow-right"></i></div>
+          <div class="news-read">Đọc tiếp <i class="ri-arrow-right-line"></i></div>
         </div>
       </div>
       <div class="news-card">
         <div class="news-img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt=""></div>
         <div class="news-body">
-          <div class="news-meta"><span class="news-tag">Xu hướng</span><span class="news-date"><i class="fas fa-calendar-alt me-1"></i>28/04/2025</span></div>
+          <div class="news-meta"><span class="news-tag">Xu hướng</span><span class="news-date"><i class="ri-calendar-line me-1"></i>28/04/2025</span></div>
           <h3 class="news-title">Xu hướng nội thất 2025: Tối giản, bền vững và thân thiện môi trường</h3>
           <p class="news-excerpt">Người tiêu dùng ngày càng ưa chuộng các sản phẩm thân thiện môi trường, có tuổi thọ cao và thiết kế tối giản.</p>
-          <div class="news-read">Đọc tiếp <i class="fas fa-arrow-right"></i></div>
+          <div class="news-read">Đọc tiếp <i class="ri-arrow-right-line"></i></div>
         </div>
       </div>
     </div>
     <div style="text-align:center;margin-top:28px">
+<<<<<<< HEAD
       <a class="see-all" href="News.html">Xem tất cả bài viết <i class="fas fa-arrow-right"></i></a>
+=======
+      <a class="see-all" href="News.html">Xem tất cả bài viết <i class="ri-arrow-right-line"></i></a>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     </div>
   </div>
 </div>
@@ -623,12 +728,17 @@
   <div class="cart-foot" id="cartFoot"></div>
 </div>
 
-<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})}"><i class="ri-arrow-up-line"></i></button>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   const API="http://localhost:8080/api/products";
+<<<<<<< HEAD
   const IMG="http://localhost:8080/images/products/";
+=======
+  // const IMG="http://localhost:8080/images/products/";
+  const IMG = "http://localhost:8080/uploads/products/";   // ← Đổi sang uploads
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
   let allProds=[];
   let cart=JSON.parse(localStorage.getItem("tnc_cart")||"[]");
 
@@ -662,6 +772,7 @@
       buildCats();renderFeatured();renderNew();
     }catch(e){
       buildCats(); // vẫn hiển thị danh mục tĩnh khi API lỗi
+<<<<<<< HEAD
       document.getElementById('featuredGrid').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px"><i class="fas fa-wifi-slash" style="font-size:40px;color:var(--dim);margin-bottom:16px;display:block"></i><h5>Không thể kết nối server</h5><p style="color:var(--sub);font-size:13px">Kiểm tra Spring Boot đang chạy tại localhost:8080</p></div>`;
       document.getElementById('newGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim)">Không thể tải sản phẩm</div>';
     }
@@ -707,6 +818,73 @@
   }
   function syncCat(){filterByCategory(document.getElementById('headerCatSelect').value)}
 
+=======
+      document.getElementById('featuredGrid').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px"><i class="ri-wifi-off-line" style="font-size:40px;color:var(--dim);margin-bottom:16px;display:block"></i><h5>Không thể kết nối server</h5><p style="color:var(--sub);font-size:13px">Kiểm tra Spring Boot đang chạy tại localhost:8080</p></div>`;
+      document.getElementById('newGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim)">Không thể tải sản phẩm</div>';
+    }
+
+
+
+  }function getImg(url) {
+
+    if (url.startsWith("http")) return url;
+
+    // Xử lý nhiều kiểu lưu trong database
+    let clean = url
+            .replace(/^uploads\/products\//, '')
+            .replace(/^\/uploads\/products\//, '')
+            .replace(/^uploads\//, '')
+            .replace(/^\/uploads\//, '')
+            .replace(/^images\/products\//, '')
+            .replace(/^\/images\/products\//, '');
+
+    return IMG + encodeURIComponent(clean);
+  }
+
+  const ICONS={'Nhà bếp':'','Phòng ngủ':'️','Phòng khách':'','Vệ sinh':'','Điện gia dụng':'','Làm vườn':'','Lưu trữ':'','Làm sạch':'','Nồi & Chảo':'','Dao & Thớt':''};
+
+  const STATIC_CATS=[
+    {name:'Nhà bếp',emoji:''},
+    {name:'Điện gia dụng',emoji:''},
+    {name:'Phòng ngủ',emoji:''},
+    {name:'Phòng khách',emoji:''},
+    {name:'Vệ sinh',emoji:''},
+    {name:'Làm vườn',emoji:''},
+  ];
+
+  function buildCats(){
+    const apiCats=new Set();
+    allProds.forEach(p=>{if(p.category?.name)apiCats.add(p.category.name)});
+    // Hiển thị danh mục tĩnh + bất kỳ danh mục nào từ API chưa có trong danh sách
+    const displayCats=[...STATIC_CATS];
+    apiCats.forEach(c=>{if(!STATIC_CATS.find(s=>s.name===c))displayCats.push({name:c,emoji:ICONS[c]||''});});
+    const g=document.getElementById('catGrid');
+    g.innerHTML='<div class="cat-card active" onclick="filterByCategory(\'all\')"><span class="cat-emoji"></span><div class="cat-name">Tất cả</div></div>';
+    displayCats.forEach(c=>{g.innerHTML+=`<div class="cat-card" onclick="filterByCategory('${c.name}')" id="cc-${c.name.replace(/\s/g,'_')}"><span class="cat-emoji">${c.emoji}</span><div class="cat-name">${c.name}</div></div>`;});
+    const sel=document.getElementById('headerCatSelect');
+    sel.innerHTML='<option value="all">Tất cả</option>';
+    displayCats.forEach(c=>sel.innerHTML+=`<option value="${c.name}">${c.name}</option>`);
+  }
+
+  function filterByCategory(cat){
+    document.querySelectorAll('.cat-card').forEach(e=>e.classList.remove('active'));
+    if(cat==='all')document.querySelector('.cat-card')?.classList.add('active');
+    else{const e=document.getElementById('cc-'+cat.replace(/\s/g,'_'));if(e)e.classList.add('active');}
+    // Chuyển sang trang sản phẩm với tham số danh mục
+    window.location.href='Product.html'+(cat!=='all'?'?category='+encodeURIComponent(cat):'');
+  }
+  function syncCat(){filterByCategory(document.getElementById('headerCatSelect').value)}
+  function goSearch(){
+    const q=(document.getElementById('headerSearch').value||'').trim();
+    const cat=document.getElementById('headerCatSelect').value;
+    if(!q&&cat==='all')return;
+    let url='Product.html?';
+    if(cat!=='all')url+='category='+encodeURIComponent(cat)+'&';
+    if(q)url+='q='+encodeURIComponent(q);
+    window.location.href=url;
+  }
+
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
   function renderFeatured(){
     const feat=allProds.filter(p=>p.isFeatured&&(p.status==='active'||!p.status)).slice(0,5);
     document.getElementById('featuredGrid').innerHTML=feat.length?feat.map(featCard).join(''):'<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim)">Chưa có sản phẩm nổi bật</div>';
@@ -760,7 +938,11 @@
         </div>
         <div class="prod-actions">
           <button class="btn-buy-now" onclick="event.stopPropagation();buyNow(${p.productId},'${safeName}',${p.price})">Mua ngay</button>
+<<<<<<< HEAD
           <button class="btn-add" title="Thêm vào giỏ" onclick="event.stopPropagation();addToCart(${p.productId},'${safeName}',${p.price})"><i class="fas fa-cart-plus"></i></button>
+=======
+          <button class="btn-add" title="Thêm vào giỏ" onclick="event.stopPropagation();addToCart(${p.productId},'${safeName}',${p.price})"><i class="ri-cart-line"></i></button>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
         </div>
       </div>
     </div>
@@ -796,7 +978,7 @@
           <button class="qty-btn" onclick="chgQ(1)">+</button>
         </div>
       </div>
-      <button class="btn-modal-add" onclick="addToCartModal(${p.productId},'${(p.name||'').replace(/'/g,"\\'")}',${p.price})"><i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng</button>
+      <button class="btn-modal-add" onclick="addToCartModal(${p.productId},'${(p.name||'').replace(/'/g,"\\'")}',${p.price})"><i class="ri-cart-line me-2"></i>Thêm vào giỏ hàng</button>
     </div>`;
     document.getElementById('productModal').classList.add('show');
     document.body.style.overflow='hidden';
@@ -813,6 +995,7 @@
     addToCart(id,name,price,q);closeProdModal();
   }
 
+<<<<<<< HEAD
   // CART
   function addToCart(id,name,price,qty=1){
     const item=cart.find(i=>i.id===id);
@@ -821,6 +1004,123 @@
   }
   function saveCart(){localStorage.setItem('tnc_cart',JSON.stringify(cart))}
   function updateCartCount(){document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.quantity,0)}
+=======
+
+
+
+  async function addToCart(id, name, price, qty = 1) {
+    const user = JSON.parse(sessionStorage.getItem("currentLogin") || "null");
+    if (!user) {
+      showToast(' Vui lòng đăng nhập');
+      return;
+    }
+
+    const cid = getCustomerId();
+    if (!cid) { showToast(' Không xác định được tài khoản'); return; }
+
+    console.log(" Gửi request thêm giỏ:", {customerId: cid, productId: id, quantity: qty});
+
+    try {
+      const response = await fetch('http://localhost:8080/api/cart/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId: cid,
+          productId: id,
+          quantity: qty
+        })
+      });
+
+      console.log("Status:", response.status);
+
+      if (response.ok) {
+        console.log("Backend OK");
+        // Cập nhật local
+        let item = cart.find(i => i.id === id);
+        if (item) item.quantity += qty;
+        else cart.push({id, name, price, quantity: qty});
+
+        saveCart();
+        updateCartCount();
+        showToast(` Đã thêm "${name.slice(0,22)}..."`);
+      } else {
+        const err = await response.text();
+        console.error("Backend error:", err);
+        showToast('Lỗi backend: ' + err);
+      }
+    } catch (e) {
+      console.error(" Lỗi fetch:", e);
+      showToast(' Không kết nối được backend');
+    }
+  }
+  // ==================== HELPER: lấy customerId từ user đang login ====================
+  function getCustomerId(){
+    const user = JSON.parse(sessionStorage.getItem("currentLogin") || "null");
+    return user ? (user.id || user.customerId || null) : null;
+  }
+
+  // ==================== FORCE SYNC (An toàn hơn) ====================
+  async function forceSyncCartFromBackend(retry = 2) {
+    const cid = getCustomerId();
+    if (!cid) return; // chưa login → không sync
+
+    for (let i = 0; i <= retry; i++) {
+      try {
+        console.log(`🔄 Force sync lần ${i+1}...`);
+
+        const res = await fetch(`http://localhost:8080/api/cart/${cid}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const backendCart = await res.json();
+
+        const localCart = backendCart.map(item => ({
+          id: item.productId,
+          name: item.productName || "Sản phẩm",
+          price: Number(item.price) || 0,
+          quantity: item.quantity
+        }));
+
+        localStorage.setItem("tnc_cart", JSON.stringify(localCart));
+        cart = [...localCart];
+
+        updateCartCount();
+        console.log(` Force Sync thành công: ${localCart.length} sản phẩm`);
+        return;
+
+      } catch (e) {
+        console.error(`Force Sync lỗi lần ${i+1}:`, e.message || e);
+
+        if (i === retry) {
+          console.warn(" Backend không khả dụng → Giữ nguyên localStorage");
+        } else {
+          await new Promise(resolve => setTimeout(resolve, 400));
+        }
+      }
+    }
+  }
+  function saveCart(){localStorage.setItem('tnc_cart',JSON.stringify(cart))}
+  // function updateCartCount(){document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.quantity,0)}
+  async function updateCartCount() {
+    const cid = getCustomerId();
+    if (!cid) {
+      document.getElementById('cartCount').textContent = '0';
+      return;
+    }
+    try {
+      const res = await fetch(`http://localhost:8080/api/cart/count/${cid}`);
+      if (res.ok) {
+        const count = await res.json();
+        document.getElementById('cartCount').textContent = count || 0;
+        return;
+      }
+    } catch (e) {
+      console.log("Dùng localStorage làm fallback");
+    }
+    // Fallback: tính từ localStorage nếu backend không khả dụng
+    const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+    document.getElementById('cartCount').textContent = count;
+  }
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
   function showToast(msg){
     const t=document.createElement('div');
     t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c2c1a;color:#fff;padding:11px 20px;border-radius:50px;font-size:14px;font-weight:600;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:opacity .3s';
@@ -828,7 +1128,11 @@
     setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},2500);
   }
   function buyNow(id,name,price){
+<<<<<<< HEAD
     const user=JSON.parse(localStorage.getItem("currentLogin")||"null");
+=======
+    const user=JSON.parse(sessionStorage.getItem("currentLogin")||"null");
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     if(!user){window.location.href='login.html';return;}
     addToCart(id,name,price,1);
     const d=document.getElementById('cartDrawer');
@@ -838,7 +1142,11 @@
     renderCart();
   }
   function toggleCart(){
+<<<<<<< HEAD
     const user=JSON.parse(localStorage.getItem("currentLogin")||"null");
+=======
+    const user=JSON.parse(sessionStorage.getItem("currentLogin")||"null");
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     if(!user){window.location.href='login.html';return;}
     const d=document.getElementById('cartDrawer');
     const o=document.getElementById('cartOverlay');
@@ -851,7 +1159,11 @@
     const el=document.getElementById('cartItems');
     const ft=document.getElementById('cartFoot');
     if(!cart.length){
+<<<<<<< HEAD
       el.innerHTML='<div class="cart-empty"><i class="fas fa-cart-shopping"></i><p>Giỏ hàng trống</p></div>';
+=======
+      el.innerHTML='<div class="cart-empty"><i class="ri-shopping-cart-line"></i><p>Giỏ hàng trống</p></div>';
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
       ft.innerHTML='';return;
     }
     el.innerHTML=cart.map((item,i)=>{
@@ -868,11 +1180,12 @@
           <button class="cqb" onclick="updQ(${i},1)">+</button>
         </div>
       </div>
-      <button class="cart-remove" onclick="rmCart(${i})"><i class="fas fa-trash"></i></button>
+      <button class="cart-remove" onclick="rmCart(${i})"><i class="ri-delete-bin-line"></i></button>
     </div>`;
     }).join('');
     const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
     ft.innerHTML=`<div class="cart-total"><span>Tổng cộng:</span><strong>${Number(total).toLocaleString('vi-VN')}₫</strong></div>
+<<<<<<< HEAD
     <button class="btn-checkout" onclick="checkout()"><i class="fas fa-bolt me-2"></i>Đặt hàng ngay</button>`;
   }
   function updQ(i,d){cart[i].quantity=Math.max(1,cart[i].quantity+d);saveCart();updateCartCount();renderCart();}
@@ -889,6 +1202,162 @@
       if(user.role==='ADMIN')document.getElementById('adminMenu').style.display='block';
     }
     updateCartCount();initSlider();loadProducts();
+=======
+    <button class="btn-checkout" onclick="checkout()"><i class="ri-flashlight-line me-2"></i>Đặt hàng ngay</button>`;
+  }
+
+
+  async function updQ(i, d) {
+    const item = cart[i];
+    if (!item) return;
+
+    const newQuantity = Math.max(1, item.quantity + d);
+
+    console.log(` updQ Index: productId=${item.id}, newQty=${newQuantity}`);
+
+    try {
+      await fetch('http://localhost:8080/api/cart/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId: getCustomerId(),
+          productId: item.id,
+          quantity: newQuantity
+        })
+      });
+    } catch (e) {
+      console.warn("Backend lỗi");
+    }
+
+    // Cập nhật local
+    item.quantity = newQuantity;
+    saveCart();
+    updateCartCount();
+    renderCart();
+
+    // Sync cho chi_cart
+    localStorage.setItem("lastCartSync", Date.now());
+  }
+
+  async function rmCart(i) {
+    if (!confirm("Xóa sản phẩm này khỏi giỏ hàng?")) return;
+
+    const item = cart[i];
+    if (!item) return;
+
+    // === XÓA TRÊN BACKEND ===
+    try {
+      const response = await fetch(`http://localhost:8080/api/cart/remove?customerId=${getCustomerId()}&productId=${item.id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        console.log(` Đã xóa productId=${item.id} khỏi backend`);
+      } else {
+        console.error("Backend xóa thất bại");
+      }
+    } catch (e) {
+      console.error("Lỗi kết nối khi xóa:", e);
+    }
+
+    // Xóa trên localStorage
+    cart.splice(i, 1);
+    saveCart();
+    updateCartCount();
+    renderCart();   // nếu đang mở drawer
+  }
+
+  // function checkout(){alert('Tính năng đặt hàng sẽ được phát triển.\n\n'+cart.length+' sản phẩm · Tổng: '+Number(cart.reduce((s,i)=>s+i.price*i.quantity,0)).toLocaleString('vi-VN')+'₫');}
+  // ==================== CHECKOUT ====================
+  function checkout() {
+    const user = JSON.parse(localStorage.getItem("currentLogin") || "null");
+
+    if (!user) {
+      showToast('⚠️ Vui lòng đăng nhập để thanh toán');
+      setTimeout(() => window.location.href = 'login.html', 1200);
+      return;
+    }
+
+    if (cart.length === 0) {
+      showToast('Giỏ hàng trống!');
+      return;
+    }
+
+    console.log(" Chuyển đến trang thanh toán với " + cart.length + " sản phẩm");
+
+    // Lưu giỏ hàng trước khi chuyển trang
+    saveCart();
+    localStorage.setItem("lastCartSync", Date.now());
+
+    // Chuyển trang
+    window.location.href = 'chi_cart.html';
+  }
+
+  // Cải tiến nút "Đặt hàng ngay" trong modal
+  // function buyNow(id, name, price) {
+  //   const user = JSON.parse(sessionStorage.getItem("currentLogin") || "null");
+  //   if (!user) {
+  //     showToast('⚠️ Vui lòng đăng nhập');
+  //     setTimeout(() => window.location.href = 'login.html', 1000);
+  //     return;
+  //   }
+  //
+  //   addToCart(id, name, price, 1);
+  //
+  //   // Mở giỏ hàng ngay sau khi thêm
+  //   setTimeout(() => {
+  //     toggleCart();
+  //   }, 600);
+  // }
+
+  function logout(){
+    if(confirm("Bạn có chắc muốn đăng xuất?")){
+      localStorage.removeItem("currentLogin");
+      localStorage.removeItem("tnc_cart");
+      cart = [];
+      document.getElementById("cartCount").textContent = "0";
+      location.reload();
+    }
+  }
+
+  window.addEventListener('scroll',()=>document.getElementById('scrollTop').classList.toggle('show',scrollY>400));
+
+  function initAccountMenu(){
+    const user=JSON.parse(localStorage.getItem("currentLogin")||"null");
+    if(!user) return;
+
+    document.getElementById('userDisplay').textContent = user.username || 'Tài khoản';
+    document.getElementById('menuLogin').style.display    = 'none';
+    document.getElementById('menuRegister').style.display = 'none';
+
+    const role = (user.role || '').toUpperCase();
+
+    if(role === 'ADMIN'){
+      // Chỉ hiện link quản trị + đăng xuất — ẩn giỏ hàng
+      document.getElementById('adminMenu').style.display        = 'block';
+      document.getElementById('adminLogoutDivider').style.display = 'block';
+      document.getElementById('adminLogout').style.display      = 'block';
+      document.getElementById('cartIcon').style.display         = 'none';
+    } else if(role === 'STAFF'){
+      // Chỉ hiện link nhân viên + đăng xuất — ẩn giỏ hàng
+      document.getElementById('staffMenu').style.display          = 'block';
+      document.getElementById('staffLogoutDivider').style.display = 'block';
+      document.getElementById('staffLogout').style.display        = 'block';
+      document.getElementById('cartIcon').style.display           = 'none';
+    } else {
+      // CUSTOMER: hiện đầy đủ menu + load giỏ hàng
+      document.getElementById('menuProfile').style.display        = 'block';
+      document.getElementById('menuOrders').style.display         = 'block';
+      document.getElementById('menuDividerLogout').style.display  = 'block';
+      document.getElementById('menuLogout').style.display         = 'block';
+    }
+  }
+
+  window.onload=()=>{
+    initAccountMenu();
+    updateCartCount();initSlider();loadProducts();
+    forceSyncCartFromBackend();
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
   };
 </script>
 </body>

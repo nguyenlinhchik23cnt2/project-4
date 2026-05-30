@@ -13,9 +13,18 @@ import java.util.Optional;
 public interface NgaCustomerRepository extends JpaRepository<NgaCustomer, Integer> {
 
     Optional<NgaCustomer> findByUsername(String username);
+
+    // Dùng khi đổi username — kiểm tra trùng lặp toàn bảng
     boolean existsByUsername(String username);
+
     boolean existsByEmail(String email);
 
+<<<<<<< HEAD
+=======
+    // Dùng khi đổi email — loại trừ chính customer đang sửa
+    boolean existsByEmailAndIdNot(String email, Integer id);
+
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     @Query("SELECT c FROM NgaCustomer c WHERE " +
             "(:keyword IS NULL OR c.fullName LIKE %:keyword% OR c.phone LIKE %:keyword% " +
             "OR c.email LIKE %:keyword% OR c.address LIKE %:keyword%) AND " +

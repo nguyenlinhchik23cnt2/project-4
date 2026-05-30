@@ -78,15 +78,22 @@
             ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`;
         alertBox.classList.remove('hidden');
 
+<<<<<<< HEAD
         setTimeout(() => {
             alertBox.classList.add('hidden');
         }, 5000);
+=======
+        setTimeout(() => alertBox.classList.add('hidden'), 5000);
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     }
 
     function togglePassword(inputId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById('eye-' + inputId);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
         if (input.type === "password") {
             input.type = "text";
             icon.classList.replace("fa-eye", "fa-eye-slash");
@@ -96,7 +103,11 @@
         }
     }
 
+<<<<<<< HEAD
     // ====================== LOGIN ======================
+=======
+    // ====================== XỬ LÝ ĐĂNG NHẬP ======================
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -121,6 +132,7 @@
             const result = await response.json();
 
             if (result.success) {
+<<<<<<< HEAD
                 showNotification(result.message || "Đăng nhập thành công!", true);
 
                 // Lưu thông tin user
@@ -132,12 +144,36 @@
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 1000);
+=======
+                showNotification("Đăng nhập thành công!", true);
+
+                // Lưu thông tin user (đồng bộ với các trang khác)
+                localStorage.setItem('currentLogin', JSON.stringify(result.user));
+
+                // ====================== PHÂN QUYỀN CHUYỂN HƯỚNG ======================
+                const role = (result.user?.role || '').toString().toLowerCase().trim();
+
+                if (role === 'admin') {
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 800);
+                } else {
+                    setTimeout(() => {
+                        window.location.href = 'index.html';   // User thường và Staff
+                    }, 800);
+                }
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
             } else {
                 showNotification(result.message || "Tài khoản hoặc mật khẩu không đúng!", false);
             }
         } catch (error) {
+<<<<<<< HEAD
             console.error("Login error:", error);
             showNotification("Không thể kết nối đến server. Vui lòng kiểm tra backend đang chạy chưa!", false);
+=======
+            console.error(error);
+            showNotification("Không thể kết nối đến server. Vui lòng kiểm tra backend!", false);
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
         }
     });
 </script>

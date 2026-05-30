@@ -209,7 +209,7 @@
         .modal-price-old{font-size:15px;color:var(--dim);text-decoration:line-through;font-weight:400}
         .modal-save{font-size:11px;font-weight:700;background:#fef2f2;color:var(--red);padding:2px 8px;border-radius:20px}
         .modal-stock-row{margin-bottom:16px}
-        .stock-badge{display:inline-flex;align-items:center;gap=5px;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
+        .stock-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
         .sb-ok{background:var(--olive-l);color:var(--olive)}
         .sb-low{background:#fff7ed;color:#ea580c}
         .sb-out{background:#fef2f2;color:var(--red)}
@@ -322,7 +322,7 @@
 
 <!-- TOP BAR -->
 <div id="topBar">
-    <span>🎉 Miễn phí vận chuyển cho đơn từ <b>500.000₫</b> · Flash Sale cuối tuần – Giảm đến 40%</span>
+    <span> Miễn phí vận chuyển cho đơn từ <b>500.000₫</b> · Flash Sale cuối tuần – Giảm đến 40%</span>
     <button class="topbar-close" onclick="this.closest('div').style.display='none'">×</button>
 </div>
 
@@ -343,7 +343,7 @@
             <button class="search-btn" onclick="onSearch()"><i class="fas fa-search"></i></button>
         </div>
         <div class="header-icons">
-            <button class="icon-btn" onclick="toggleCart()" title="Giỏ hàng">
+            <button class="icon-btn" id="cartIcon" onclick="toggleCart()" title="Giỏ hàng">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <span class="badge-count" id="cartCount">0</span>
             </button>
@@ -353,12 +353,23 @@
                     <span id="userDisplay">Tài khoản</span>
                     <i class="fa-solid fa-chevron-down" style="font-size:10px;color:var(--dim)"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2">
-                    <li><a class="dropdown-item py-2" href="login.html"><i class="fa-solid fa-right-to-bracket me-2 text-muted"></i>Đăng nhập</a></li>
-                    <li><a class="dropdown-item py-2" href="#"><i class="fa-solid fa-user-plus me-2 text-muted"></i>Đăng ký</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item py-2 text-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
-                    <li id="adminMenu" style="display:none"><hr class="dropdown-divider"><a class="dropdown-item text-primary fw-bold py-2" href="admin.html"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Trang quản trị</a></li>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2" id="menuAccount">
+                    <!-- Chưa đăng nhập -->
+                    <li id="menuLogin"><a class="dropdown-item py-2" href="login.html"><i class="bi bi-box-arrow-in-right me-2 text-muted"></i>Đăng nhập</a></li>
+                    <li id="menuRegister"><a class="dropdown-item py-2" href="register.html"><i class="bi bi-person-plus me-2 text-muted"></i>Đăng ký</a></li>
+                    <!-- Khách hàng -->
+                    <li id="menuProfile" style="display:none"><a class="dropdown-item py-2" href="profile.html"><i class="bi bi-person me-2 text-muted"></i>Tài khoản của tôi</a></li>
+                    <li id="menuOrders" style="display:none"><a class="dropdown-item py-2" href="my-orders.html"><i class="bi bi-box-seam me-2 text-muted"></i>Đơn hàng của tôi</a></li>
+                    <li id="menuDividerLogout" style="display:none"><hr class="dropdown-divider"></li>
+                    <li id="menuLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                    <!-- Admin -->
+                    <li id="adminMenu" style="display:none"><a class="dropdown-item text-primary fw-bold py-2" href="admin.html"><i class="bi bi-tools me-2"></i>Trang quản trị</a></li>
+                    <li id="adminLogoutDivider" style="display:none"><hr class="dropdown-divider"></li>
+                    <li id="adminLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                    <!-- Staff -->
+                    <li id="staffMenu" style="display:none"><a class="dropdown-item text-success fw-bold py-2" href="admin.html"><i class="bi bi-person-tie me-2"></i>Trang nhân viên</a></li>
+                    <li id="staffLogoutDivider" style="display:none"><hr class="dropdown-divider"></li>
+                    <li id="staffLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
                 </ul>
             </div>
         </div>
@@ -443,7 +454,7 @@
             </div>
             <div class="filter-body">
                 <div class="check-item"><input type="checkbox" id="f-instock" onchange="applyFilters()"><label for="f-instock">Còn hàng</label></div>
-                <div class="check-item"><input type="checkbox" id="f-featured" onchange="applyFilters()"><label for="f-featured">⭐ Nổi bật</label></div>
+                <div class="check-item"><input type="checkbox" id="f-featured" onchange="applyFilters()"><label for="f-featured"> Nổi bật</label></div>
             </div>
         </div>
 
@@ -583,11 +594,26 @@
 
     // ── HELPERS ──────────────────────────────────────────────────
     const $ = id => document.getElementById(id);
-    const fmtPrice = n => Number(n).toLocaleString('vi-VN')+'₫';
+    const fmtPrice = n => Number(n).toLocaleString('vi-VN') + '₫';
+
     const getImg = url => {
-        if(!url) return 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=70';
-        if(url.startsWith('http')) return url;
-        return IURL + encodeURIComponent(url.replace(/^uploads\//,'').replace(/^\/images\/products\//,''));
+        if (!url) {
+            return 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=70';
+        }
+        if (url.startsWith('http')) {
+            return url;
+        }
+
+        let clean = url
+            .replace(/^uploads\/products\//, '')
+            .replace(/^\/uploads\/products\//, '')
+            .replace(/^uploads\//, '')
+            .replace(/^\/uploads\//, '')
+            .replace(/^images\/products\//, '')
+            .replace(/^\/images\/products\//, '')
+            .replace(/^\//, '');
+
+        return IURL + encodeURIComponent(clean);
     };
     const ICONS = {'Nhà bếp':'','Phòng ngủ':'','Phòng khách':'','Vệ sinh':'','Điện gia dụng':'','Làm vườn':'','Lưu trữ':'','Làm sạch':'','Nồi & Chảo':'','Dao & Thớt':''};
 
@@ -919,7 +945,7 @@
           ${isWished?'':'♡'}
         </button>
       </div>
-      <!-- Tabs -->
+
         <div class="modal-tabs">
         <div class="modal-tab active" onclick="switchTab(this,'desc')">Mô tả</div>
         <div class="modal-tab" onclick="switchTab(this,'specs')">Thông số</div>
@@ -967,61 +993,179 @@
           </div>`).join('')}</div>`:'<p style="color:var(--dim)">Không có sản phẩm liên quan.</p>'}
         </div>
         </div>`;
-  $('prodModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeProdModal(e) {
-  if (!e||e.target===$('prodModal')) { $('prodModal').classList.remove('show'); document.body.style.overflow=''; }
-}
-function chgQ(d) { const e=$('modalQty'); e.value=Math.max(1,Number(e.value)+d); }
-function switchTab(el,name) {
-  document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  $('tab-'+name)?.classList.add('active');
-}
-function addToCartModal(id,name,price) {
-  const qty = Number($('modalQty')?.value||1);
-  addToCart(id,name,price,qty);
-  closeProdModal();
-}
+        $('prodModal').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeProdModal(e) {
+        if (!e||e.target===$('prodModal')) { $('prodModal').classList.remove('show'); document.body.style.overflow=''; }
+    }
+    function chgQ(d) { const e=$('modalQty'); e.value=Math.max(1,Number(e.value)+d); }
+    function switchTab(el,name) {
+        document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+        el.classList.add('active');
+        $('tab-'+name)?.classList.add('active');
+    }
+    function addToCartModal(id,name,price) {
+        const qty = Number($('modalQty')?.value||1);
+        addToCart(id,name,price,qty);
+        closeProdModal();
+    }
 
-// ── WISHLIST ─────────────────────────────────────────────────
-function toggleWish(id, btn) {
-  if (wished.has(id)) { wished.delete(id); if(btn){ btn.innerHTML='♡'; btn.classList.remove('wished'); } }
-  else { wished.add(id); if(btn){ btn.innerHTML='❤'; btn.classList.add('wished'); } showToast('💕 Đã thêm vào yêu thích'); }
-  localStorage.setItem('tnc_wish', JSON.stringify([...wished]));
-}
+    // ── AUTH CHECK ───────────────────────────────────────────────
+    function isLoggedIn() {
+        const user = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+        return user !== null;
+    }
 
-// ── CART ─────────────────────────────────────────────────────
-function addToCart(id,name,price,qty=1) {
-  const item = cart.find(i=>i.id===id);
-  if(item) item.quantity+=qty; else cart.push({id,name,price,quantity:qty});
-  saveCart(); updateCartCount();
-  showToast(`Đã thêm "${name.slice(0,20)}…" vào giỏ`);
-}
-function saveCart() { localStorage.setItem('tnc_cart',JSON.stringify(cart)); }
-function updateCartCount() { $('cartCount').textContent = cart.reduce((s,i)=>s+i.quantity,0); }
-function showToast(msg) {
-  const t=document.createElement('div');
-  t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(0);background:#1c2c1a;color:#fff;padding:11px 20px;border-radius:50px;font-size:14px;font-weight:600;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:opacity .3s';
-  t.textContent=msg; document.body.appendChild(t);
-  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},2500);
-}
-function toggleCart() {
-  const d=$('cartDrawer'), o=$('cartOverlay');
-  const show=!d.classList.contains('show');
-  d.classList.toggle('show',show); o.classList.toggle('show',show);
-  document.body.style.overflow=show?'hidden':'';
-  if(show) renderCart();
-}
-function renderCart() {
-  const el=$('cartItems'), ft=$('cartFoot');
-  if(!cart.length) { el.innerHTML='<div class="cart-empty"><i class="fas fa-cart-shopping"></i><p>Giỏ hàng trống</p></div>'; ft.innerHTML=''; return; }
-  el.innerHTML = cart.map((item,i)=>{
-    const p=allProds.find(x=>x.productId===item.id);
-    const img=p?getImg(p.imageUrl):'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&q=60';
-    return `<div class="cart-item">
+    function getCurrentUser() {
+        return JSON.parse(localStorage.getItem('currentLogin') || 'null');
+    }
+
+
+
+    function isAdmin() {
+        const user = getCurrentUser();
+        return user && (user.role === 'admin' || user.role === 'ADMIN');
+    }
+
+    // ── WISHLIST ─────────────────────────────────────────────────
+    function toggleWish(id, btn) {
+        if (wished.has(id)) {
+            wished.delete(id);
+            if(btn){ btn.innerHTML='♡'; btn.classList.remove('wished'); }
+        } else {
+            wished.add(id);
+            if(btn){ btn.innerHTML='❤'; btn.classList.add('wished'); }
+            showToast(' Đã thêm vào yêu thích');
+        }
+        localStorage.setItem('tnc_wish', JSON.stringify([...wished]));
+    }
+
+
+    async function addToCart(id, name, price, qty = 1) {
+        const user = JSON.parse(localStorage.getItem("currentLogin") || "null");
+        if (!user) {
+            showToast('⚠️ Vui lòng đăng nhập');
+            return;
+        }
+
+        console.log(" Gửi request thêm giỏ:", {productId: id, quantity: qty});
+
+        try {
+            const response = await fetch('http://localhost:8080/api/cart/update', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    customerId: getCustomerId(),
+                    productId: id,
+                    quantity: qty
+                })
+            });
+
+            if (response.ok) {
+                console.log(" Backend OK");
+
+                // Cập nhật local
+                let item = cart.find(i => i.id === id);
+                if (item) item.quantity += qty;
+                else cart.push({id, name, price, quantity: qty});
+
+                saveCart();
+                updateCartCount();
+
+                // Đồng bộ mạnh từ backend
+                await forceSyncCartFromBackend();
+
+                showToast(` Đã thêm "${name.slice(0,22)}..." vào giỏ hàng`);
+            } else {
+                const err = await response.text();
+                console.error(" Backend error:", err);
+                showToast(' Lỗi backend');
+            }
+        } catch (e) {
+            console.error(" Lỗi fetch:", e);
+            showToast(' Không kết nối được backend');
+        }
+    }
+
+    async function forceSyncCartFromBackend() {
+        try {
+            console.log("Đang đồng bộ giỏ hàng từ Backend...");
+
+            const cid=getCustomerId();if(!cid)return;
+            const res = await fetch(`http://localhost:8080/api/cart/${cid}`);
+            if (!res.ok) throw new Error("Không lấy được giỏ hàng");
+
+            const backendCart = await res.json();
+
+            const localCart = backendCart.map(item => ({
+                id: item.productId,
+                name: item.productName || "Sản phẩm",
+                price: Number(item.price) || 0,
+                quantity: item.quantity
+            }));
+
+            localStorage.setItem("tnc_cart", JSON.stringify(localCart));
+            cart = [...localCart];
+
+            updateCartCount();
+            console.log(` Đồng bộ thành công: ${localCart.length} sản phẩm`);
+
+        } catch (e) {
+            console.error(" Force Sync lỗi:", e);
+        }
+    }
+
+    function saveCart() { localStorage.setItem('tnc_cart', JSON.stringify(cart)); }
+    // updateCartCount → replaced by shared version
+
+    function showToast(msg, type = "success") {
+        const t = document.createElement('div');
+        let bg = "#1c2c1a";
+        if (type === "warning") bg = "#f59e0b";
+        if (type === "error") bg = "#ef4444";
+
+        t.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:${bg};color:#fff;padding:13px 24px;border-radius:50px;font-size:14.5px;font-weight:600;z-index:9999;white-space:nowrap;box-shadow:0 8px 25px rgba(0,0,0,.3);`;
+        t.textContent = msg;
+        document.body.appendChild(t);
+
+        setTimeout(() => {
+            t.style.opacity = '0';
+            setTimeout(() => t.remove(), 400);
+        }, 2800);
+    }
+    function showToast(msg, type = "success") {
+        const t = document.createElement('div');
+        let background = "#1c2c1a";
+        if (type === "warning") background = "#f59e0b";
+        if (type === "error") background = "#ef4444";
+
+        t.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:${background};color:#fff;padding:12px 22px;border-radius:50px;font-size:14.5px;font-weight:600;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:opacity .3s`;
+        t.textContent = msg;
+        document.body.appendChild(t);
+
+        setTimeout(() => {
+            t.style.opacity = '0';
+            setTimeout(() => t.remove(), 400);
+        }, 2800);
+    }
+
+    // Các hàm toggleCart, renderCart, updQ, rmCart, checkout giữ nguyên...
+    function toggleCart() {
+        const d=$('cartDrawer'), o=$('cartOverlay');
+        const show=!d.classList.contains('show');
+        d.classList.toggle('show',show); o.classList.toggle('show',show);
+        document.body.style.overflow=show?'hidden':'';
+        if(show) renderCart();
+    }
+    function renderCart() {
+        const el=$('cartItems'), ft=$('cartFoot');
+        if(!cart.length) { el.innerHTML='<div class="cart-empty"><i class="fas fa-cart-shopping"></i><p>Giỏ hàng trống</p></div>'; ft.innerHTML=''; return; }
+        el.innerHTML = cart.map((item,i)=>{
+            const p=allProds.find(x=>x.productId===item.id);
+            const img=p?getImg(p.imageUrl):'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&q=60';
+            return `<div class="cart-item">
         <img class="cart-item-img" src="${img}" onerror="this.src='https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&q=60'">
         <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
@@ -1034,34 +1178,104 @@ function renderCart() {
         </div>
         <button class="cart-remove" onclick="rmCart(${i})"><i class="fas fa-trash"></i></button>
         </div>`;
-  }).join('');
-  const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
-  ft.innerHTML=`<div class="cart-total"><span>Tổng cộng:</span><strong>${fmtPrice(total)}</strong></div>
+        }).join('');
+        const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
+        ft.innerHTML=`<div class="cart-total"><span>Tổng cộng:</span><strong>${fmtPrice(total)}</strong></div>
         <button class="btn-checkout" onclick="checkout()"><i class="fas fa-bolt me-2"></i>Đặt hàng ngay</button>`;
-}
-function updQ(i,d){ cart[i].quantity=Math.max(1,cart[i].quantity+d); saveCart(); updateCartCount(); renderCart(); }
-function rmCart(i){ cart.splice(i,1); saveCart(); updateCartCount(); renderCart(); }
-function checkout() { alert('Tính năng đặt hàng sẽ được phát triển.\n\n'+cart.length+' sản phẩm · Tổng: '+fmtPrice(cart.reduce((s,i)=>s+i.price*i.quantity,0))); }
+    }
+    function updQ(i,d){ cart[i].quantity=Math.max(1,cart[i].quantity+d); saveCart(); updateCartCount(); renderCart(); }
+    function rmCart(i){ cart.splice(i,1); saveCart(); updateCartCount(); renderCart(); }
+    // function checkout() { alert('Tính năng đặt hàng sẽ được phát triển.\n\n'+cart.length+' sản phẩm · Tổng: '+fmtPrice(cart.reduce((s,i)=>s+i.price*i.quantity,0))); }
+    function checkout() {
+        console.log(" Checkout button clicked!");
 
-// ── MOBILE FILTER ────────────────────────────────────────────
-function toggleMobileFilter() { $('filterSidebar').classList.toggle('mobile-show'); }
+        const user = JSON.parse(localStorage.getItem("currentLogin") || "null");
 
-// ── MISC ──────────────────────────────────────────────────────
-function logout() { if(confirm('Bạn có chắc muốn đăng xuất?')){ localStorage.removeItem('currentLogin'); location.reload(); } }
-window.addEventListener('scroll', ()=>$('scrollTop').classList.toggle('show',scrollY>400));
-window.addEventListener('resize', ()=>{
-  const isMobile = window.innerWidth <= 960;
-  $('mobileFilterBtn').style.display = isMobile ? 'flex' : 'none';
-});
+        if (!user) {
+            showToast('⚠️ Vui lòng đăng nhập để thanh toán');
+            setTimeout(() => window.location.href = 'login.html', 1200);
+            return;
+        }
 
-// ── INIT ──────────────────────────────────────────────────────
-window.onload = () => {
-  const user = JSON.parse(localStorage.getItem('currentLogin')||'null');
-  if(user) { $('userDisplay').textContent=user.username||'Tài khoản'; if(user.role==='ADMIN') $('adminMenu').style.display='block'; }
-  updateCartCount();
-  if(window.innerWidth<=960) $('mobileFilterBtn').style.display='flex';
-  loadProducts();
-};
+        if (!cart || cart.length === 0) {
+            showToast(' Giỏ hàng đang trống!');
+            return;
+        }
+
+        // Đồng bộ lần cuối trước khi chuyển
+        forceSyncCartFromBackend().then(() => {
+            localStorage.setItem("lastCartSync", Date.now());
+            window.location.href = 'chi_cart.html';
+        });
+    }
+
+    // ── MOBILE FILTER ────────────────────────────────────────────
+    function toggleMobileFilter() { $('filterSidebar').classList.toggle('mobile-show'); }
+
+    // ── MISC ──────────────────────────────────────────────────────
+    // logout → replaced by shared version    // logout → replaced by shared version
+    window.addEventListener('scroll', ()=>$('scrollTop').classList.toggle('show',scrollY>400));
+    window.addEventListener('resize', ()=>{
+        const isMobile = window.innerWidth <= 960;
+        $('mobileFilterBtn').style.display = isMobile ? 'flex' : 'none';
+    });
+
+    window.onload = () => {
+        initAccountMenu();
+        updateCartCount();
+        if (window.innerWidth <= 960 && $('mobileFilterBtn'))
+            $('mobileFilterBtn').style.display = 'flex';
+
+        loadProducts();
+    };
+
+    // ==================== CART & ACCOUNT HELPERS ====================
+    function getCustomerId(){
+        const user=JSON.parse(localStorage.getItem("currentLogin")||"null");
+        return user?(user.id||user.customerId||null):null;
+    }
+    async function updateCartCount(){
+        const cid=getCustomerId();
+        if(!cid){document.getElementById('cartCount').textContent='0';return;}
+        try{
+            const res=await fetch(`http://localhost:8080/api/cart/count/${cid}`);
+            if(res.ok){document.getElementById('cartCount').textContent=(await res.json())||0;return;}
+        }catch(e){}
+        document.getElementById('cartCount').textContent=
+            JSON.parse(localStorage.getItem('tnc_cart')||'[]').reduce((s,i)=>s+i.quantity,0);
+    }
+    function initAccountMenu(){
+        const user=JSON.parse(localStorage.getItem("currentLogin")||"null");
+        if(!user)return;
+        document.getElementById('userDisplay').textContent=user.username||'Tài khoản';
+        document.getElementById('menuLogin').style.display='none';
+        document.getElementById('menuRegister').style.display='none';
+        const role=(user.role||'').toUpperCase();
+        if(role==='ADMIN'){
+            document.getElementById('adminMenu').style.display='block';
+            document.getElementById('adminLogoutDivider').style.display='block';
+            document.getElementById('adminLogout').style.display='block';
+            document.getElementById('cartIcon').style.display='none';
+
+        }else if(role==='STAFF'){
+            document.getElementById('staffMenu').style.display='block';
+            document.getElementById('staffLogoutDivider').style.display='block';
+            document.getElementById('staffLogout').style.display='block';
+            document.getElementById('cartIcon').style.display='none';
+
+        }else{
+            document.getElementById('menuProfile').style.display='block';
+            document.getElementById('menuOrders').style.display='block';
+            document.getElementById('menuDividerLogout').style.display='block';
+            document.getElementById('menuLogout').style.display='block';
+        }
+    }
+    function logout(){
+        if(confirm('Bạn có chắc muốn đăng xuất?')){
+            localStorage.removeItem('currentLogin');
+            setTimeout(()=>window.location.href='index.html',400);
+        }
+    }
 </script>
 </body>
 </html>

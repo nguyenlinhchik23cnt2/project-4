@@ -119,6 +119,15 @@
     const API_BASE_URL = 'http://localhost:8080/api/auth';
     const alertBox = document.getElementById('alert-box');
 
+<<<<<<< HEAD
+=======
+    // Đồng bộ kiểu index.html: nếu đã đăng nhập thì về trang chủ
+    (function initAccountMenu() {
+        const user = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+        if (user) window.location.replace('index.html');
+    })();
+
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
     function showNotification(message, isSuccess) {
         alertBox.textContent = message;
         alertBox.className = `mb-4 p-4 rounded-2xl text-sm font-medium text-center ${
@@ -175,8 +184,13 @@
             const result = await response.json();
 
             if (result.success) {
+<<<<<<< HEAD
                 showNotification("🎉 Đăng ký tài khoản thành công!", true);
                 localStorage.setItem('currentUser', JSON.stringify(result.user || result));
+=======
+                showNotification(" Đăng ký tài khoản thành công!", true);
+                localStorage.setItem('currentLogin', JSON.stringify(result.user || result));
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
 
                 setTimeout(() => {
                     window.location.href = 'profile.html';
