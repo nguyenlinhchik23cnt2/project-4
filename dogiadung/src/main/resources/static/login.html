@@ -78,15 +78,12 @@
             ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`;
         alertBox.classList.remove('hidden');
 
-        setTimeout(() => {
-            alertBox.classList.add('hidden');
-        }, 5000);
+        setTimeout(() => alertBox.classList.add('hidden'), 5000);
     }
 
     function togglePassword(inputId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById('eye-' + inputId);
-
         if (input.type === "password") {
             input.type = "text";
             icon.classList.replace("fa-eye", "fa-eye-slash");
@@ -96,7 +93,7 @@
         }
     }
 
-    // ====================== LOGIN ======================
+    // ====================== XỬ LÝ ĐĂNG NHẬP ======================
     document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -111,33 +108,36 @@
         try {
             const response = await fetch(`${API_BASE_URL}/login`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
             });
 
             const result = await response.json();
 
             if (result.success) {
-                showNotification(result.message || "Đăng nhập thành công!", true);
+                showNotification("Đăng nhập thành công!", true);
 
-                // Lưu thông tin user
-                localStorage.setItem('currentUser', JSON.stringify(result.user || result));
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('username', username);
+                // Lưu thông tin user (đồng bộ với các trang khác)
+                localStorage.setItem('currentLogin', JSON.stringify(result.user));
 
-                // Chuyển trang sau 1 giây
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1000);
+                // ====================== PHÂN QUYỀN CHUYỂN HƯỚNG ======================
+                const role = (result.user?.role || '').toString().toLowerCase().trim();
+
+                if (role === 'admin') {
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 800);
+                } else {
+                    setTimeout(() => {
+                        window.location.href = 'index.html';   // User thường và Staff
+                    }, 800);
+                }
             } else {
                 showNotification(result.message || "Tài khoản hoặc mật khẩu không đúng!", false);
             }
         } catch (error) {
-            console.error("Login error:", error);
-            showNotification("Không thể kết nối đến server. Vui lòng kiểm tra backend đang chạy chưa!", false);
+            console.error(error);
+            showNotification("Không thể kết nối đến server. Vui lòng kiểm tra backend!", false);
         }
     });
 </script>

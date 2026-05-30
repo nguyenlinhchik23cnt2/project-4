@@ -1,18 +1,76 @@
+//package org.nguyenlinhchi.dogiadung.SERVICE;
+//
+//import org.nguyenlinhchi.dogiadung.ENTITY.chi_cartItem;
+//import org.nguyenlinhchi.dogiadung.REPOSITORY.chi_cartItemRepository;
+//import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Transactional;
+//import java.util.List;
+//
+//@Service
+//public class chi_cartItemService {
+//
+//    private final chi_cartItemRepository cartRepository;
+//
+//    public chi_cartItemService(chi_cartItemRepository cartRepository) {
+//        this.cartRepository = cartRepository;
+//    }
+//
+//
+//    @Transactional
+//    public chi_cartItem addToCart(Integer customerId, Integer productId, Integer quantity) {
+//        chi_cartItem existing = cartRepository.findByCustomerIdAndProductId(customerId, productId)
+//                .orElse(null);
+//
+//        if (existing != null) {
+//            existing.setQuantity(existing.getQuantity() + quantity);
+//            return cartRepository.save(existing);
+//        } else {
+//            chi_cartItem newItem = new chi_cartItem(customerId, productId, quantity);
+//            return cartRepository.save(newItem);
+//        }
+//    }
+//    public List<chi_cartItem> getCartByCustomerId(Integer customerId) {
+//        return cartRepository.findByCustomerId(customerId);
+//    }
+//
+//    @Transactional
+//    public void removeFromCart(Integer customerId, Integer productId) {
+//        cartRepository.deleteByCustomerIdAndProductId(customerId, productId);
+//    }
+//
+//    @Transactional
+//    public void clearCart(Integer customerId) {
+//        cartRepository.deleteAllByCustomerId(customerId);
+//    }
+//
+//    @Transactional
+//    public chi_cartItem updateQuantity(Integer customerId, Integer productId, Integer newQuantity) {
+//        chi_cartItem item = cartRepository.findByCustomerIdAndProductId(customerId, productId)
+//                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm trong giỏ hàng"));
+//
+//        item.setQuantity(newQuantity);
+//        return cartRepository.save(item);
+//    }
+//    public List<chi_cartItem> getAllCarts() {
+//        return cartRepository.findAll();
+//    }
+//}
+
+
+
 package org.nguyenlinhchi.dogiadung.SERVICE;
 
 import org.nguyenlinhchi.dogiadung.DTO.CartItemResponse;
-import org.nguyenlinhchi.dogiadung.ENTITY.TraOrder;
 import org.nguyenlinhchi.dogiadung.ENTITY.TraProduct;
 import org.nguyenlinhchi.dogiadung.ENTITY.chi_cartItem;
-import org.nguyenlinhchi.dogiadung.ENTITY.chi_orderItem;
-import org.nguyenlinhchi.dogiadung.REPOSITORY.TraOrderRepository;
 import org.nguyenlinhchi.dogiadung.REPOSITORY.TraProductRepository;
 import org.nguyenlinhchi.dogiadung.REPOSITORY.chi_cartItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,12 +131,26 @@ public class chi_cartItemService {
     @Transactional
     public CartItemResponse updateQuantity(Integer customerId, Integer productId, Integer newQuantity) {
         if (newQuantity == null || newQuantity <= 0) {
-            throw new IllegalArgumentException("Số lượng phải lớn hơn 0");
+            newQuantity = 1;
         }
 
-        chi_cartItem item = cartRepository.findByCustomerIdAndProductId(customerId, productId)
-                .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không có trong giỏ hàng"));
+        System.out.println(" [updateQuantity] customerId=" + customerId + ", productId=" + productId + ", newQty=" + newQuantity);
 
+        // Tìm item trong giỏ hàng
+        Optional<chi_cartItem> optionalItem = cartRepository.findByCustomerIdAndProductId(customerId, productId);
+
+        chi_cartItem item;
+
+        if (optionalItem.isPresent()) {
+            item = optionalItem.get();
+            System.out.println("Tìm thấy item → Cập nhật quantity thành " + newQuantity);
+        } else {
+            // FALLBACK QUAN TRỌNG: Nếu không tìm thấy thì tạo mới
+            System.out.println(" Không tìm thấy item → Tạo mới trong giỏ hàng");
+            return addToCart(customerId, productId, newQuantity);   // Gọi hàm addToCart
+        }
+
+        // Kiểm tra tồn kho
         TraProduct product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không tồn tại"));
 
@@ -86,11 +158,14 @@ public class chi_cartItemService {
             throw new IllegalArgumentException("Số lượng tồn kho không đủ");
         }
 
+        // Cập nhật số lượng
         item.setQuantity(newQuantity);
         chi_cartItem saved = cartRepository.save(item);
+
+        System.out.println(" Đã lưu quantity = " + saved.getQuantity());
+
         return mapToResponse(saved, product);
     }
-
     @Transactional
     public void removeFromCart(Integer customerId, Integer productId) {
         cartRepository.deleteByCustomerIdAndProductId(customerId, productId);

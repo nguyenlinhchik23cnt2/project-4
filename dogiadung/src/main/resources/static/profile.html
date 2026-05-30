@@ -1,151 +1,1422 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TNC Shop - Thông Tin Cá Nhân</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        tncGreen: '#1e4620',
-                        tncGreenHover: '#143016'
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tài khoản của tôi – TNC Shop</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== GLOBAL TOKENS (giống hệt index.html) ===== */
+    :root{
+      --olive:#4a7043;--olive-d:#3a5a34;--olive-l:#e8f0e6;
+      --red:#e11d48;--bg:#f7f6f2;--white:#fff;
+      --text:#1c1f1a;--sub:#5a6258;--dim:#9aa398;--border:#e0ddd7;
+      --shadow:0 4px 20px rgba(74,112,67,.12);--r:14px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+
+    /* ===== TOP BAR ===== */
+    #topBar{background:var(--olive);color:#fff;text-align:center;font-size:13px;padding:8px 16px;position:relative}
+    #topBar span{opacity:.9}#topBar b{color:#fde68a;margin:0 4px}
+    .topbar-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer}
+    .topbar-close:hover{color:#fff}
+
+    /* ===== HEADER ===== */
+    header{background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.07);position:sticky;top:0;z-index:999}
+    .header-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:14px 24px}
+    .brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .brand-icon{width:42px;height:42px;background:var(--olive);border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .brand-icon svg{width:24px;height:24px;fill:#fff}
+    .brand-name{font-size:20px;font-weight:800;color:var(--olive);letter-spacing:-.02em;line-height:1.1}
+    .brand-name small{display:block;font-size:10px;font-weight:500;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}
+    .header-search{flex:1;max-width:560px;display:flex;align-items:stretch;border:2px solid var(--border);border-radius:50px;overflow:hidden;transition:border-color .2s;background:#fff}
+    .header-search:focus-within{border-color:var(--olive)}
+    .search-cat{border:none;border-right:1px solid var(--border);background:var(--bg);padding:0 14px;font-family:inherit;font-size:13px;color:var(--sub);cursor:pointer;white-space:nowrap;font-weight:500}
+    .search-cat:focus{outline:none}
+    .header-search input{border:none;flex:1;padding:0 16px;font-family:inherit;font-size:14px;color:var(--text);background:transparent}
+    .header-search input:focus{outline:none}
+    .search-btn{background:var(--olive);border:none;color:#fff;padding:0 20px;font-size:15px;cursor:pointer;transition:background .2s}
+    .search-btn:hover{background:var(--olive-d)}
+    .header-icons{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .icon-btn{position:relative;width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--sub);cursor:pointer;transition:all .2s}
+    .icon-btn:hover{border-color:var(--olive);color:var(--olive);background:var(--olive-l)}
+    .icon-btn .badge-count{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-size:10px;font-weight:700;border-radius:20px;padding:1px 5px;min-width:18px;text-align:center}
+    .account-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:50px;padding:7px 14px;background:#fff;cursor:pointer;transition:all .2s}
+    .account-btn:hover{border-color:var(--olive);background:var(--olive-l)}
+    .account-btn span{font-size:13px;font-weight:600;color:var(--text)}
+    .nav-links{background:#fff;border-top:1px solid var(--border)}
+    .nav-links ul{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;list-style:none}
+    .nav-links li a{display:block;padding:12px 16px;font-size:13.5px;font-weight:600;color:var(--sub);transition:color .2s;white-space:nowrap;position:relative}
+    .nav-links li a:hover,.nav-links li a.active{color:var(--olive)}
+    .nav-links li a.active::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--olive);border-radius:2px}
+    .sale-link a{color:var(--red)!important}
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb-wrap{background:#fff;border-bottom:1px solid var(--border);padding:12px 0}
+    .breadcrumb-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim)}
+    .breadcrumb-inner a{color:var(--sub);font-weight:500;transition:color .2s}
+    .breadcrumb-inner a:hover{color:var(--olive)}
+    .breadcrumb-inner i{font-size:10px}
+
+    /* ===== PROFILE LAYOUT ===== */
+    .profile-wrap{max-width:1280px;margin:0 auto;padding:32px 24px 60px;display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start}
+
+    /* ===== SIDEBAR ===== */
+    .sidebar{background:#fff;border-radius:var(--r);border:1.5px solid var(--border);overflow:hidden;position:sticky;top:90px}
+    .sidebar-user{background:linear-gradient(135deg,var(--olive) 0%,var(--olive-d) 100%);padding:28px 20px;text-align:center;color:#fff}
+    .sidebar-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px;border:3px solid rgba(255,255,255,.4)}
+    .sidebar-name{font-size:16px;font-weight:700;margin-bottom:3px}
+    .sidebar-username{font-size:12px;opacity:.75;font-weight:500}
+    .sidebar-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;margin-top:10px}
+    .sidebar-nav{padding:8px 0}
+    .snav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;font-size:13.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+    .snav-item:hover{background:var(--olive-l);color:var(--olive);border-left-color:var(--olive)}
+    .snav-item.active{background:var(--olive-l);color:var(--olive);border-left-color:var(--olive)}
+    .snav-item i{width:18px;text-align:center;font-size:14px;flex-shrink:0}
+    .snav-divider{height:1px;background:var(--border);margin:6px 0}
+    .snav-logout{display:flex;align-items:center;gap:12px;padding:12px 20px;font-size:13.5px;font-weight:600;color:var(--red);cursor:pointer;transition:all .2s}
+    .snav-logout:hover{background:#fef2f2}
+    .snav-logout i{width:18px;text-align:center;font-size:14px}
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content{}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    /* ===== CARDS / SECTION ===== */
+    .content-card{background:#fff;border-radius:var(--r);border:1.5px solid var(--border);overflow:hidden;margin-bottom:20px}
+    .card-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .card-head h3{font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+    .card-head h3 i{color:var(--olive);font-size:15px}
+    .card-body{padding:24px}
+
+    /* ===== FORM STYLES ===== */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-grid.full{grid-template-columns:1fr}
+    .form-group{display:flex;flex-direction:column;gap:6px}
+    .form-group label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+    .form-group label span.req{color:var(--red)}
+    .form-control-custom{width:100%;border:1.5px solid var(--border);border-radius:9px;padding:10px 14px;font-family:inherit;font-size:14px;color:var(--text);background:#fff;transition:border-color .2s,box-shadow .2s}
+    .form-control-custom:focus{outline:none;border-color:var(--olive);box-shadow:0 0 0 3px rgba(74,112,67,.1)}
+    .form-control-custom:disabled{background:var(--bg);color:var(--sub);cursor:not-allowed}
+    .form-control-custom.readonly{background:var(--bg);color:var(--sub)}
+    select.form-control-custom{cursor:pointer}
+    .form-hint{font-size:11px;color:var(--dim);margin-top:3px}
+    .btn-save{background:var(--olive);color:#fff;border:none;border-radius:50px;padding:12px 32px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+    .btn-save:hover{background:var(--olive-d);transform:translateY(-1px)}
+    .btn-save:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .btn-outline{background:#fff;color:var(--olive);border:1.5px solid var(--olive);border-radius:50px;padding:11px 24px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+    .btn-outline:hover{background:var(--olive);color:#fff}
+
+    /* ===== INFO DISPLAY ===== */
+    .info-row{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid var(--bg)}
+    .info-row:last-child{border-bottom:none}
+    .info-label{width:140px;flex-shrink:0;font-size:12.5px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+    .info-value{flex:1;font-size:14px;font-weight:500;color:var(--text)}
+    .info-value.muted{color:var(--dim);font-style:italic}
+
+    /* ===== ALERT ===== */
+    .alert-box{border-radius:9px;padding:12px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .alert-success{background:#f0fdf4;border:1.5px solid #86efac;color:#15803d}
+    .alert-error{background:#fef2f2;border:1.5px solid #fca5a5;color:#b91c1c}
+    .alert-info{background:var(--olive-l);border:1.5px solid #a7c4a4;color:var(--olive-d)}
+    .alert-warning{background:#fffbeb;border:1.5px solid #fcd34d;color:#92400e}
+
+    /* ===== ORDERS TABLE ===== */
+    .order-table{width:100%;border-collapse:collapse}
+    .order-table th{background:var(--bg);padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);text-align:left;border-bottom:1.5px solid var(--border)}
+    .order-table td{padding:14px;font-size:13.5px;border-bottom:1px solid var(--bg);vertical-align:middle}
+    .order-table tr:hover td{background:#fafaf8}
+    .order-table tr:last-child td{border-bottom:none}
+    .order-status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+    .status-pending{background:#fffbeb;color:#92400e;border:1px solid #fcd34d}
+    .status-processing{background:#eff6ff;color:#1d4ed8;border:1px solid #93c5fd}
+    .status-shipping{background:#f0f9ff;color:#0369a1;border:1px solid #7dd3fc}
+    .status-delivered{background:#f0fdf4;color:#15803d;border:1px solid #86efac}
+    .status-cancelled{background:#fef2f2;color:#b91c1c;border:1px solid #fca5a5}
+    .order-code{font-family:monospace;font-weight:700;color:var(--olive);font-size:13px}
+    .order-detail-btn{background:none;border:1.5px solid var(--border);border-radius:7px;padding:5px 12px;font-family:inherit;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer;transition:all .2s}
+    .order-detail-btn:hover{border-color:var(--olive);color:var(--olive);background:var(--olive-l)}
+
+    /* ===== ORDER DETAIL MODAL ===== */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1050;display:none;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.show{display:flex}
+    .order-modal{background:#fff;border-radius:18px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.2);position:relative}
+    .order-modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:18px 18px 0 0}
+    .order-modal-head h4{font-size:16px;font-weight:700}
+    .modal-close{width:32px;height:32px;border-radius:50%;background:#fff;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;color:var(--sub);transition:all .2s}
+    .modal-close:hover{background:var(--text);color:#fff}
+    .order-modal-body{padding:24px}
+    .order-track{display:flex;align-items:flex-start;gap:0;margin-bottom:24px}
+    .track-step{flex:1;text-align:center;position:relative}
+    .track-step:not(:last-child)::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:2px;background:var(--border);z-index:0}
+    .track-step.done:not(:last-child)::after{background:var(--olive)}
+    .track-dot{width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;position:relative;z-index:1;font-size:11px;color:#fff}
+    .track-step.done .track-dot{background:var(--olive)}
+    .track-step.current .track-dot{background:var(--olive);box-shadow:0 0 0 4px rgba(74,112,67,.2)}
+    .track-label{font-size:10.5px;font-weight:600;color:var(--dim)}
+    .track-step.done .track-label,.track-step.current .track-label{color:var(--olive)}
+    .order-items-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+    .oi-row{display:flex;gap:12px;align-items:center;padding:12px;background:var(--bg);border-radius:9px}
+    .oi-img{width:52px;height:52px;object-fit:cover;border-radius:8px;background:#eee}
+    .oi-info{flex:1}
+    .oi-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+    .oi-meta{font-size:12px;color:var(--dim)}
+    .oi-price{font-size:14px;font-weight:700;color:var(--red)}
+    .order-total-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13.5px;color:var(--sub);border-top:1px solid var(--border)}
+    .order-total-row.grand{color:var(--text);font-weight:800;font-size:15px}
+
+    /* ===== VOUCHER GRID ===== */
+    .voucher-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+    .voucher-card{background:#fff;border:1.5px dashed var(--border);border-radius:12px;overflow:hidden;position:relative;transition:all .2s;cursor:pointer}
+    .voucher-card:hover{border-color:var(--olive);box-shadow:var(--shadow)}
+    .voucher-card.expired{opacity:.55}
+    .voucher-stripe{height:6px}
+    .voucher-stripe.green{background:linear-gradient(90deg,var(--olive),#6aaa62)}
+    .voucher-stripe.red{background:linear-gradient(90deg,#e11d48,#f97316)}
+    .voucher-stripe.blue{background:linear-gradient(90deg,#3b82f6,#8b5cf6)}
+    .voucher-stripe.gray{background:linear-gradient(90deg,#9ca3af,#d1d5db)}
+    .voucher-body{padding:16px}
+    .voucher-code{font-family:monospace;font-size:15px;font-weight:800;color:var(--olive);letter-spacing:.1em;margin-bottom:4px}
+    .voucher-desc{font-size:13px;color:var(--text);font-weight:600;margin-bottom:8px}
+    .voucher-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--dim)}
+    .voucher-badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase}
+    .vb-active{background:var(--olive-l);color:var(--olive)}
+    .vb-used{background:#f3f4f6;color:var(--dim)}
+    .vb-expired{background:#fef2f2;color:#b91c1c}
+    .voucher-copy{position:absolute;top:14px;right:14px;background:none;border:1.5px solid var(--border);border-radius:7px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;color:var(--sub);transition:all .2s}
+    .voucher-copy:hover{background:var(--olive);color:#fff;border-color:var(--olive)}
+
+    /* ===== STATS ROW ===== */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+    .stat-card{background:#fff;border-radius:12px;border:1.5px solid var(--border);padding:16px 20px;text-align:center}
+    .stat-num{font-size:22px;font-weight:800;color:var(--olive)}
+    .stat-label{font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state{text-align:center;padding:52px 24px;color:var(--dim)}
+    .empty-state i{font-size:40px;margin-bottom:14px;display:block}
+    .empty-state h5{font-size:15px;font-weight:700;color:var(--sub);margin-bottom:8px}
+    .empty-state p{font-size:13px;line-height:1.6}
+
+    /* ===== FILTER TABS ===== */
+    .filter-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+    .filter-tab{padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);font-size:12.5px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff;color:var(--sub)}
+    .filter-tab:hover{border-color:var(--olive);color:var(--olive)}
+    .filter-tab.active{background:var(--olive);color:#fff;border-color:var(--olive)}
+
+    /* ===== USERNAME CHANGE ===== */
+    .username-wrap{display:flex;gap:8px;align-items:stretch}
+    .username-wrap .form-control-custom{flex:1}
+    .btn-username-change{background:var(--olive);color:#fff;border:none;border-radius:9px;padding:0 18px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+    .btn-username-change:hover{background:var(--olive-d)}
+    .btn-username-change:disabled{opacity:.5;cursor:not-allowed}
+    .username-status{font-size:11.5px;font-weight:600;margin-top:5px;display:none}
+    .username-status.ok{color:#15803d}.username-status.err{color:#b91c1c}.username-status.checking{color:var(--olive)}
+
+    /* ===== STAR RATING ===== */
+    .stars-input{display:flex;gap:4px;flex-direction:row-reverse;justify-content:flex-end}
+    .stars-input input{display:none}
+    .stars-input label{font-size:26px;color:#d1d5db;cursor:pointer;transition:color .15s;line-height:1}
+    .stars-input label:hover,.stars-input label:hover~label,
+    .stars-input input:checked~label{color:#f59e0b}
+    .review-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:10.5px;font-weight:700}
+    .rb-pending{background:#fffbeb;color:#92400e;border:1px solid #fcd34d}
+    .rb-approved{background:#f0fdf4;color:#15803d;border:1px solid #86efac}
+    .rb-rejected{background:#fef2f2;color:#b91c1c;border:1px solid #fca5a5}
+    .rb-none{background:#f3f4f6;color:var(--dim);border:1px solid var(--border)}
+    .review-btn{background:none;border:1.5px solid #f59e0b;border-radius:7px;padding:4px 11px;font-family:inherit;font-size:12px;font-weight:700;color:#b45309;cursor:pointer;transition:all .2s}
+    .review-btn:hover{background:#f59e0b;color:#fff}
+
+    /* ===== REVIEW MODAL ===== */
+    .review-modal{background:#fff;border-radius:18px;width:100%;max-width:500px;box-shadow:0 30px 80px rgba(0,0,0,.2);position:relative}
+    .review-modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:18px 18px 0 0}
+    .review-modal-body{padding:24px}
+    .review-product-row{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:9px;padding:12px;margin-bottom:20px}
+    .review-product-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:#eee}
+    .review-product-name{font-size:13.5px;font-weight:700;color:var(--text)}
+    .review-product-meta{font-size:12px;color:var(--dim);margin-top:2px}
+
+    /* ===== ORDER ITEMS LIST (detail modal) ===== */
+    .oi-review-section{margin-top:6px}
+    .oi-stars{color:#f59e0b;font-size:12px}
+    .oi-review-text{font-size:11.5px;color:var(--sub);font-style:italic;margin-top:2px}
+
+    /* ===== FOOTER ===== */
+    footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
+    .footer-inner{max-width:1280px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px}
+    .footer-brand-name{font-size:20px;font-weight:800;color:#fff;display:block;margin-bottom:10px}
+    .footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:18px}
+    .footer-nl{display:flex;border:1px solid rgba(255,255,255,.15);border-radius:50px;overflow:hidden;background:rgba(255,255,255,.07)}
+    .footer-nl input{flex:1;background:transparent;border:none;color:#fff;padding:9px 14px;font-family:inherit;font-size:13px}
+    .footer-nl input::placeholder{color:rgba(255,255,255,.3)}
+    .footer-nl input:focus{outline:none}
+    .footer-nl button{background:var(--olive);border:none;color:#fff;padding:9px 16px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:background .2s}
+    .footer-nl button:hover{background:#5a8a52}
+    .footer-col h4{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:14px}
+    .footer-col ul{list-style:none}
+    .footer-col ul li{margin-bottom:9px}
+    .footer-col ul li a{font-size:13px;color:rgba(255,255,255,.5);transition:color .2s}
+    .footer-col ul li a:hover{color:#fff}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:18px 24px;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .footer-bottom p{font-size:12px;color:rgba(255,255,255,.3)}
+    .pay-badges{display:flex;gap:6px}
+    .pay-b{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:3px 7px;font-size:9px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.04em}
+
+    /* ===== TOAST ===== */
+    #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1c2c1a;color:#fff;padding:11px 20px;border-radius:50px;font-size:14px;font-weight:600;z-index:9999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* ===== SCROLL TOP ===== */
+    #scrollTop{position:fixed;bottom:24px;right:24px;width:42px;height:42px;border-radius:50%;background:var(--olive);border:none;color:#fff;font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(74,112,67,.35);transition:all .2s;z-index:998}
+    #scrollTop.show{display:flex}
+    #scrollTop:hover{background:var(--olive-d);transform:translateY(-2px)}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:900px){
+      .profile-wrap{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .form-grid{grid-template-columns:1fr}
+      .stats-row{grid-template-columns:repeat(2,1fr)}
+      .footer-inner{grid-template-columns:1fr 1fr;gap:24px}
+    }
+    @media(max-width:600px){
+      .stats-row{grid-template-columns:repeat(2,1fr)}
+      .voucher-grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans">
+<body>
 
-<header class="bg-white shadow-sm border-b py-4 px-6 flex justify-between items-center">
-    <div class="flex items-center space-x-3">
-        <div class="bg-tncGreen p-2.5 rounded-xl text-white">
-            <i class="fa-solid fa-house-chimney text-xl"></i>
-        </div>
-        <div>
-            <span class="text-2xl font-black text-tncGreen">TNC Shop</span>
-        </div>
-    </div>
-    <button onclick="logout()"
-            class="px-5 py-2 text-red-600 hover:bg-red-50 rounded-xl flex items-center gap-2 font-medium">
-        <i class="fas fa-sign-out-alt"></i> Đăng xuất
-    </button>
-</header>
-
-<div class="max-w-3xl mx-auto mt-10 px-4">
-    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-
-        <!-- Profile Header -->
-        <div class="bg-tncGreen text-white p-8 text-center">
-            <div id="avatar" class="w-32 h-32 mx-auto rounded-full border-4 border-white overflow-hidden bg-gray-200">
-                <img id="avatar-img" src="https://via.placeholder.com/150" alt="Avatar"
-                     class="w-full h-full object-cover">
-            </div>
-            <h1 id="full-name" class="text-3xl font-bold mt-4"></h1>
-            <p id="username" class="text-green-100 mt-1"></p>
-        </div>
-
-        <div class="p-8">
-            <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                <i class="fas fa-user-circle"></i> Thông Tin Cá Nhân
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Họ và tên</label>
-                    <input id="display-name" type="text"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Giới tính</label>
-                    <select id="gender"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen">
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Ngày sinh</label>
-                    <input id="birthdate" type="date"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
-                    <input id="email" type="email"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen">
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Số điện thoại</label>
-                    <input id="phone" type="tel"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen">
-                </div>
-            </div>
-
-            <div class="mt-8 flex gap-4">
-                <button onclick="saveProfile()"
-                        class="flex-1 bg-tncGreen text-white py-4 rounded-2xl font-bold hover:bg-tncGreenHover transition flex items-center justify-center gap-2">
-                    <i class="fas fa-save"></i> Lưu Thông Tin
-                </button>
-                <button onclick="window.location.href='index.html'"
-                        class="flex-1 border border-gray-300 py-4 rounded-2xl font-bold hover:bg-gray-50 transition">
-                    Về Trang Chủ
-                </button>
-            </div>
-        </div>
-    </div>
+<!-- TOP BAR -->
+<div id="topBar">
+  <span>Miễn phí vận chuyển cho đơn từ <b>500.000₫</b> · Ưu đãi Bộ sưu tập Olive Nature 2026</span>
+  <button class="topbar-close" onclick="this.closest('div').style.display='none'">×</button>
 </div>
 
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22" fill="none" stroke="#fff" stroke-width="2"/></svg>
+      </div>
+      <div class="brand-name">TNC Shop<small>Đồ Gia Dụng Thông Minh</small></div>
+    </a>
+    <div class="header-search">
+      <select class="search-cat">
+        <option value="all">Tất cả</option>
+        <option>Nhà bếp</option><option>Điện gia dụng</option>
+        <option>Phòng ngủ</option><option>Phòng khách</option>
+      </select>
+      <input type="text" id="headerSearch" placeholder="Bạn cần tìm gì hôm nay?" onkeydown="if(event.key==='Enter')window.location.href='Product.html'">
+      <button class="search-btn" onclick="window.location.href='Product.html'"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="header-icons">
+      <a href="index.html" class="icon-btn" title="Giỏ hàng">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge-count" id="cartCount">0</span>
+      </a>
+      <div class="dropdown">
+        <button class="account-btn" type="button" data-bs-toggle="dropdown">
+          <i class="fa-regular fa-user" style="font-size:16px;color:var(--sub)"></i>
+          <span id="userDisplay">Tài khoản</span>
+          <i class="fa-solid fa-chevron-down" style="font-size:10px;color:var(--dim)"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2">
+          <li id="menuLogin"><a class="dropdown-item py-2" href="login.html"><i class="fa-solid fa-right-to-bracket me-2 text-muted"></i>Đăng nhập</a></li>
+          <li id="menuRegister"><a class="dropdown-item py-2" href="register.html"><i class="fa-solid fa-user-plus me-2 text-muted"></i>Đăng ký</a></li>
+          <li id="menuProfile" style="display:none"><a class="dropdown-item py-2 fw-bold" href="profile.html"><i class="fa-solid fa-user me-2" style="color:var(--olive)"></i>Tài khoản của tôi</a></li>
+          <li id="menuOrders" style="display:none"><a class="dropdown-item py-2" href="profile.html"><i class="fa-solid fa-box me-2 text-muted"></i>Đơn hàng của tôi</a></li>
+          <li id="menuDividerLogout" style="display:none"><hr class="dropdown-divider"></li>
+          <li id="menuLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
+          <li id="adminMenu" style="display:none"><hr class="dropdown-divider"><a class="dropdown-item text-primary fw-bold py-2" href="admin.html"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Trang quản trị</a></li>
+          <li id="staffMenu" style="display:none"><hr class="dropdown-divider"><a class="dropdown-item text-success fw-bold py-2" href="staff.html"><i class="fa-solid fa-user-tie me-2"></i>Trang nhân viên</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <ul>
+      <li><a href="index.html">Trang chủ</a></li>
+      <li><a href="Product.html">Sản phẩm</a></li>
+      <li><a href="Category.html">Danh mục</a></li>
+      <li><a href="News.html">Tin tức</a></li>
+      <li><a href="Contact.html">Liên hệ</a></li>
+      <li><a href="About.html">Về chúng tôi</a></li>
+      <li><a href="Guarantee.html">Chính sách bảo mật</a></li>
+      <li class="sale-link"><a href="#">Flash Sale</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-wrap">
+  <div class="breadcrumb-inner">
+    <a href="index.html"><i class="fas fa-home"></i> Trang chủ</a>
+    <i class="fas fa-chevron-right"></i>
+    <span style="color:var(--sub);font-weight:600">Tài khoản của tôi</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="profile-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="sidebar-name" id="sidebarName">Đang tải...</div>
+      <div class="sidebar-username" id="sidebarUsername">@username</div>
+      <div class="sidebar-badge"><i class="fas fa-leaf" style="font-size:10px"></i> Khách hàng thân thiết</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="snav-item active" onclick="switchTab('info')">
+        <i class="fas fa-user-circle"></i> Thông tin cá nhân
+      </div>
+      <div class="snav-item" onclick="switchTab('orders')">
+        <i class="fas fa-box"></i> Đơn hàng của tôi
+      </div>
+      <div class="snav-item" onclick="switchTab('history')">
+        <i class="fas fa-history"></i> Lịch sử đơn hàng
+      </div>
+      <div class="snav-item" onclick="switchTab('vouchers')">
+        <i class="fas fa-ticket-alt"></i> Voucher của tôi
+      </div>
+      <div class="snav-divider"></div>
+      <div class="snav-item" onclick="switchTab('security')">
+        <i class="fas fa-shield-alt"></i> Bảo mật tài khoản
+      </div>
+      <div class="snav-divider"></div>
+      <div class="snav-logout" onclick="logout()">
+        <i class="fas fa-right-from-bracket"></i> Đăng xuất
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT AREA -->
+  <main class="main-content">
+
+    <!-- =================== TAB: THÔNG TIN CÁ NHÂN =================== -->
+    <div class="tab-panel active" id="tab-info">
+
+      <!-- STATS ROW -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="statOrders">—</div>
+          <div class="stat-label">Tổng đơn hàng</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statSpent">—</div>
+          <div class="stat-label">Đã chi tiêu</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statVouchers">—</div>
+          <div class="stat-label">Voucher còn lại</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statPoints">—</div>
+          <div class="stat-label">Điểm thưởng</div>
+        </div>
+      </div>
+
+      <!-- EDIT FORM -->
+      <div class="content-card">
+        <div class="card-head">
+          <h3><i class="fas fa-user-edit"></i> Chỉnh sửa thông tin cá nhân</h3>
+          <button class="btn-outline" id="btnToggleEdit" onclick="toggleEdit()"><i class="fas fa-pen me-1"></i> Chỉnh sửa</button>
+        </div>
+        <div class="card-body">
+          <div id="alertBox" style="display:none"></div>
+
+          <div class="form-grid">
+            <!-- Họ và tên -->
+            <div class="form-group">
+              <label>Họ và tên <span class="req">*</span></label>
+              <input type="text" id="fFullName" class="form-control-custom" placeholder="Nhập họ và tên" disabled>
+            </div>
+            <!-- Username (có thể đổi) -->
+            <div class="form-group">
+              <label>Tên đăng nhập</label>
+              <div class="username-wrap">
+                <input type="text" id="fUsername" class="form-control-custom" placeholder="Tên đăng nhập" maxlength="60">
+                <button class="btn-username-change" id="btnChangeUsername" onclick="changeUsername()">
+                  <i class="fas fa-check me-1"></i>Đổi
+                </button>
+              </div>
+              <div class="username-status" id="usernameStatus"></div>
+              <span class="form-hint"><i class="fas fa-info-circle" style="font-size:10px"></i> Chỉ chứa chữ, số, dấu gạch dưới. Tối thiểu 4 ký tự.</span>
+            </div>
+            <!-- Số điện thoại -->
+            <div class="form-group">
+              <label>Số điện thoại</label>
+              <input type="tel" id="fPhone" class="form-control-custom" placeholder="Nhập số điện thoại" disabled>
+            </div>
+            <!-- Email -->
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="fEmail" class="form-control-custom" placeholder="Nhập email" disabled>
+            </div>
+            <!-- Ngày sinh -->
+            <div class="form-group">
+              <label>Ngày sinh</label>
+              <input type="date" id="fDob" class="form-control-custom" disabled>
+            </div>
+            <!-- Giới tính -->
+            <div class="form-group">
+              <label>Giới tính</label>
+              <select id="fGender" class="form-control-custom" disabled>
+                <option value="">-- Chọn giới tính --</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+              </select>
+            </div>
+          </div>
+          <!-- Địa chỉ (full width) -->
+          <div class="form-grid full" style="margin-top:16px">
+            <div class="form-group">
+              <label>Địa chỉ</label>
+              <input type="text" id="fAddress" class="form-control-custom" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành" disabled>
+            </div>
+          </div>
+
+          <!-- Ngày tạo tài khoản (chỉ xem) -->
+          <div class="form-grid full" style="margin-top:16px">
+            <div class="form-group">
+              <label>Ngày tạo tài khoản</label>
+              <input type="text" id="fCreatedAt" class="form-control-custom readonly" readonly>
+            </div>
+          </div>
+
+          <div id="editActions" style="display:none;margin-top:20px;display:none;gap:10px;align-items:center">
+            <button class="btn-save" id="btnSave" onclick="saveProfile()">
+              <i class="fas fa-check"></i> Lưu thay đổi
+            </button>
+            <button class="btn-outline" onclick="cancelEdit()" style="padding:11px 20px">
+              Huỷ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-info -->
+
+    <!-- =================== TAB: ĐƠN HÀNG =================== -->
+    <div class="tab-panel" id="tab-orders">
+      <div class="content-card">
+        <div class="card-head">
+          <h3><i class="fas fa-box"></i> Đơn hàng đang xử lý</h3>
+        </div>
+        <div class="card-body">
+          <div class="alert-box alert-warning">
+            <i class="fas fa-triangle-exclamation"></i>
+            <span>Backend chưa cung cấp API đơn hàng. Dữ liệu bên dưới là <b>mẫu minh hoạ</b>.</span>
+          </div>
+
+          <div class="filter-tabs">
+            <div class="filter-tab active" onclick="filterOrders(this,'all')">Tất cả</div>
+            <div class="filter-tab" onclick="filterOrders(this,'pending')">Chờ xác nhận</div>
+            <div class="filter-tab" onclick="filterOrders(this,'processing')">Đang xử lý</div>
+            <div class="filter-tab" onclick="filterOrders(this,'shipping')">Đang giao</div>
+            <div class="filter-tab" onclick="filterOrders(this,'delivered')">Đã giao</div>
+          </div>
+
+          <div style="overflow-x:auto">
+            <table class="order-table" id="ordersTable">
+              <thead>
+                <tr>
+                  <th>Mã đơn</th>
+                  <th>Ngày đặt</th>
+                  <th>Sản phẩm</th>
+                  <th>Tổng tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-orders -->
+
+    <!-- =================== TAB: LỊCH SỬ =================== -->
+    <div class="tab-panel" id="tab-history">
+      <div class="content-card">
+        <div class="card-head">
+          <h3><i class="fas fa-history"></i> Lịch sử đơn hàng</h3>
+        </div>
+        <div class="card-body">
+          <div class="alert-box alert-info" style="margin-bottom:16px">
+            <i class="fas fa-star" style="color:#f59e0b"></i>
+            <span>Đơn <b>Đã giao</b> có thể đánh giá sản phẩm. Dữ liệu gửi tới <code>POST /api/order-items/review</code> — kết nối thực với <b>chi_orderItem</b>.</span>
+          </div>
+
+          <div class="filter-tabs">
+            <div class="filter-tab active" onclick="filterHistory(this,'all')">Tất cả</div>
+            <div class="filter-tab" onclick="filterHistory(this,'delivered')">Đã giao thành công</div>
+            <div class="filter-tab" onclick="filterHistory(this,'cancelled')">Đã huỷ</div>
+          </div>
+
+          <div style="overflow-x:auto">
+            <table class="order-table" id="historyTable">
+              <thead>
+                <tr>
+                  <th>Mã đơn</th>
+                  <th>Ngày đặt</th>
+                  <th>Sản phẩm</th>
+                  <th>Tổng tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Đánh giá</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="historyTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-history -->
+
+    <!-- =================== TAB: VOUCHER =================== -->
+    <div class="tab-panel" id="tab-vouchers">
+      <div class="content-card">
+        <div class="card-head">
+          <h3><i class="fas fa-ticket-alt"></i> Voucher của tôi</h3>
+        </div>
+        <div class="card-body">
+          <div class="alert-box alert-warning">
+            <i class="fas fa-triangle-exclamation"></i>
+            <span>Backend chưa cung cấp API voucher. Dữ liệu bên dưới là <b>mẫu minh hoạ</b>.</span>
+          </div>
+
+          <div class="filter-tabs" style="margin-bottom:20px">
+            <div class="filter-tab active" onclick="filterVouchers(this,'all')">Tất cả</div>
+            <div class="filter-tab" onclick="filterVouchers(this,'active')">Còn hạn</div>
+            <div class="filter-tab" onclick="filterVouchers(this,'used')">Đã dùng</div>
+            <div class="filter-tab" onclick="filterVouchers(this,'expired')">Hết hạn</div>
+          </div>
+
+          <div class="voucher-grid" id="voucherGrid"></div>
+        </div>
+      </div>
+    </div><!-- /tab-vouchers -->
+
+    <!-- =================== TAB: BẢO MẬT =================== -->
+    <div class="tab-panel" id="tab-security">
+
+      <!-- USERNAME CHANGE CARD -->
+      <div class="content-card">
+        <div class="card-head">
+          <h3><i class="fas fa-at"></i> Đổi tên đăng nhập</h3>
+        </div>
+        <div class="card-body">
+          <div class="alert-box alert-warning" style="margin-bottom:16px">
+            <i class="fas fa-triangle-exclamation"></i>
+            <span>Backend cần thêm <b>1 dòng</b> vào <code>NgaCustomerService.update()</code>:<br>
+            <code style="font-size:11px;display:block;margin-top:4px;background:rgba(0,0,0,.05);padding:4px 8px;border-radius:5px">customer.setUsername(newData.getUsername()); // Bỏ chú thích dòng này</code>
+            Endpoint hiện tại <code>PUT /api/customers/{id}</code> đã nhận username nhưng Service đang bỏ qua.</span>
+          </div>
+          <div id="secAlertBox" style="display:none;margin-bottom:14px"></div>
+          <div style="max-width:420px">
+            <div class="form-group">
+              <label>Username hiện tại</label>
+              <input type="text" id="secCurrentUsername" class="form-control-custom readonly" readonly>
+            </div>
+            <div class="form-group" style="margin-top:14px">
+              <label>Username mới <span class="req">*</span></label>
+              <div class="username-wrap">
+                <input type="text" id="secNewUsername" class="form-control-custom"
+                       placeholder="Tối thiểu 4 ký tự, chữ/số/dấu_"
+                       maxlength="60" oninput="checkUsernameAvail()"
+                       onkeydown="if(event.key==='Enter')saveUsername()">
+                <button class="btn-username-change" id="btnSaveUsername" onclick="saveUsername()">
+                  <i class="fas fa-check me-1"></i>Lưu
+                </button>
+              </div>
+              <div class="username-status" id="secUsernameStatus"></div>
+              <span class="form-hint">Chỉ dùng chữ thường, số, dấu gạch dưới (_). Ví dụ: <em>nguyen_van_a</em></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSWORD CARD -->
+      <div class="content-card">
+        <div class="card-head">
+          <h3><i class="fas fa-lock"></i> Đổi mật khẩu</h3>
+        </div>
+        <div class="card-body">
+          <div class="alert-box alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>Tính năng đổi mật khẩu cần endpoint <code>PUT /api/customers/{id}/password</code> — chưa được triển khai trong backend hiện tại.</span>
+          </div>
+          <div class="form-grid" style="max-width:480px">
+            <div class="form-group" style="grid-column:1/-1">
+              <label>Mật khẩu hiện tại</label>
+              <input type="password" class="form-control-custom" placeholder="••••••••" disabled>
+            </div>
+            <div class="form-group">
+              <label>Mật khẩu mới</label>
+              <input type="password" class="form-control-custom" placeholder="••••••••" disabled>
+            </div>
+            <div class="form-group">
+              <label>Xác nhận mật khẩu mới</label>
+              <input type="password" class="form-control-custom" placeholder="••••••••" disabled>
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn-save" disabled style="opacity:.5;cursor:not-allowed">
+              <i class="fas fa-lock"></i> Đổi mật khẩu (Sắp có)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCOUNT INFO -->
+      <div class="content-card">
+        <div class="card-head">
+          <h3><i class="fas fa-id-card"></i> Thông tin tài khoản</h3>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <div class="info-label">Username</div>
+            <div class="info-value" id="secUsername">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Ngày tạo TK</div>
+            <div class="info-value" id="secCreated">—</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Phân quyền</div>
+            <div class="info-value"><span style="background:var(--olive-l);color:var(--olive);padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700">CUSTOMER</span></div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Customer ID</div>
+            <div class="info-value" id="secCustomerId" style="font-family:monospace;color:var(--olive)">—</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-security -->
+
+  </main>
+</div><!-- /profile-wrap -->
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal" onclick="if(event.target===this)closeOrderModal()">
+  <div class="order-modal">
+    <div class="order-modal-head">
+      <h4 id="modalOrderTitle">Chi tiết đơn hàng</h4>
+      <button class="modal-close" onclick="closeOrderModal()">×</button>
+    </div>
+    <div class="order-modal-body" id="orderModalBody"></div>
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal-overlay" id="reviewModal" onclick="if(event.target===this)closeReviewModal()">
+  <div class="review-modal">
+    <div class="review-modal-head">
+      <h4><i class="fas fa-star" style="color:#f59e0b;margin-right:6px"></i>Đánh giá sản phẩm</h4>
+      <button class="modal-close" onclick="closeReviewModal()">×</button>
+    </div>
+    <div class="review-modal-body">
+      <div class="review-product-row">
+        <img class="review-product-img" id="reviewProdImg" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=100&q=70" alt="">
+        <div>
+          <div class="review-product-name" id="reviewProdName">Tên sản phẩm</div>
+          <div class="review-product-meta" id="reviewProdMeta">Mã đơn: —</div>
+        </div>
+      </div>
+
+      <div id="reviewAlertBox" style="display:none;margin-bottom:14px"></div>
+
+      <!-- Star Rating -->
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Chất lượng sản phẩm <span class="req">*</span></label>
+        <div class="stars-input" id="starsInput">
+          <input type="radio" id="s5" name="rating" value="5"><label for="s5" title="Xuất sắc">★</label>
+          <input type="radio" id="s4" name="rating" value="4"><label for="s4" title="Tốt">★</label>
+          <input type="radio" id="s3" name="rating" value="3"><label for="s3" title="Bình thường">★</label>
+          <input type="radio" id="s2" name="rating" value="2"><label for="s2" title="Kém">★</label>
+          <input type="radio" id="s1" name="rating" value="1"><label for="s1" title="Tệ">★</label>
+        </div>
+        <div id="ratingLabel" style="font-size:12px;color:var(--dim);margin-top:5px">Chọn số sao</div>
+      </div>
+
+      <!-- Comment -->
+      <div class="form-group" style="margin-bottom:20px">
+        <label>Nhận xét của bạn</label>
+        <textarea id="reviewComment" class="form-control-custom" rows="4"
+          placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..."
+          style="resize:vertical;min-height:90px"></textarea>
+        <span class="form-hint"><span id="charCount">0</span>/500 ký tự</span>
+      </div>
+
+      <!-- Hidden fields -->
+      <input type="hidden" id="reviewOrderId">
+      <input type="hidden" id="reviewProductId">
+
+      <div style="display:flex;gap:10px">
+        <button class="btn-save" id="btnSubmitReview" onclick="submitReview()">
+          <i class="fas fa-paper-plane"></i> Gửi đánh giá
+        </button>
+        <button class="btn-outline" onclick="closeReviewModal()">Huỷ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-brand-name">TNC Shop</span>
+      <p>Chuỗi cửa hàng đồ gia dụng thông minh hàng đầu Việt Nam. Cam kết sản phẩm chất lượng, giá cả hợp lý, dịch vụ tận tâm.</p>
+      <div style="margin-bottom:10px;font-size:12px;color:rgba(255,255,255,.35)">Đăng ký nhận ưu đãi độc quyền</div>
+      <div class="footer-nl">
+        <input type="email" placeholder="Email của bạn...">
+        <button onclick="alert('Cảm ơn bạn đã đăng ký!')">Đăng ký</button>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Sản phẩm</h4>
+      <ul>
+        <li><a href="Product.html">Đồ dùng nhà bếp</a></li>
+        <li><a href="Product.html">Điện gia dụng</a></li>
+        <li><a href="Product.html">Phòng ngủ</a></li>
+        <li><a href="Product.html">Phòng khách</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hỗ trợ</h4>
+      <ul>
+        <li><a href="#">Hướng dẫn mua hàng</a></li>
+        <li><a href="#">Chính sách đổi trả</a></li>
+        <li><a href="#">Giao hàng & Vận chuyển</a></li>
+        <li><a href="#">Câu hỏi thường gặp</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Về chúng tôi</h4>
+      <ul>
+        <li><a href="#">Giới thiệu TNC Shop</a></li>
+        <li><a href="#">Tin tức & Sự kiện</a></li>
+        <li><a href="#">Chính sách bảo mật</a></li>
+        <li><a href="#">Điều khoản sử dụng</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="max-width:1280px;margin:0 auto">
+    <div class="footer-bottom">
+      <p>© 2025 TNC Shop · Đồ Gia Dụng Thông Minh. Bảo lưu mọi quyền.</p>
+      <div class="pay-badges">
+        <span class="pay-b">COD</span><span class="pay-b">BANKING</span>
+        <span class="pay-b">MOMO</span><span class="pay-b">VNPAY</span><span class="pay-b">VISA</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+  const API_BASE = 'http://localhost:8080/api';
+  let currentUser = null;
+  let customerData = null;
+  let isEditing = false;
+  let originalData = {};
 
-    function loadProfile() {
-        // Hiển thị thông tin
-        document.getElementById('full-name').textContent = currentUser.fullName || "Khách hàng mới";
-        document.getElementById('username').textContent = "@" + (currentUser.username || "user");
+  /* ==================== INIT ==================== */
+  window.onload = async () => {
+    initAccountMenu();
+    updateCartCount();
+    initSampleData();
+    renderVouchers('all');
+    renderOrders('all');
+    renderHistory('all');
+    window.addEventListener('scroll', () =>
+      document.getElementById('scrollTop').classList.toggle('show', scrollY > 400));
 
-        // Điền dữ liệu vào form
-        document.getElementById('display-name').value = currentUser.fullName || "";
-        document.getElementById('email').value = currentUser.email || "";
-        document.getElementById('phone').value = currentUser.phone || "";
-        document.getElementById('gender').value = currentUser.gender || "Nam";
-        document.getElementById('birthdate').value = currentUser.birthdate || "";
-
-        // Avatar
-        const avatarImg = document.getElementById('avatar-img');
-        avatarImg.src = currentUser.avatarUrl ||
-            `https://via.placeholder.com/150/1e4620/ffffff?text=${currentUser.fullName ? currentUser.fullName.charAt(0).toUpperCase() : 'U'}`;
+    currentUser = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+    if (!currentUser) {
+      showToast('⚠️ Vui lòng đăng nhập để xem tài khoản');
+      setTimeout(() => window.location.href = 'login.html', 1500);
+      return;
     }
 
-    function saveProfile() {
-        currentUser.fullName = document.getElementById('display-name').value;
-        currentUser.email = document.getElementById('email').value;
-        currentUser.phone = document.getElementById('phone').value;
-        currentUser.gender = document.getElementById('gender').value;
-        currentUser.birthdate = document.getElementById('birthdate').value;
+    await loadCustomerData();
+  };
 
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  function initAccountMenu() {
+    const user = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+    if (user) {
+      document.getElementById('userDisplay').textContent = user.username || 'Tài khoản';
+      document.getElementById('menuLogin').style.display = 'none';
+      document.getElementById('menuRegister').style.display = 'none';
+      document.getElementById('menuProfile').style.display = 'block';
+      document.getElementById('menuOrders').style.display = 'block';
+      document.getElementById('menuDividerLogout').style.display = 'block';
+      document.getElementById('menuLogout').style.display = 'block';
+      const role = (user.role || '').toUpperCase();
+      if (role === 'ADMIN') document.getElementById('adminMenu').style.display = 'block';
+      else if (role === 'STAFF') document.getElementById('staffMenu').style.display = 'block';
+    }
+  }
 
-        alert("✅ Thông tin cá nhân đã được cập nhật thành công!");
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('tnc_cart') || '[]');
+    const count = cart.reduce((s, i) => s + (i.quantity || 0), 0);
+    document.getElementById('cartCount').textContent = count;
+  }
+
+  /* ==================== LOAD CUSTOMER ==================== */
+  async function loadCustomerData() {
+    const user = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+    if (!user) return;
+
+    const customerId = user.customerId || user.id;
+    if (!customerId) {
+      showAlert('info', '<i class="fas fa-info-circle me-2"></i>Không tìm thấy ID khách hàng trong session. Vui lòng kiểm tra dữ liệu đăng nhập.');
+      fillMockData(user);
+      return;
     }
 
-    function logout() {
-        if (confirm("Bạn có chắc muốn đăng xuất?")) {
-            localStorage.clear();
-            window.location.href = 'login.html';
+    try {
+      const res = await fetch(`${API_BASE}/customers/${customerId}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      customerData = await res.json();
+      fillForm(customerData);
+      // Load order items thực tế từ backend
+      await loadRealOrderItems(customerId);
+    } catch (e) {
+      console.warn('API lỗi, dùng dữ liệu mẫu:', e);
+      fillMockData(user);
+      showAlert('warning', '<i class="fas fa-wifi-slash me-2"></i>Không kết nối được backend. Đang hiển thị dữ liệu mẫu.');
+    }
+  }
+
+  function fillForm(data) {
+    document.getElementById('fFullName').value  = data.fullName  || '';
+    document.getElementById('fUsername').value  = data.username  || '';
+    document.getElementById('fPhone').value     = data.phone     || '';
+    document.getElementById('fEmail').value     = data.email     || '';
+    document.getElementById('fAddress').value   = data.address   || '';
+    document.getElementById('fDob').value       = data.dob       ? data.dob.substring(0,10) : '';
+    document.getElementById('fGender').value    = data.gender    || '';
+    document.getElementById('fCreatedAt').value = data.createdAt ? new Date(data.createdAt).toLocaleString('vi-VN') : '';
+
+    document.getElementById('sidebarName').textContent    = data.fullName || data.username || 'Khách hàng';
+    document.getElementById('sidebarUsername').textContent = '@' + (data.username || '');
+    document.getElementById('secUsername').textContent    = data.username || '—';
+    document.getElementById('secCreated').textContent     = data.createdAt ? new Date(data.createdAt).toLocaleDateString('vi-VN') : '—';
+    // Hiển thị Customer ID trong tab Bảo mật
+    const _cid = data.id || JSON.parse(localStorage.getItem('currentLogin')||'{}').customerId || JSON.parse(localStorage.getItem('currentLogin')||'{}').id || '—';
+    document.getElementById('secCustomerId').textContent = _cid;
+
+    originalData = { ...data };
+
+    // Sample stats
+    document.getElementById('statOrders').textContent  = '8';
+    document.getElementById('statSpent').textContent   = '3,2M';
+    document.getElementById('statVouchers').textContent= '3';
+    document.getElementById('statPoints').textContent  = '320';
+  }
+
+  function fillMockData(user) {
+    const mock = {
+      fullName: user.fullName || user.username || 'Khách hàng',
+      username: user.username || 'user',
+      phone: user.phone || '',
+      email: user.email || '',
+      address: user.address || '',
+      dob: null, gender: '', createdAt: null
+    };
+    fillForm(mock);
+    customerData = mock;
+    originalData = { ...mock };
+  }
+
+  /* ==================== EDIT / SAVE ==================== */
+  function toggleEdit() {
+    isEditing = !isEditing;
+    const fields = ['fFullName','fPhone','fEmail','fAddress','fDob','fGender'];
+    fields.forEach(id => {
+      document.getElementById(id).disabled = !isEditing;
+    });
+    document.getElementById('editActions').style.display = isEditing ? 'flex' : 'none';
+    document.getElementById('btnToggleEdit').innerHTML = isEditing
+      ? '<i class="fas fa-times me-1"></i> Huỷ'
+      : '<i class="fas fa-pen me-1"></i> Chỉnh sửa';
+    if (!isEditing) cancelEdit();
+  }
+
+  function cancelEdit() {
+    isEditing = false;
+    fillForm(originalData);
+    ['fFullName','fPhone','fEmail','fAddress','fDob','fGender'].forEach(id => {
+      document.getElementById(id).disabled = true;
+    });
+    document.getElementById('editActions').style.display = 'none';
+    document.getElementById('btnToggleEdit').innerHTML = '<i class="fas fa-pen me-1"></i> Chỉnh sửa';
+    hideAlert();
+  }
+
+  async function saveProfile() {
+    const user = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+    const customerId = user?.customerId || user?.id;
+
+    if (!customerId) {
+      showAlert('error', '<i class="fas fa-exclamation-circle me-2"></i>Không tìm thấy ID khách hàng. Vui lòng đăng nhập lại.');
+      return;
+    }
+
+    const fullName = document.getElementById('fFullName').value.trim();
+    if (!fullName) {
+      showAlert('error', '<i class="fas fa-exclamation-circle me-2"></i>Họ và tên không được để trống.');
+      return;
+    }
+
+    const payload = {
+      fullName,
+      phone:   document.getElementById('fPhone').value.trim(),
+      email:   document.getElementById('fEmail').value.trim(),
+      address: document.getElementById('fAddress').value.trim(),
+      dob:     document.getElementById('fDob').value || null,
+      gender:  document.getElementById('fGender').value
+    };
+
+    const btn = document.getElementById('btnSave');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang lưu...';
+
+    try {
+      const res = await fetch(`${API_BASE}/customers/${customerId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || `Lỗi HTTP ${res.status}`);
+      }
+
+      const updated = await res.json();
+      customerData = updated;
+      originalData = { ...updated };
+      fillForm(updated);
+
+      // Cập nhật localStorage
+      const stored = JSON.parse(localStorage.getItem('currentLogin') || '{}');
+      localStorage.setItem('currentLogin', JSON.stringify({ ...stored, fullName: updated.fullName }));
+
+      showAlert('success', '<i class="fas fa-check-circle me-2"></i>Cập nhật thông tin thành công!');
+      showToast('✅ Lưu thông tin thành công');
+      isEditing = false;
+      ['fFullName','fPhone','fEmail','fAddress','fDob','fGender'].forEach(id => {
+        document.getElementById(id).disabled = true;
+      });
+      document.getElementById('editActions').style.display = 'none';
+      document.getElementById('btnToggleEdit').innerHTML = '<i class="fas fa-pen me-1"></i> Chỉnh sửa';
+
+    } catch (e) {
+      showAlert('error', `<i class="fas fa-times-circle me-2"></i>Lỗi: ${e.message}`);
+      showToast('❌ Lưu thất bại: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-check"></i> Lưu thay đổi';
+    }
+  }
+
+  /* ==================== TABS ==================== */
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.snav-item').forEach(s => s.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+    if (name === 'security') initSecurityTab();
+  }
+
+  /* ==================== ALERTS ==================== */
+  function showAlert(type, html) {
+    const box = document.getElementById('alertBox');
+    box.className = 'alert-box alert-' + type;
+    box.innerHTML = html;
+    box.style.display = 'flex';
+  }
+  function hideAlert() {
+    document.getElementById('alertBox').style.display = 'none';
+  }
+
+  /* ==================== TOAST ==================== */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  /* ==================== SAMPLE DATA ==================== */
+  const SAMPLE_ORDERS = [
+    { id:'TNC-2026001', date:'15/05/2026', products:'Nồi áp suất Elmich + 2 sản phẩm', total:1250000, status:'delivered' },
+    { id:'TNC-2026007', date:'20/05/2026', products:'Máy xay sinh tố Sunhouse', total:650000, status:'shipping' },
+    { id:'TNC-2026012', date:'22/05/2026', products:'Bộ dao 6 món cao cấp', total:480000, status:'processing' },
+    { id:'TNC-2026015', date:'23/05/2026', products:'Chảo chống dính Tefal', total:320000, status:'pending' },
+    { id:'TNC-2025088', date:'12/12/2025', products:'Quạt đứng + Ấm điện', total:890000, status:'delivered' },
+    { id:'TNC-2025055', date:'01/10/2025', products:'Bộ nồi inox 5 món', total:1450000, status:'delivered' },
+    { id:'TNC-2025030', date:'20/07/2025', products:'Máy hút bụi Xiaomi', total:2100000, status:'cancelled' },
+    { id:'TNC-2025010', date:'05/03/2025', products:'Đèn bàn LED thông minh', total:250000, status:'delivered' },
+  ];
+
+  const STATUS_MAP = {
+    pending:    { label:'Chờ xác nhận', cls:'status-pending' },
+    processing: { label:'Đang xử lý',   cls:'status-processing' },
+    shipping:   { label:'Đang giao',    cls:'status-shipping' },
+    delivered:  { label:'Đã giao',      cls:'status-delivered' },
+    cancelled:  { label:'Đã huỷ',       cls:'status-cancelled' }
+  };
+
+  function initSampleData() {}
+
+  /* ==================== REAL ORDER ITEMS API ==================== */
+  /**
+   * Tải order items thực từ GET /api/order-items/by-customer/{customerId}.
+   * Nếu có dữ liệu thực → thay thế SAMPLE_ORDERS; nếu lỗi → giữ nguyên mẫu.
+   */
+  async function loadRealOrderItems(customerId) {
+    try {
+      const res = await fetch(`${API_BASE}/order-items/by-customer/${customerId}`);
+      if (!res.ok) return; // Giữ mẫu nếu API chưa sẵn
+      const items = await res.json();
+      if (!items || items.length === 0) return;
+
+      // Chuyển đổi chi_orderItem → định dạng SAMPLE_ORDERS để render
+      const mapped = items.map(it => ({
+        id:       `ORD-${it.orderId}`,
+        _orderId:  it.orderId,
+        _productId: it.productId,
+        date:     it.reviewedAt ? new Date(it.reviewedAt).toLocaleDateString('vi-VN') : '—',
+        products: `Sản phẩm #${it.productId}`,
+        total:    it.unitPrice ? Number(it.unitPrice) * (it.quantity || 1) : 0,
+        status:   'delivered',  // order items đã có = đã giao
+        rating:   it.rating,
+        reviewComment: it.reviewComment,
+        isApproved:    it.isApproved
+      }));
+
+      // Cập nhật mảng toàn cục & re-render
+      SAMPLE_ORDERS.length = 0;
+      mapped.forEach(m => SAMPLE_ORDERS.push(m));
+      renderOrders('all');
+      renderHistory('all');
+
+      // Cập nhật stat đơn hàng
+      document.getElementById('statOrders').textContent = items.length;
+    } catch (e) {
+      console.warn('Không load được order items thực:', e);
+    }
+  }
+
+  function orderRow(o) {
+    const s = STATUS_MAP[o.status] || STATUS_MAP.pending;
+    return `<tr data-status="${o.status}">
+      <td><span class="order-code">${o.id}</span></td>
+      <td>${o.date}</td>
+      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${o.products}</td>
+      <td style="font-weight:700;color:var(--red)">${Number(o.total).toLocaleString('vi-VN')}₫</td>
+      <td><span class="order-status ${s.cls}">${s.label}</span></td>
+      <td><button class="order-detail-btn" onclick="openOrderModal('${o.id}')"><i class="fas fa-eye me-1"></i>Xem</button></td>
+    </tr>`;
+  }
+
+  function renderOrders(filter) {
+    const data = filter === 'all' ? SAMPLE_ORDERS.filter(o => o.status !== 'cancelled')
+      : SAMPLE_ORDERS.filter(o => o.status === filter);
+    const tbody = document.getElementById('ordersTbody');
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-box-open"></i><h5>Không có đơn hàng nào</h5><p>Bạn chưa có đơn hàng ở trạng thái này.</p></div></td></tr>`;
+    } else {
+      tbody.innerHTML = data.map(orderRow).join('');
+    }
+  }
+
+  function renderHistory(filter) {
+    const histOrders = SAMPLE_ORDERS.filter(o => ['delivered','cancelled'].includes(o.status));
+    const data = filter === 'all' ? histOrders : histOrders.filter(o => o.status === filter);
+    const tbody = document.getElementById('historyTbody');
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-history"></i><h5>Không có lịch sử</h5><p>Chưa có đơn hàng hoàn thành hoặc bị huỷ.</p></div></td></tr>`;
+    } else {
+      tbody.innerHTML = data.map(orderRow).join('');
+    }
+  }
+
+  function filterOrders(el, filter) {
+    document.querySelectorAll('#tab-orders .filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderOrders(filter);
+  }
+
+  function filterHistory(el, filter) {
+    document.querySelectorAll('#tab-history .filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderHistory(filter);
+  }
+
+  /* ==================== ORDER MODAL ==================== */
+  function openOrderModal(orderId) {
+    const o = SAMPLE_ORDERS.find(x => x.id === orderId);
+    if (!o) return;
+    const s = STATUS_MAP[o.status];
+    const steps = ['pending','processing','shipping','delivered'];
+    const stepIdx = steps.indexOf(o.status);
+
+    const trackHtml = steps.map((st, i) => {
+      const lbl = STATUS_MAP[st]?.label || st;
+      const done = i < stepIdx || (o.status !== 'cancelled' && i <= stepIdx);
+      const cur  = i === stepIdx && o.status !== 'cancelled';
+      return `<div class="track-step ${done?'done':''} ${cur?'current':''}">
+        <div class="track-dot"><i class="fas fa-check" style="font-size:9px"></i></div>
+        <div class="track-label">${lbl}</div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('modalOrderTitle').textContent = 'Đơn hàng ' + o.id;
+    document.getElementById('orderModalBody').innerHTML = `
+      ${o.status === 'cancelled' ? '<div class="alert-box alert-error" style="margin-bottom:16px"><i class="fas fa-times-circle"></i> Đơn hàng này đã bị huỷ.</div>' : ''}
+      ${o.status !== 'cancelled' ? `<div class="order-track">${trackHtml}</div>` : ''}
+      <div class="order-items-list">
+        <div class="oi-row">
+          <img class="oi-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=100&q=70" alt="">
+          <div class="oi-info">
+            <div class="oi-name">${o.products.split('+')[0].trim()}</div>
+            <div class="oi-meta">SL: 1 · Ngày đặt: ${o.date}</div>
+          </div>
+          <div class="oi-price">${Number(o.total).toLocaleString('vi-VN')}₫</div>
+        </div>
+      </div>
+      <div class="order-total-row"><span>Tạm tính</span><span>${Number(o.total).toLocaleString('vi-VN')}₫</span></div>
+      <div class="order-total-row"><span>Phí vận chuyển</span><span style="color:var(--olive)">Miễn phí</span></div>
+      <div class="order-total-row grand"><span>Tổng cộng</span><span style="color:var(--red)">${Number(o.total).toLocaleString('vi-VN')}₫</span></div>
+    `;
+    document.getElementById('orderModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOrderModal() {
+    document.getElementById('orderModal').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  /* ==================== VOUCHERS ==================== */
+  const SAMPLE_VOUCHERS = [
+    { code:'TNC-SAVE50K', desc:'Giảm 50.000₫ cho đơn từ 300K', expire:'30/06/2026', type:'green', status:'active', minOrder:'300K' },
+    { code:'TNC-FREE-SHIP', desc:'Miễn phí vận chuyển toàn quốc', expire:'15/07/2026', type:'blue', status:'active', minOrder:'0₫' },
+    { code:'TNC-VIP10',  desc:'Giảm 10% tối đa 100K (Khách VIP)', expire:'31/12/2026', type:'red', status:'active', minOrder:'500K' },
+    { code:'TNC-KHAI20', desc:'Khai trương – Giảm 20K', expire:'01/01/2026', type:'gray', status:'expired', minOrder:'200K' },
+    { code:'TNC-TET30K', desc:'Ưu đãi Tết – Giảm 30.000₫', expire:'10/02/2026', type:'gray', status:'used', minOrder:'250K' },
+  ];
+
+  function voucherCard(v) {
+    const b = { active:'vb-active', used:'vb-used', expired:'vb-expired' }[v.status];
+    const lbl = { active:'Còn hạn', used:'Đã dùng', expired:'Hết hạn' }[v.status];
+    return `<div class="voucher-card ${v.status==='expired'?'expired':''}">
+      <div class="voucher-stripe ${v.type}"></div>
+      <div class="voucher-body">
+        <div class="voucher-code">${v.code}</div>
+        <div class="voucher-desc">${v.desc}</div>
+        <div class="voucher-meta">
+          <span>Đơn tối thiểu: ${v.minOrder}</span>
+          <span class="voucher-badge ${b}">${lbl}</span>
+        </div>
+        <div class="voucher-meta" style="margin-top:6px"><span>Hết hạn: ${v.expire}</span></div>
+      </div>
+      ${v.status==='active'?`<button class="voucher-copy" onclick="copyVoucher(event,'${v.code}')"><i class="fas fa-copy"></i> Sao chép</button>`:''}
+    </div>`;
+  }
+
+  function renderVouchers(filter) {
+    const data = filter === 'all' ? SAMPLE_VOUCHERS : SAMPLE_VOUCHERS.filter(v => v.status === filter);
+    const grid = document.getElementById('voucherGrid');
+    grid.innerHTML = data.length ? data.map(voucherCard).join('') :
+      `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-ticket-alt"></i><h5>Không có voucher</h5><p>Bạn không có voucher ở trạng thái này.</p></div>`;
+  }
+
+  function filterVouchers(el, filter) {
+    document.querySelectorAll('#tab-vouchers .filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderVouchers(filter);
+  }
+
+  function copyVoucher(e, code) {
+    e.stopPropagation();
+    navigator.clipboard.writeText(code).then(() => showToast('📋 Đã sao chép: ' + code))
+      .catch(() => showToast('Code: ' + code));
+  }
+
+  /* ==================== AUTH ==================== */
+  function logout() {
+    if (confirm('Bạn có chắc muốn đăng xuất?')) {
+      localStorage.removeItem('currentLogin');
+      window.location.href = 'index.html';
+    }
+  }
+
+  /* ==================== USERNAME CHANGE ==================== */
+  let _usernameCheckTimer = null;
+
+  // Điền username hiện tại vào ô readonly khi load tab bảo mật
+  function initSecurityTab() {
+    const stored = JSON.parse(localStorage.getItem('currentLogin') || '{}');
+    const current = customerData?.username || stored.username || '';
+    document.getElementById('secCurrentUsername').value = current;
+    document.getElementById('secNewUsername').value = '';
+    const st = document.getElementById('secUsernameStatus');
+    st.style.display = 'none'; st.className = 'username-status';
+    document.getElementById('secAlertBox').style.display = 'none';
+  }
+
+  function checkUsernameAvail() {
+    clearTimeout(_usernameCheckTimer);
+    const val = document.getElementById('secNewUsername').value.trim();
+    const st  = document.getElementById('secUsernameStatus');
+
+    if (!val) { st.style.display = 'none'; return; }
+
+    // Validate format ngay tức thì
+    if (!/^[a-z0-9_]{4,60}$/.test(val)) {
+      st.textContent = '✗ Chỉ dùng chữ thường (a-z), số, dấu _ · Tối thiểu 4 ký tự';
+      st.className = 'username-status err'; st.style.display = 'block';
+      return;
+    }
+
+    const current = document.getElementById('secCurrentUsername').value.trim();
+    if (val === current) {
+      st.textContent = '⚠ Username mới trùng với username hiện tại';
+      st.className = 'username-status err'; st.style.display = 'block';
+      return;
+    }
+
+    // Debounce 600ms rồi kiểm tra API
+    st.textContent = 'Đang kiểm tra…';
+    st.className = 'username-status checking'; st.style.display = 'block';
+
+    _usernameCheckTimer = setTimeout(async () => {
+      try {
+        const res = await fetch(`${API_BASE}/customers/check-username?username=${encodeURIComponent(val)}`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (data.available) {
+          st.textContent = '✓ Username có thể sử dụng';
+          st.className = 'username-status ok';
+        } else {
+          st.textContent = '✗ Username đã được sử dụng';
+          st.className = 'username-status err';
         }
+      } catch {
+        // Nếu endpoint chưa có, bỏ qua lỗi — vẫn cho phép lưu
+        st.textContent = '⚠ Không thể kiểm tra — sẽ xác nhận khi lưu';
+        st.className = 'username-status checking';
+      }
+      st.style.display = 'block';
+    }, 600);
+  }
+
+  async function saveUsername() {
+    const newUsername = document.getElementById('secNewUsername').value.trim();
+    const secAlert    = document.getElementById('secAlertBox');
+
+    function showSecAlert(type, html) {
+      secAlert.className = 'alert-box alert-' + type;
+      secAlert.innerHTML = html;
+      secAlert.style.display = 'flex';
+    }
+    function hideSecAlert() { secAlert.style.display = 'none'; }
+
+    hideSecAlert();
+
+    // Validate
+    if (!newUsername) {
+      showSecAlert('error', '<i class="fas fa-exclamation-circle me-2"></i>Vui lòng nhập username mới.');
+      return;
+    }
+    if (!/^[a-z0-9_]{4,60}$/.test(newUsername)) {
+      showSecAlert('error', '<i class="fas fa-exclamation-circle me-2"></i>Username không hợp lệ. Chỉ dùng chữ thường (a-z), số, dấu gạch dưới, tối thiểu 4 ký tự.');
+      return;
+    }
+    const current = document.getElementById('secCurrentUsername').value.trim();
+    if (newUsername === current) {
+      showSecAlert('error', '<i class="fas fa-exclamation-circle me-2"></i>Username mới phải khác username hiện tại.');
+      return;
     }
 
-    // Khởi chạy trang
-    window.onload = loadProfile;
+    const stored     = JSON.parse(localStorage.getItem('currentLogin') || '{}');
+    const customerId = stored.customerId || stored.id;
+    if (!customerId) {
+      showSecAlert('error', '<i class="fas fa-exclamation-circle me-2"></i>Không tìm thấy ID khách hàng. Vui lòng đăng nhập lại.');
+      return;
+    }
+
+    const btn = document.getElementById('btnSaveUsername');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Đang lưu…';
+
+    try {
+      // Gửi username kèm toàn bộ data hiện tại (PUT /api/customers/{id})
+      const payload = {
+        ...(customerData || {}),
+        username: newUsername
+      };
+      const res = await fetch(`${API_BASE}/customers/${customerId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${res.status}`);
+      }
+
+      const updated = await res.json();
+      customerData = updated;
+      originalData = { ...updated };
+
+      // Cập nhật localStorage — giữ nguyên token/id, chỉ đổi username
+      localStorage.setItem('currentLogin', JSON.stringify({
+        ...stored,
+        username: updated.username || newUsername
+      }));
+
+      // Làm mới UI
+      fillForm(updated);
+      document.getElementById('secCurrentUsername').value = updated.username || newUsername;
+      document.getElementById('secNewUsername').value = '';
+      document.getElementById('userDisplay').textContent = updated.username || newUsername;
+
+      const st = document.getElementById('secUsernameStatus');
+      st.style.display = 'none';
+
+      showSecAlert('success', `<i class="fas fa-check-circle me-2"></i>Đổi username thành công! Username mới: <b>${updated.username || newUsername}</b>`);
+      showToast('✅ Đổi username thành công');
+
+    } catch (e) {
+      showSecAlert('error', `<i class="fas fa-times-circle me-2"></i>Lỗi: ${e.message}`);
+      showToast('❌ Đổi username thất bại: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-check me-1"></i>Lưu';
+    }
+  }
 </script>
 </body>
 </html>

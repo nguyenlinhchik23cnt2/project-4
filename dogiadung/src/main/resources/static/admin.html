@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TNC Shop – Quản trị</title>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         :root{
             --olive:#4a7043;--olive-d:#3a5a34;--olive-l:#e8f0e6;--olive-ll:#f3f8f2;
@@ -143,8 +143,9 @@
         .form-group{display:flex;flex-direction:column;gap:4px}
         .form-label{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.04em}
         .form-label .req{color:var(--red)}
-        .form-control{border:1.5px solid var(--border2);border-radius:var(--rs);padding:8px 11px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:all .15s;background:var(--bg);width:100%}
+        .form-control{border:1.5px solid var(--border2);border-radius:var(--rs);padding:8px 11px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:all .15s;background:#fff;width:100%}
         .form-control:focus{border-color:var(--olive);background:#fff;box-shadow:0 0 0 3px rgba(74,112,67,.08)}
+        .form-control[readonly]{background:var(--bg);cursor:default;color:var(--sub)}
         select.form-control{cursor:pointer}
         textarea.form-control{resize:vertical;min-height:76px;line-height:1.55}
         .form-section{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);padding-bottom:6px;border-bottom:1px solid var(--border);margin:16px 0 12px}
@@ -192,11 +193,10 @@
     </style>
 </head>
 <body>
-
 <!-- SIDEBAR -->
 <div class="sidebar">
     <div class="sb-logo">
-        <div class="sb-logo-icon"></div>
+        <div class="sb-logo-icon"><i class="bi bi-house-fill" style="color:#fff;font-size:17px"></i></div>
         <div>
             <div class="sb-logo-text">TNC Shop</div>
             <div class="sb-logo-sub">Trang quản trị</div>
@@ -208,40 +208,31 @@
     </div>
     <nav class="sb-nav">
         <div class="sb-section-label">Tổng quan</div>
-        <button class="nav-item active" onclick="gotoSection('dashboard',this)">
-            <div class="nav-icon"></div> Dashboard
+        <button class="nav-item active" onclick="gotoSection('dashboard',this)"> <div class="nav-icon"><i class="bi bi-grid-1x2-fill" style="font-size:15px"></i></div> Dashboard
         </button>
         <div class="sb-section-label">Quản lý</div>
-        <button class="nav-item" onclick="gotoSection('products',this)">
-            <div class="nav-icon"></div> Sản phẩm
+        <button class="nav-item" onclick="gotoSection('products',this)"> <div class="nav-icon"><i class="bi bi-box-seam" style="font-size:15px"></i></div> Sản phẩm
             <span class="nav-badge" id="badge-products">–</span>
         </button>
-        <button class="nav-item" onclick="gotoSection('orders',this)">
-            <div class="nav-icon"></div> Đơn hàng
+        <button class="nav-item" onclick="gotoSection('orders',this)"> <div class="nav-icon"><i class="bi bi-cart3" style="font-size:15px"></i></div> Đơn hàng
             <span class="nav-badge" id="badge-orders">–</span>
         </button>
-        <button class="nav-item" onclick="gotoSection('stock',this)">
-            <div class="nav-icon"></div> Nhập kho
+        <button class="nav-item" onclick="gotoSection('stock',this)"> <div class="nav-icon"><i class="bi bi-arrow-bar-down" style="font-size:15px"></i></div> Nhập kho
             <span class="nav-badge" id="badge-stock">–</span>
         </button>
-        <button class="nav-item" onclick="gotoSection('customers',this)">
-            <div class="nav-icon"></div> Khách hàng
-            <span class="nav-badge" id="badge-customers">–</span>
-        </button>
-        <button class="nav-item" onclick="gotoSection('categories',this)">
-            <div class="nav-icon"></div> Danh mục
+        <button class="nav-item" onclick="gotoSection('categories',this)"> <div class="nav-icon"><i class="bi bi-folder2-open" style="font-size:15px"></i></div> Danh mục
             <span class="nav-badge" id="badge-categories">–</span>
         </button>
-        <button class="nav-item" onclick="gotoSection('users',this)">
-            <div class="nav-icon"></div> Người dùng
-            <span class="nav-badge" id="badge-users">–</span>
+        <button class="nav-item" onclick="gotoSection('warranty',this)"> <div class="nav-icon"><i class="bi bi-shield-check" style="font-size:15px"></i></div> Bảo hành
+            <span class="nav-badge" id="badge-warranty">–</span>
+        </button>
+        <button class="nav-item" onclick="gotoSection('orderlogs',this)"> <div class="nav-icon"><i class="bi bi-journal-text" style="font-size:15px"></i></div> Trạng thái đơn hàng
+            <span class="nav-badge" id="badge-orderlogs">–</span>
         </button>
         <div class="sb-section-label" style="margin-top:8px">Liên kết</div>
-        <button class="nav-item" onclick="window.open('index.html','_blank')">
-            <div class="nav-icon"></div> Xem trang chủ
+        <button class="nav-item" onclick="window.open('index.html','_blank')"> <div class="nav-icon"><i class="bi bi-globe2" style="font-size:15px"></i></div> Xem trang chủ
         </button>
-        <button class="nav-item" onclick="window.open('products.html','_blank')">
-            <div class="nav-icon"></div> Xem trang sản phẩm
+        <button class="nav-item" onclick="window.open('products.html','_blank')"> <div class="nav-icon"><i class="bi bi-bag" style="font-size:15px"></i></div> Xem trang sản phẩm
         </button>
     </nav>
     <div class="sb-footer">
@@ -251,11 +242,10 @@
                 <div class="sb-user-name" id="sb-name">Admin</div>
                 <div class="sb-user-role">Quản trị viên</div>
             </div>
-            <button class="btn-logout" onclick="logout()" title="Đăng xuất"><i class="fas fa-right-from-bracket"></i></button>
+            <button class="btn-logout" onclick="logout()" title="Đăng xuất"><i class="bi bi-box-arrow-right"></i></button>
         </div>
     </div>
 </div>
-
 <!-- MAIN -->
 <div class="main">
     <div class="topbar">
@@ -265,56 +255,64 @@
         </div>
         <div class="topbar-right">
             <span class="topbar-clock" id="clock"></span>
-            <button class="btn btn-ghost btn-sm" onclick="refreshCurrent()"><i class="fas fa-rotate-right"></i> Làm mới</button>
+            <button class="btn btn-ghost btn-sm" onclick="refreshCurrent()"><i class="bi bi-arrow-clockwise"></i> Làm mới</button>
             <div id="topbar-extra"></div>
         </div>
     </div>
-
     <div class="content">
-
-        <!-- ══ DASHBOARD ══ -->
+        <!-- API CONNECTION WARNING -->
+        <div id="api-warn" style="display:none;align-items:center;gap:12px;background:#fef3c7;border:1.5px solid #fcd34d;border-radius:10px;padding:12px 16px;margin-bottom:16px">
+            <i class="bi bi-exclamation-triangle-fill" style="color:#d97706;font-size:18px;flex-shrink:0"></i>
+            <div style="flex:1">
+                <div style="font-weight:700;font-size:13px;color:#92400e">Không kết nối được đến API Backend</div>
+                <div style="font-size:12px;color:#b45309;margin-top:2px">Kiểm tra: <strong>Backend đang chạy?</strong> · <strong>URL đúng chưa?</strong> · <strong>CORS đã cấu hình?</strong> · Base URL: <span id="api-warn-url" style="font-family:monospace"></span></div>
+            </div>
+            <button onclick="retryConnect()" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer"><i class="bi bi-arrow-clockwise"></i> Thử lại</button>
+            <button onclick="document.getElementById('api-warn').style.display='none'" style="background:none;border:none;cursor:pointer;color:#92400e;font-size:16px">✕</button>
+        </div>
         <div id="section-dashboard" class="section active">
             <div class="stats-grid">
                 <div class="stat-card stat-green">
-                    <div class="stat-card-icon"></div>
+                    <div class="stat-card-icon"><i class="bi bi-box-seam" style="font-size:20px"></i></div>
                     <div class="stat-card-value" id="stat-products">–</div>
                     <div class="stat-card-label">Sản phẩm</div>
                     <div class="stat-card-delta" id="stat-active-prod">– active</div>
                 </div>
                 <div class="stat-card stat-blue">
-                    <div class="stat-card-icon"></div>
+                    <div class="stat-card-icon"><i class="bi bi-cart-check" style="font-size:20px"></i></div>
                     <div class="stat-card-value" id="stat-orders">–</div>
                     <div class="stat-card-label">Đơn hàng</div>
                     <div class="stat-card-delta" id="stat-pending-ord">– chờ xử lý</div>
                 </div>
-                <div class="stat-card stat-amber">
-                    <div class="stat-card-icon"></div>
-                    <div class="stat-card-value" id="stat-customers">–</div>
-                    <div class="stat-card-label">Khách hàng</div>
-                </div>
                 <div class="stat-card stat-red">
-                    <div class="stat-card-icon"></div>
+                    <div class="stat-card-icon"><i class="bi bi-exclamation-triangle" style="font-size:20px"></i></div>
                     <div class="stat-card-value" id="stat-lowstock">–</div>
                     <div class="stat-card-label">Sản phẩm tồn thấp</div>
                     <div class="stat-card-delta" style="color:var(--red)" id="stat-outstock">– hết hàng</div>
+                </div>
+                <div class="stat-card" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1.5px solid #7dd3fc">
+                    <div class="stat-card-icon" style="background:rgba(14,165,233,.15)"><i class="bi bi-shield-check" style="font-size:20px;color:#0284c7"></i></div>
+                    <div class="stat-card-value" id="stat-warranty" style="color:#0284c7">–</div>
+                    <div class="stat-card-label">Phiếu bảo hành</div>
+                    <div class="stat-card-delta" id="stat-warranty-pending">– đang xử lý</div>
                 </div>
             </div>
             <!-- Revenue + recent orders -->
             <div style="display:grid;grid-template-columns:1fr 2fr;gap:14px;margin-bottom:14px">
                 <div>
                     <div class="revenue-card" style="margin-bottom:14px">
-                        <div class="revenue-label"> Doanh thu (đã TT)</div>
+                        <div class="revenue-label"><i class="bi bi-cash-coin" style="margin-right:5px"></i> Doanh thu (đã TT)</div>
                         <div class="revenue-value" id="stat-revenue">–</div>
                     </div>
                     <div class="card">
-                        <div class="card-header"><span class="card-title"> Nhập kho gần đây</span></div>
+                        <div class="card-header"><span class="card-title"><i class="bi bi-arrow-bar-down me-1"></i> Nhập kho gần đây</span></div>
                         <table><thead><tr><th>Lô hàng</th><th>SP</th><th>Số lượng</th></tr></thead>
                             <tbody id="dash-stock"><tr class="loading-row"><td colspan="3"><span class="spinner"></span></td></tr></tbody></table>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">Đơn hàng gần đây</span>
+                        <span class="card-title"><i class="bi bi-cart3 me-1" style="color:var(--blue)"></i> Đơn hàng gần đây</span>
                         <button class="btn btn-ghost btn-sm" onclick="gotoSection('orders',document.querySelector('.nav-item:nth-child(4)'))">Xem tất cả</button>
                     </div>
                     <div class="table-wrap"><table>
@@ -325,29 +323,28 @@
             </div>
             <div class="dash-grid">
                 <div class="card">
-                    <div class="card-header"><span class="card-title"> Sản phẩm tồn kho thấp</span></div>
+                    <div class="card-header"><span class="card-title"><i class="bi bi-exclamation-triangle me-1" style="color:var(--amber)"></i> Sản phẩm tồn kho thấp</span></div>
                     <table><thead><tr><th>Sản phẩm</th><th>Tồn kho</th><th>Tối thiểu</th><th></th></tr></thead>
                         <tbody id="dash-lowstock"><tr class="loading-row"><td colspan="4"><span class="spinner"></span></td></tr></tbody></table>
                 </div>
                 <div class="card">
-                    <div class="card-header"><span class="card-title"> Sản phẩm theo danh mục</span></div>
+                    <div class="card-header"><span class="card-title"><i class="bi bi-folder2-open me-1" style="color:var(--olive)"></i> Sản phẩm theo danh mục</span></div>
                     <table><thead><tr><th>Danh mục</th><th>Số sản phẩm</th><th>Active</th></tr></thead>
                         <tbody id="dash-cats"><tr class="loading-row"><td colspan="3"><span class="spinner"></span></td></tr></tbody></table>
                 </div>
             </div>
         </div>
 
-        <!-- ══ PRODUCTS ══ -->
         <div id="section-products" class="section">
             <div class="card">
                 <div class="card-header">
                     <span class="card-title">Danh sách sản phẩm</span>
                     <div class="card-actions">
-                        <div class="search-box"><i class="fas fa-search"></i><input id="search-products" placeholder="Tìm sản phẩm..." oninput="filterTable('products-tbody','search-products',[1,2])"></div>
+                        <div class="search-box"><i class="bi bi-search"></i><input id="search-products" placeholder="Tìm sản phẩm..." oninput="filterTable('products-tbody','search-products',[1,2])"></div>
                         <select class="filter-select" id="prod-status-f" onchange="filterByStatus('products')">
                             <option value="">Tất cả</option><option value="active">Active</option><option value="inactive">Inactive</option>
                         </select>
-                        <button class="btn btn-primary btn-sm" onclick="openCreate('products')"><i class="fas fa-plus"></i> Thêm sản phẩm</button>
+                        <button class="btn btn-primary btn-sm" onclick="openCreate('products')"><i class="bi bi-plus-lg"></i> Thêm sản phẩm</button>
                     </div>
                 </div>
                 <div class="table-wrap"><table>
@@ -364,7 +361,7 @@
                 <div class="card-header">
                     <span class="card-title">Danh sách đơn hàng</span>
                     <div class="card-actions">
-                        <div class="search-box"><i class="fas fa-search"></i><input id="search-orders" placeholder="Tìm đơn hàng..." oninput="filterTable('orders-tbody','search-orders',[0,1])"></div>
+                        <div class="search-box"><i class="bi bi-search"></i><input id="search-orders" placeholder="Tìm đơn hàng..." oninput="filterTable('orders-tbody','search-orders',[0,1])"></div>
                         <select class="filter-select" id="ord-status-f" onchange="filterByStatus('orders')">
                             <option value="">Tất cả trạng thái</option>
                             <option value="pending">Chờ xử lý</option><option value="confirmed">Đã xác nhận</option>
@@ -374,7 +371,7 @@
                             <option value="">Tất cả TT</option><option value="pending">Chưa TT</option>
                             <option value="paid">Đã TT</option><option value="failed">Thất bại</option>
                         </select>
-                        <button class="btn btn-primary btn-sm" onclick="openCreate('orders')"><i class="fas fa-plus"></i> Tạo đơn hàng</button>
+                        <span id="pending-orders-badge" style="display:none;align-items:center;gap:5px;font-size:11.5px;font-weight:700;color:#92400e;padding:5px 12px;background:#fef3c7;border:1.5px solid #fcd34d;border-radius:6px;"><i class="bi bi-bell-fill"></i><span id="pending-orders-count">0</span> đơn chờ xác nhận</span>
                     </div>
                 </div>
                 <div class="table-wrap"><table>
@@ -391,36 +388,49 @@
                 <div class="card-header">
                     <span class="card-title">Phiếu nhập kho</span>
                     <div class="card-actions">
-                        <div class="search-box"><i class="fas fa-search"></i><input id="search-stock" placeholder="Tìm mã lô, sản phẩm..." oninput="filterTable('stock-tbody','search-stock',[1,2])"></div>
-                        <select class="filter-select" id="stock-status-f" onchange="filterByStatus('stock')">
-                            <option value="">Tất cả</option><option value="done">Đã nhập</option><option value="cancelled">Đã hủy</option>
+                        <div class="search-box"><i class="bi bi-search"></i><input id="search-stock" placeholder="Tìm mã phiếu, sản phẩm..." oninput="filterStockAdvanced()"></div>
+                        <select class="filter-select" id="stock-status-f" onchange="filterStockAdvanced()">
+                            <option value="">Tất cả trạng thái</option><option value="done">Đã nhập</option><option value="cancelled">Đã hủy</option>
                         </select>
-                        <button class="btn btn-primary btn-sm" onclick="openCreate('stock')"><i class="fas fa-plus"></i> Tạo phiếu nhập</button>
+                        <select class="filter-select" id="stock-prod-f" onchange="filterStockAdvanced()" style="max-width:160px">
+                            <option value="">Tất cả sản phẩm</option>
+                        </select>
+                        <button class="btn btn-primary btn-sm" onclick="openCreate('stock')"><i class="bi bi-plus-lg"></i> Tạo phiếu nhập</button>
                     </div>
                 </div>
                 <div class="table-wrap"><table>
-                    <thead><tr><th>ID</th><th>Mã lô hàng</th><th>Sản phẩm ID</th><th>Số lượng</th><th>Giá nhập/đv</th><th>Tổng giá trị</th><th>Người tạo</th><th>Ngày nhập</th><th>Trạng thái</th><th>Ghi chú</th><th style="text-align:right">Thao tác</th></tr></thead>
+                    <thead><tr><th style="width:40px">STT</th><th>Mã phiếu nhập</th><th>Sản phẩm</th><th>Số lượng</th><th>Giá nhập/đv</th><th>Tổng giá trị</th><th>Người tạo</th><th>Ngày nhập</th><th>Trạng thái</th><th>Ghi chú</th><th style="text-align:right">Thao tác</th></tr></thead>
                     <tbody id="stock-tbody"><tr class="loading-row"><td colspan="11"><span class="spinner"></span>Đang tải...</td></tr></tbody>
                 </table></div>
                 <div class="pagination"><span id="stock-info">–</span><div class="page-btns" id="stock-pages"></div></div>
             </div>
         </div>
 
-        <!-- ══ CUSTOMERS ══ -->
-        <div id="section-customers" class="section">
+        <!-- ══ ORDER LOGS ══ -->
+        <div id="section-orderlogs" class="section">
             <div class="card">
                 <div class="card-header">
-                    <span class="card-title">Danh sách khách hàng</span>
+                    <span class="card-title" style="color:var(--olive)"> Lịch sử thay đổi trạng thái đơn hàng</span>
                     <div class="card-actions">
-                        <div class="search-box"><i class="fas fa-search"></i><input id="search-customers" placeholder="Tìm khách hàng..." oninput="filterTable('customers-tbody','search-customers',[0,1,2])"></div>
-                        <button class="btn btn-primary btn-sm" onclick="openCreate('customers')"><i class="fas fa-plus"></i> Thêm khách hàng</button>
+                        <div class="search-box"><i class="bi bi-search"></i><input id="search-orderlogs" placeholder="Tìm theo Order ID, trạng thái..." oninput="filterOrderLogs()"></div>
+                        <select class="filter-select" id="log-newstatus-f" onchange="filterOrderLogs()">
+                            <option value="">Tất cả trạng thái mới</option>
+                            <option value="PENDING">PENDING</option>
+                            <option value="CONFIRMED">CONFIRMED</option>
+                            <option value="PROCESSING">PROCESSING</option>
+                            <option value="SHIPPED">SHIPPED</option>
+                            <option value="DELIVERED">DELIVERED</option>
+                            <option value="DONE">DONE</option>
+                            <option value="CANCELLED">CANCELLED</option>
+                        </select>
+                        <button class="btn btn-primary btn-sm" onclick="openCreateOrderLog()"><i class="bi bi-plus-lg"></i> Thêm log</button>
                     </div>
                 </div>
                 <div class="table-wrap"><table>
-                    <thead><tr><th>Họ tên</th><th>Email</th><th>Điện thoại</th><th>Địa chỉ</th><th>Số đơn</th><th style="text-align:right">Thao tác</th></tr></thead>
-                    <tbody id="customers-tbody"><tr class="loading-row"><td colspan="6"><span class="spinner"></span>Đang tải...</td></tr></tbody>
+                    <thead><tr><th style="width:44px">STT</th><th style="width:60px">ID</th><th>Order ID</th><th>Trạng thái cũ</th><th>Trạng thái mới</th><th>Người thay đổi</th><th>Ghi chú</th><th>Thời gian</th><th style="text-align:right">Thao tác</th></tr></thead>
+                    <tbody id="orderlogs-tbody"><tr class="loading-row"><td colspan="9"><span class="spinner"></span>Đang tải...</td></tr></tbody>
                 </table></div>
-                <div class="pagination"><span id="customers-info">–</span><div class="page-btns" id="customers-pages"></div></div>
+                <div class="pagination"><span id="orderlogs-info">–</span><div class="page-btns" id="orderlogs-pages"></div></div>
             </div>
         </div>
 
@@ -430,36 +440,40 @@
                 <div class="card-header">
                     <span class="card-title">Danh mục sản phẩm</span>
                     <div class="card-actions">
-                        <div class="search-box"><i class="fas fa-search"></i><input id="search-categories" placeholder="Tìm danh mục..." oninput="filterTable('categories-tbody','search-categories',[0])"></div>
-                        <button class="btn btn-primary btn-sm" onclick="openCreate('categories')"><i class="fas fa-plus"></i> Thêm danh mục</button>
+                        <div class="search-box"><i class="bi bi-search"></i><input id="search-categories" placeholder="Tìm danh mục..." oninput="filterTable('categories-tbody','search-categories',[1])"></div>
+                        <button class="btn btn-primary btn-sm" onclick="openCreate('categories')"><i class="bi bi-plus-lg"></i> Thêm danh mục</button>
                     </div>
                 </div>
                 <div class="table-wrap"><table>
-                    <thead><tr><th>ID</th><th>Tên danh mục</th><th>Danh mục cha</th><th>Số sản phẩm</th><th style="text-align:right">Thao tác</th></tr></thead>
-                    <tbody id="categories-tbody"><tr class="loading-row"><td colspan="5"><span class="spinner"></span>Đang tải...</td></tr></tbody>
+                    <thead><tr><th>ID</th><th>Tên danh mục</th><th>Danh mục cha</th><th>Sắp xếp</th><th>Số SP</th><th>Trạng thái</th><th style="text-align:right">Thao tác</th></tr></thead>
+                    <tbody id="categories-tbody"><tr class="loading-row"><td colspan="7"><span class="spinner"></span>Đang tải...</td></tr></tbody>
                 </table></div>
                 <div class="pagination"><span id="categories-info">–</span><div class="page-btns" id="categories-pages"></div></div>
             </div>
         </div>
 
-        <!-- ══ USERS ══ -->
-        <div id="section-users" class="section">
+        <!-- ══ WARRANTY ══ -->
+        <div id="section-warranty" class="section">
             <div class="card">
                 <div class="card-header">
-                    <span class="card-title">Người dùng hệ thống</span>
+                    <span class="card-title">Quản lý bảo hành</span>
                     <div class="card-actions">
-                        <div class="search-box"><i class="fas fa-search"></i><input id="search-users" placeholder="Tìm người dùng..." oninput="filterTable('users-tbody','search-users',[0,1])"></div>
-                        <select class="filter-select" id="users-role-f" onchange="filterByStatus('users')">
-                            <option value="">Tất cả vai trò</option><option value="ADMIN">Admin</option><option value="STAFF">Nhân viên</option>
+                        <div class="search-box"><i class="bi bi-search"></i><input id="search-warranty" placeholder="Tìm mã BH, sản phẩm, khách..." oninput="filterTable('warranty-tbody','search-warranty',[1,2,3])"></div>
+                        <select class="filter-select" id="warranty-status-f" onchange="filterByStatus('warranty')">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="pending">Chờ tiếp nhận</option>
+                            <option value="processing">Đang xử lý</option>
+                            <option value="done">Đã hoàn trả</option>
+                            <option value="cancelled">Từ chối</option>
                         </select>
-                        <button class="btn btn-primary btn-sm" onclick="openCreate('users')"><i class="fas fa-plus"></i> Thêm người dùng</button>
+                        <button class="btn btn-primary btn-sm" onclick="openCreate('warranty')"><i class="bi bi-plus-lg"></i> Tiếp nhận bảo hành</button>
                     </div>
                 </div>
                 <div class="table-wrap"><table>
-                    <thead><tr><th>Tên đăng nhập</th><th>Họ tên</th><th>Email</th><th>SĐT</th><th>Vai trò</th><th>Trạng thái</th><th>Ngày tạo</th><th style="text-align:right">Thao tác</th></tr></thead>
-                    <tbody id="users-tbody"><tr class="loading-row"><td colspan="8"><span class="spinner"></span>Đang tải...</td></tr></tbody>
+                    <thead><tr><th style="width:36px">STT</th><th style="width:90px">Mã BH</th><th>Sản phẩm</th><th>Khách hàng</th><th>Mô tả lỗi</th><th>Tiếp nhận</th><th>Dự kiến trả</th><th>Trạng thái</th><th style="text-align:right">Thao tác</th></tr></thead>
+                    <tbody id="warranty-tbody"><tr class="loading-row"><td colspan="8"><span class="spinner"></span>Đang tải...</td></tr></tbody>
                 </table></div>
-                <div class="pagination"><span id="users-info">–</span><div class="page-btns" id="users-pages"></div></div>
+                <div class="pagination"><span id="warranty-info">–</span><div class="page-btns" id="warranty-pages"></div></div>
             </div>
         </div>
 
@@ -481,11 +495,25 @@
 <div class="toast-container" id="toast-container"></div>
 
 <script>
+    // ── ROLE GUARD: chỉ ADMIN mới được vào trang này ──
+    (function() {
+        const _u = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+        if (!_u) {
+            window.location.replace('login.html');
+            return;
+        }
+        const _role = (_u.role || '').toString().toUpperCase().trim();
+        if (_role !== 'ADMIN' && _role !== 'STAFF') {
+            alert('Bạn không có quyền truy cập trang quản trị!');
+            window.location.replace('index.html');
+        }
+    })();
+
     // ══ CONFIG ═══════════════════════════════════════════
     const B = () => (document.getElementById('baseUrl')?.value || 'http://localhost:8080').replace(/\/$/,'');
     const PAGE = 12;
-    let allData = { products:[], orders:[], stock:[], customers:[], categories:[], users:[] };
-    let pages   = { products:1, orders:1, stock:1, customers:1, categories:1, users:1 };
+    let allData = { products:[], orders:[], stock:[], categories:[], warranty:[], suppliers:[], orderlogs:[] };
+    let pages   = { products:1, orders:1, stock:1, categories:1, warranty:1, orderlogs:1 };
     let curSection = 'dashboard';
     const $ = id => document.getElementById(id);
 
@@ -512,8 +540,8 @@
     setInterval(()=>$('clock').textContent=new Date().toLocaleTimeString('vi-VN'),1000);
 
     // ══ NAVIGATION ═══════════════════════════════════════
-    const TITLES={dashboard:'Dashboard',products:'Sản phẩm',orders:'Đơn hàng',stock:'Nhập kho',customers:'Khách hàng',categories:'Danh mục',users:'Người dùng'};
-    const SUBS  ={dashboard:'Tổng quan hệ thống',products:'Quản lý sản phẩm & tồn kho',orders:'Quản lý đơn hàng & thanh toán',stock:'Quản lý phiếu nhập kho',customers:'Quản lý thông tin khách hàng',categories:'Quản lý danh mục sản phẩm',users:'Quản lý tài khoản người dùng'};
+    const TITLES={dashboard:'Dashboard',products:'Sản phẩm',orders:'Đơn hàng',stock:'Nhập kho',categories:'Danh mục',warranty:'Bảo hành',orderlogs:'Order Logs'};
+    const SUBS  ={dashboard:'Tổng quan hệ thống',products:'Quản lý sản phẩm & tồn kho',orders:'Quản lý đơn hàng & thanh toán',stock:'Quản lý phiếu nhập kho',categories:'Quản lý danh mục sản phẩm',warranty:'Tiếp nhận & theo dõi bảo hành',orderlogs:'Lịch sử thay đổi trạng thái đơn hàng'};
 
     function gotoSection(name, btn){
         document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -532,8 +560,11 @@
     // ══ API ══════════════════════════════════════════════
     async function api(method,path,body){
         const u=JSON.parse(localStorage.getItem('currentLogin')||'null');
-        const token=u?btoa((u.username||'')+':'+(u.role||'ADMIN')):'';
-        const opts={method,headers:{'Content-Type':'application/json','Accept':'application/json','Authorization':'Bearer '+token}};
+        // Ưu tiên: token JWT thật được lưu lúc login
+        // Nếu không có, thử các tên field phổ biến, cuối cùng mới fallback
+        const rawToken = u?.token || u?.accessToken || u?.jwtToken || u?.jwt || null;
+        const opts={method,headers:{'Content-Type':'application/json','Accept':'application/json'}};
+        if(rawToken) opts.headers['Authorization']='Bearer '+rawToken;
         if(body) opts.body=JSON.stringify(body);
         const r=await fetch(B()+path,opts);
         if(!r.ok){const t=await r.text();let m=t;try{m=JSON.parse(t).message||t}catch{};throw new Error(m||r.statusText);}
@@ -574,7 +605,7 @@
         });
     }
     function filterByStatus(name){
-        const sf=$('prod-status-f'),$of=$('ord-status-f'),$pf=$('ord-pay-f'),stf=$('stock-status-f'),$rf=$('users-role-f');
+        const sf=$('prod-status-f'),$of=$('ord-status-f'),$pf=$('ord-pay-f'),stf=$('stock-status-f'),$wf=$('warranty-status-f');
         pages[name]=1;
         if(name==='products'){
             const f=sf?.value||'';
@@ -583,12 +614,37 @@
             const sf2=$of?.value||'',pf2=$pf?.value||'';
             renderOrders(allData.orders.filter(o=>(!sf2||o.status===sf2)&&(!pf2||o.payStatus===pf2)));
         } else if(name==='stock'){
-            const f2=stf?.value||'';
-            renderStock(allData.stock.filter(s=>!f2||s.status===f2));
-        } else if(name==='users'){
-            const f3=$rf?.value||'';
-            renderUsers(allData.users.filter(u=>!f3||u.role===f3));
+            filterStockAdvanced();
+        } else if(name==='warranty'){
+            const f4=$wf?.value||'';
+            renderWarranty(allData.warranty.filter(w=>!f4||w.status===f4));
         }
+    }
+
+    function filterStockAdvanced(){
+        pages.stock=1;
+        const q=($('search-stock')?.value||'').toLowerCase();
+        const sf=$('stock-status-f')?.value||'';
+        const pf=parseInt($('stock-prod-f')?.value||'0',10)||0;
+        renderStock(allData.stock.filter(s=>{
+            const prod=allData.products.find(p=>p.productId===s.productId);
+            const searchText=((s.batchCode||'')+(prod?prod.name:'SP #'+s.productId)).toLowerCase();
+            return(!sf||s.status===sf)&&(!pf||s.productId===pf)&&(!q||searchText.includes(q));
+        }));
+    }
+    function populateStockProductFilter(){
+        const sel=$('stock-prod-f');if(!sel)return;
+        const cur=sel.value;
+        sel.innerHTML='<option value="">Tất cả sản phẩm</option>';
+        // Chỉ hiển thị sản phẩm có trong phiếu nhập
+        const usedIds=[...new Set(allData.stock.map(s=>s.productId))];
+        usedIds.forEach(pid=>{
+            const p=allData.products.find(x=>x.productId===pid);
+            const o=document.createElement('option');
+            o.value=pid;o.textContent=p?p.name:`SP #${pid}`;
+            if(parseInt(cur,10)===pid) o.selected=true;
+            sel.appendChild(o);
+        });
     }
 
     // ══ PAGINATE ═════════════════════════════════════════
@@ -611,34 +667,63 @@
     }
 
     // ══ LOAD SECTION ═════════════════════════════════════
-    const EP={products:'/api/products',orders:'/api/orders',stock:'/api/stock-imports',customers:'/api/customers',categories:'/api/categories',users:'/api/auth/users'};
+    const EP={products:'/api/products',orders:'/api/orders',stock:'/api/stock-imports',categories:'/api/categories',warranty:'/api/warranties',suppliers:'/api/suppliers',orderlogs:'/api/order-logs'};
 
     async function loadSection(name){
-        const tbId=name===('stock')?'stock-tbody':name+'-tbody';
+        const tbId=name==='stock'?'stock-tbody':name==='warranty'?'warranty-tbody':name==='orderlogs'?'orderlogs-tbody':name+'-tbody';
         $(tbId).innerHTML=`<tr class="loading-row"><td colspan="12"><span class="spinner"></span>Đang tải...</td></tr>`;
         try{
             const raw=await api('GET',EP[name]);
-            // users endpoint returns {success, data:[]} wrapper; others return array directly
             const data=Array.isArray(raw)?raw:(raw&&raw.data?raw.data:[]);
             allData[name]=data||[];
-            $(('badge-'+name)).textContent=allData[name].length;
+            const badge=$('badge-'+name);
+            if(badge) badge.textContent=allData[name].length;
             pages[name]=1;
-            const renders={products:renderProducts,orders:renderOrders,stock:renderStock,customers:renderCustomers,categories:renderCategories,users:renderUsers};
+            const renders={products:renderProducts,orders:renderOrders,stock:renderStock,categories:renderCategories,warranty:renderWarranty,orderlogs:renderOrderLogs};
+            // Load suppliers khi cần cho products/stock
+            if((name==='products'||name==='stock')&&allData.suppliers.length===0){
+                try{ const sr=await api('GET','/api/suppliers'); allData.suppliers=Array.isArray(sr)?sr:(sr?.data||[]); }catch{}
+            }
+            // Load products khi cần cho warranty (để select sản phẩm có dữ liệu)
+            if(name==='warranty'&&allData.products.length===0){
+                try{ const pr=await api('GET','/api/products'); allData.products=Array.isArray(pr)?pr:(pr?.data||[]); }catch{}
+            }
             paginate(name,allData[name],renders[name]);
+            if(name==='stock') populateStockProductFilter();
+            // Áp dụng phân quyền sau khi render
+            if(name==='products') setTimeout(applyProductRoleUI,50);
+            if(name==='orders') setTimeout(applyOrderRoleUI,50);
+            if(name==='categories') setTimeout(applyCategoryRoleUI,50);
+            if(name==='orderlogs') setTimeout(applyOrderLogsRoleUI,50);
         }catch(e){
-            $(tbId).innerHTML=`<tr class="loading-row"><td colspan="12" style="color:var(--red)">❌ ${e.message}</td></tr>`;
+            const errMsg=e.message||'Không thể kết nối';
+            $(tbId).innerHTML=`<tr class="loading-row"><td colspan="12">
+                <div style="text-align:center;padding:20px">
+                  <i class="bi bi-wifi-off" style="font-size:32px;color:var(--red);display:block;margin-bottom:8px"></i>
+                  <div style="font-weight:700;color:var(--red);margin-bottom:4px">Lỗi kết nối API</div>
+                  <div style="font-size:12px;color:var(--sub);margin-bottom:12px">${errMsg}</div>
+                  <button class="btn btn-ghost btn-sm" onclick="loadSection('${name}')"><i class="bi bi-arrow-clockwise"></i> Thử lại</button>
+                </div>
+            </td></tr>`;
+            const apiWarn=document.getElementById('api-warn');
+            if(apiWarn) { apiWarn.style.display='flex'; document.getElementById('api-warn-url').textContent=B(); }
         }
     }
 
     // ══ DASHBOARD ════════════════════════════════════════
     async function loadDashboard(){
-        for(const n of ['products','orders','stock','customers','categories','users']){
+        for(const n of ['products','orders','stock','categories','warranty','orderlogs']){
             try{
                 const raw=await api('GET',EP[n]);
                 const d=Array.isArray(raw)?raw:(raw&&raw.data?raw.data:[]);
                 allData[n]=d||[];
-                $('badge-'+n).textContent=allData[n].length;
+                const badge=$('badge-'+n);
+                if(badge) badge.textContent=allData[n].length;
             }catch{}
+        }
+        // Load suppliers nếu chưa có
+        if(allData.suppliers.length===0){
+            try{ const sr=await api('GET','/api/suppliers'); allData.suppliers=Array.isArray(sr)?sr:(sr?.data||[]); }catch{}
         }
         const prods=allData.products;
         const ords=allData.orders;
@@ -646,7 +731,8 @@
         $('stat-active-prod').textContent=prods.filter(p=>p.status==='active').length+' active';
         $('stat-orders').textContent=ords.length;
         $('stat-pending-ord').textContent=ords.filter(o=>o.status==='pending').length+' chờ xử lý';
-        $('stat-customers').textContent=allData.customers.length;
+        $('stat-warranty').textContent=allData.warranty.length;
+        $('stat-warranty-pending').textContent=allData.warranty.filter(w=>w.status==='processing').length+' đang xử lý';
         const lowStk=prods.filter(p=>(p.stockQty??0)<=(p.minStock??10)&&p.status==='active');
         $('stat-lowstock').textContent=lowStk.length;
         $('stat-outstock').textContent=prods.filter(p=>(p.stockQty??0)===0).length+' hết hàng';
@@ -682,36 +768,59 @@
     <td>${v.total}</td>
     <td style="color:var(--olive);font-weight:600">${v.active}</td>
   </tr>`).join('')||`<tr><td colspan="3" style="text-align:center;padding:20px;color:var(--dim)">Chưa có dữ liệu</td></tr>`;
+        // Hiển thị cảnh báo nếu tất cả data đều rỗng (backend không phản hồi)
+        const totalRecords=allData.products.length+allData.orders.length;
+        if(totalRecords===0){
+            const apiWarn=document.getElementById('api-warn');
+            if(apiWarn) apiWarn.style.display='flex';
+        }
     }
 
     // ══ RENDER TABLES ════════════════════════════════════
     function renderProducts(data){
         const tb=$('products-tbody');
         if(!data.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty-state"><div class="em-icon">🛋</div><p>Không có sản phẩm nào</p></div></td></tr>`;return;}
-        tb.innerHTML=data.map(p=>`<tr data-id="${p.productId}">
+        tb.innerHTML=data.map(p=>{
+            const catName=p.category?.name||(allData.categories.find(c=>(c.id||c.categoryId)===p.categoryId)?.name)||`#${p.categoryId||'–'}`;
+            const imgHtml=p.imageUrl
+                ? `<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:6px" onerror="this.parentElement.innerHTML='<span style=\\'font-size:17px\\'>📦</span>'">`
+                : `<span style="font-size:17px">📦</span>`;
+            return `<tr data-id="${p.productId}">
     <td><div class="cell-prod">
-      <div class="thumb">${p.imageUrl?`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">`:''}<span style="${p.imageUrl?'display:none':''}">📦</span></div>
+      <div class="thumb">${imgHtml}</div>
       <div><div class="cell-prod-name">${p.name||'–'}</div><div class="cell-prod-sub">${p.unit||''} · #${p.productId}</div></div>
     </div></td>
-    <td style="color:var(--sub);font-size:12.5px">${p.category?.name||`#${p.categoryId}`||'–'}</td>
+    <td style="color:var(--sub);font-size:12.5px">${catName}</td>
     <td style="font-weight:700">${fmtP(p.price)}</td>
-    <td class="${(p.stockQty??0)<=(p.minStock??10)?'stock-low':''}">${p.stockQty??'–'}<span style="color:var(--dim);font-weight:400"> / min ${p.minStock??10}</span></td>
+    <td class="${(p.stockQty??0)<=(p.minStock??10)?(p.stockQty??0)===0?'stock-out':'stock-low':'stock-ok'}">${p.stockQty??'–'}<span style="color:var(--dim);font-weight:400"> / min ${p.minStock??10}</span></td>
     <td style="font-size:12px;color:var(--sub)">${p.suppName||'–'}</td>
     <td>${badgeFull(p.status)}</td>
     <td>${p.isFeatured?'<span class="badge b-featured">Nổi bật</span>':'<span style="color:var(--dim);font-size:12px">–</span>'}</td>
     <td><div class="td-actions" style="justify-content:flex-end">
-      <button class="btn btn-edit btn-sm" onclick="editProduct(${p.productId})"><i class="fas fa-pen"></i> Sửa</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteItem('products',${p.productId},'${esc(p.name)}')"><i class="fas fa-trash"></i></button>
+      <button class="btn btn-edit btn-sm" onclick="editProduct(${p.productId})"><i class="bi bi-pencil"></i> Sửa</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteItem('products',${p.productId},'${esc(p.name)}')"><i class="bi bi-trash3"></i></button>
     </div></td>
-  </tr>`).join('');
+  </tr>`;
+        }).join('');
     }
 
     function renderOrders(data){
         const tb=$('orders-tbody');
         if(!data.length){tb.innerHTML=`<tr><td colspan="10"><div class="empty-state"><div class="em-icon"></div><p>Không có đơn hàng nào</p></div></td></tr>`;return;}
-        tb.innerHTML=data.map(o=>`<tr data-id="${o.orderId}">
-    <td style="font-weight:800">#${o.orderId}</td>
-    <td>KH #${o.customerId} <span style="color:var(--dim);font-size:11px">/ NV #${o.userId}</span></td>
+        const pendingCount=allData.orders.filter(o=>o.status==='pending').length;
+        const pb=$('pending-orders-badge');
+        if(pb){
+            pb.style.display=pendingCount>0?'flex':'none';
+            const cnt=$('pending-orders-count');
+            if(cnt) cnt.textContent=pendingCount;
+        }
+        tb.innerHTML=data.map(o=>{
+            const custLabel=`KH #${o.customerId||'–'}`;
+            const isPending=o.status==='pending';
+            const rowStyle=isPending?'background:#fffbeb;':''  ;
+            return `<tr data-id="${o.orderId}" style="${rowStyle}">
+    <td style="font-weight:800">#${o.orderId}${isPending?'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-left:6px;vertical-align:middle"></span>':''}</td>
+    <td><span style="font-weight:600">${custLabel}</span></td>
     <td style="font-weight:700">${fmtP(o.totalAmount)}</td>
     <td style="font-size:12.5px;color:var(--sub)">${fmtP(o.shippingFee)}</td>
     <td style="font-size:12.5px">${o.payMethod||'–'}</td>
@@ -720,20 +829,24 @@
     <td>${badgeFull(o.payStatus)}</td>
     <td style="font-size:12px;color:var(--sub)">${fmtD(o.orderDate)}</td>
     <td><div class="td-actions" style="justify-content:flex-end">
-      <button class="btn btn-ghost btn-sm" onclick="viewOrder(${o.orderId})"><i class="fas fa-eye"></i></button>
-      <button class="btn btn-edit btn-sm" onclick="editOrder(${o.orderId})"><i class="fas fa-pen"></i></button>
-      <button class="btn btn-danger btn-sm" onclick="deleteItem('orders',${o.orderId},'đơn #${o.orderId}')"><i class="fas fa-trash"></i></button>
+      ${isPending?`<button class="btn btn-primary btn-sm" onclick="quickConfirmOrder(${o.orderId})" title="Xác nhận đơn"><i class="bi bi-check-lg"></i> Xác nhận</button>`:''}
+      <button class="btn btn-ghost btn-sm" onclick="viewOrder(${o.orderId})" title="Xem chi tiết"><i class="bi bi-eye"></i></button>
+      <button class="btn btn-danger btn-sm" onclick="deleteItem('orders',${o.orderId},'đơn #${o.orderId}')"><i class="bi bi-trash3"></i></button>
     </div></td>
-  </tr>`).join('');
+  </tr>`;
+        }).join('');
     }
 
     function renderStock(data){
         const tb=$('stock-tbody');
         if(!data.length){tb.innerHTML=`<tr><td colspan="11"><div class="empty-state"><div class="em-icon"></div><p>Không có phiếu nhập nào</p></div></td></tr>`;return;}
-        tb.innerHTML=data.map(s=>`<tr data-id="${s.id}">
-    <td class="td-mono" style="font-weight:600">${s.id}</td>
-    <td style="font-family:monospace;font-weight:700;font-size:12.5px">${s.batchCode||'–'}</td>
-    <td>SP #${s.productId}</td>
+        tb.innerHTML=data.map(s=>{
+            const prod=allData.products.find(p=>p.productId===s.productId);
+            const prodLabel=prod?prod.name:`SP #${s.productId}`;
+            return `<tr data-id="${s.id}">
+    <td class="td-mono" style="font-weight:600;color:var(--dim);text-align:center">${allData.stock.indexOf(s)+1}</td>
+    <td style="font-family:monospace;font-weight:700;font-size:12.5px;color:var(--olive)">${s.batchCode||'–'}</td>
+    <td><span style="font-weight:600">${prodLabel}</span><div style="font-size:11px;color:var(--dim)">#${s.productId}</div></td>
     <td style="font-weight:700">${s.quantity??'–'}</td>
     <td>${fmtP(s.importPrice)}</td>
     <td style="font-weight:700;color:var(--olive)">${s.quantity&&s.importPrice?fmtP(s.quantity*s.importPrice):'–'}</td>
@@ -742,44 +855,45 @@
     <td>${badgeFull(s.status)}</td>
     <td style="font-size:12px;color:var(--sub);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.note||'–'}</td>
     <td><div class="td-actions" style="justify-content:flex-end">
-      <button class="btn btn-edit btn-sm" onclick="editStock(${s.id})"><i class="fas fa-pen"></i> Sửa</button>
+      <button class="btn btn-edit btn-sm" onclick="editStock(${s.id})"><i class="bi bi-pencil"></i> Sửa</button>
       ${s.status!=='cancelled'?`<button class="btn btn-ghost btn-sm" onclick="cancelStock(${s.id})"> Hủy</button>`:''}
-      <button class="btn btn-danger btn-sm" onclick="deleteItem('stock',${s.id},'phiếu #${s.id}')"><i class="fas fa-trash"></i></button>
+      <button class="btn btn-danger btn-sm" onclick="deleteItem('stock',${s.id},'phiếu #${s.id}')"><i class="bi bi-trash3"></i></button>
     </div></td>
-  </tr>`).join('');
+  </tr>`;
+        }).join('');
     }
 
-    function renderCustomers(data){
-        const tb=$('customers-tbody');
-        if(!data.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty-state"><div class="em-icon"></div><p>Không có khách hàng nào</p></div></td></tr>`;return;}
-        tb.innerHTML=data.map(c=>`<tr data-id="${c.customerId||c.id}">
-    <td style="font-weight:700">${c.fullName||c.name||'–'}</td>
-    <td style="color:var(--sub)">${c.email||'–'}</td>
-    <td style="font-family:monospace">${c.phone||'–'}</td>
-    <td style="color:var(--sub);font-size:12.5px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.address||'–'}</td>
-    <td style="color:var(--sub)">${allData.orders.filter(o=>o.customerId===(c.customerId||c.id)).length}</td>
-    <td><div class="td-actions" style="justify-content:flex-end">
-      <button class="btn btn-edit btn-sm" onclick="editCustomer(${c.customerId||c.id})"><i class="fas fa-pen"></i> Sửa</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteItem('customers',${c.customerId||c.id},'${esc(c.fullName||c.name)}')"><i class="fas fa-trash"></i></button>
-    </div></td>
-  </tr>`).join('');
-    }
+    // renderCustomers: stub - section đã bị xóa khỏi project
+    function renderCustomers(){}
 
     function renderCategories(data){
         const tb=$('categories-tbody');
-        if(!data.length){tb.innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="em-icon"></div><p>Không có danh mục nào</p></div></td></tr>`;return;}
-        const catMap={};data.forEach(c=>catMap[c.id||c.categoryId]=c.name);
-        tb.innerHTML=data.map(c=>`<tr data-id="${c.id||c.categoryId}">
-    <td style="color:var(--dim);font-size:12px">#${c.id||c.categoryId}</td>
-    <td style="font-weight:700">${c.name||'–'}</td>
-    <td style="color:var(--sub);font-size:12.5px">${c.parentId?catMap[c.parentId]||`#${c.parentId}`:'—'}</td>
-    <td style="color:var(--sub)">${allData.products.filter(p=>p.categoryId===(c.id||c.categoryId)).length}</td>
-    <td><div class="td-actions" style="justify-content:flex-end">
-      <button class="btn btn-edit btn-sm" onclick="editCategory(${c.id||c.categoryId})"><i class="fas fa-pen"></i> Sửa</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteItem('categories',${c.id||c.categoryId},'${esc(c.name)}')"><i class="fas fa-trash"></i></button>
-    </div></td>
-  </tr>`).join('');
+        if(!data.length){tb.innerHTML=`<tr><td colspan="7"><div class="empty-state"><div class="em-icon">🗂️</div><p>Không có danh mục nào</p></div></td></tr>`;return;}
+        // Build catMap từ TOÀN BỘ allData.categories (không phải slice trang hiện tại)
+        // để danh mục con luôn tìm được tên danh mục cha dù cha ở trang khác
+        const catMap={};(allData.categories||[]).forEach(c=>catMap[c.id||c.categoryId]=c.name);
+        tb.innerHTML=data.map(c=>{
+            const cid=c.id||c.categoryId;
+            const parentLabel=(c.parentId&&c.parentId!==0)?(catMap[c.parentId]||'#'+c.parentId):'<span style="color:var(--olive);font-size:11px;font-weight:600">Gốc</span>';
+            const st=c.status||'active';
+            const statusBadge=st==='inactive'?'<span class="badge b-inactive">Ẩn</span>':'<span class="badge b-active">Hiện</span>';
+            const prodCount=allData.products.filter(p=>p.categoryId===cid).length;
+            const safeName=(c.name||'').replace(/'/g,"\\'");
+            return `<tr data-id="${cid}">
+                <td style="color:var(--dim);font-size:12px;font-weight:600">#${cid}</td>
+                <td style="font-weight:700">${c.name||'–'}${(!c.parentId||c.parentId===0)?' <span style="font-size:10px;background:#dcfce7;color:#166534;padding:1px 6px;border-radius:10px">Gốc</span>':''}</td>
+                <td style="color:var(--sub);font-size:12.5px">${parentLabel}</td>
+                <td style="color:var(--sub);text-align:center">${c.sortOrder??0}</td>
+                <td style="color:var(--sub);text-align:center">${prodCount}</td>
+                <td>${statusBadge}</td>
+                <td><div class="td-actions" style="justify-content:flex-end">
+                    <button class="btn btn-edit btn-sm" onclick="editCategory(${cid})"><i class="bi bi-pencil"></i> Sửa</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteItem('categories',${cid},'${safeName}')"><i class="bi bi-trash3"></i></button>
+                </div></td>
+            </tr>`;
+        }).join('');
     }
+
 
     function renderUsers(data){
         const tb=$('users-tbody');
@@ -793,19 +907,50 @@
     <td>${badgeFull(u.status||'active')}</td>
     <td style="font-size:12px;color:var(--sub)">${fmtD(u.createdAt)}</td>
     <td><div class="td-actions" style="justify-content:flex-end">
-      <button class="btn btn-edit btn-sm" onclick="editUser(${u.userId||u.id})"><i class="fas fa-pen"></i> Sửa</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteItem('users',${u.userId||u.id},'${esc(u.username)}')"><i class="fas fa-trash"></i></button>
+      <button class="btn btn-edit btn-sm" onclick="editUser(${u.userId||u.id})"><i class="bi bi-pencil"></i> Sửa</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteItem('users',${u.userId||u.id},'${esc(u.username)}')"><i class="bi bi-trash3"></i></button>
     </div></td>
   </tr>`).join('');
     }
 
-    // ══ VIEW ORDER DETAIL ════════════════════════════════
+    function renderWarranty(data){
+        const tb=$('warranty-tbody');
+        if(!data.length){tb.innerHTML=`<tr><td colspan="9"><div class="empty-state"><div class="em-icon"><i class="bi bi-shield-check" style="font-size:32px;opacity:.3"></i></div><p>Không có phiếu bảo hành nào</p></div></td></tr>`;return;}
+        const wBadge={pending:'b-pending Chờ tiếp nhận',processing:'b-confirmed Đang xử lý',done:'b-done Hoàn trả',cancelled:'b-inactive Từ chối'};
+        const isStaff=getCurrentRole()==='STAFF';
+        tb.innerHTML=data.map(w=>{
+            const wid=w.id||w.warrantyId;
+            const prod=allData.products.find(p=>p.productId===w.productId);
+            const parts=(wBadge[w.status]||'b-inactive –').split(' ');
+            const wIdx=allData.warranty.indexOf(w)+1;
+            // Ưu tiên field text trực tiếp, fallback lookup customers
+            const custName=w.customerName||w.customer_name||'–';
+            const custPhone=w.customerPhone||w.customer_phone||'';
+            return `<tr data-id="${wid}">
+    <td style="color:var(--dim);text-align:center;font-size:12px">${wIdx}</td>
+    <td><span style="font-family:monospace;font-weight:700;color:var(--olive)">#W${String(wid).padStart(4,'0')}</span></td>
+    <td style="font-weight:600">${prod?prod.name:`SP #${w.productId||'–'}`}</td>
+    <td><div style="font-weight:600">${esc(custName)}</div><div style="font-size:11px;color:var(--dim)">${esc(custPhone)}</div></td>
+    <td style="font-size:12.5px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(w.issueDescription||w.description||'')}">${esc(w.issueDescription||w.description||'–')}</td>
+    <td style="font-size:12px;color:var(--sub)">${fmtD(w.receivedDate||w.createdAt)}</td>
+    <td style="font-size:12px;color:var(--sub)">${fmtD(w.expectedReturnDate)||'<span style="color:var(--dim)">Chưa xác định</span>'}</td>
+    <td><span class="badge ${parts[0]}">${parts.slice(1).join(' ')||w.status}</span></td>
+    <td><div class="td-actions" style="justify-content:flex-end">
+      ${w.status==='pending'?`<button class="btn btn-primary btn-sm" onclick="quickWarrantyStatus(${wid},'processing')" title="Bắt đầu xử lý"><i class="bi bi-tools"></i></button>`:''}
+      ${w.status==='processing'?`<button class="btn btn-primary btn-sm" onclick="quickWarrantyStatus(${wid},'done')" title="Hoàn trả khách"><i class="bi bi-check-lg"></i></button>`:''}
+      <button class="btn btn-ghost btn-sm" onclick="viewWarranty(${wid})" title="Xem chi tiết"><i class="bi bi-eye"></i></button>
+      <button class="btn btn-edit btn-sm" onclick="editWarranty(${wid})" title="Sửa"><i class="bi bi-pencil"></i></button>
+      ${!isStaff?`<button class="btn btn-danger btn-sm" onclick="deleteItem('warranty',${wid},'phiếu BH #W${String(wid).padStart(4,'0')}')"><i class="bi bi-trash3"></i></button>`:''}
+    </div></td>
+  </tr>`;
+        }).join('');
+    }
     function viewOrder(id){
         const o=allData.orders.find(x=>x.orderId===id);if(!o) return;
         openModal(`Chi tiết đơn hàng #${id}`,`
     <div class="detail-grid">
-      <div class="detail-item"><label>Khách hàng</label><span>KH #${o.customerId}</span></div>
-      <div class="detail-item"><label>Nhân viên</label><span>NV #${o.userId}</span></div>
+      <div class="detail-item"><label>Khách hàng</label><span>KH #${o.customerId||'–'}</span></div>
+      <div class="detail-item"><label>Nhân viên xử lý</label><span>NV #${o.userId||'–'}</span></div>
       <div class="detail-item"><label>Ngày đặt</label><span>${fmtD(o.orderDate)}</span></div>
       <div class="detail-item"><label>Trạng thái đơn</label><span>${badgeFull(o.status)}</span></div>
       <div class="detail-item"><label>Tổng tiền</label><span style="font-size:16px;color:var(--red);font-weight:800">${fmtP(o.totalAmount)}</span></div>
@@ -822,14 +967,14 @@
     <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
       <div style="font-size:11px;font-weight:700;color:var(--dim);margin-bottom:8px;text-transform:uppercase">ĐỔI TRẠNG THÁI NHANH</div>
       <div class="quick-status">
-        <button class="qbtn" onclick="quickStatus(${id},'confirmed')">✓ Xác nhận</button>
-        <button class="qbtn" onclick="quickStatus(${id},'shipped')"> Đang giao</button>
-        <button class="qbtn" onclick="quickStatus(${id},'done')"> Hoàn thành</button>
-        <button class="qbtn" onclick="quickStatus(${id},'cancelled')"> Hủy đơn</button>
-        ${o.payStatus!=='paid'?`<button class="qbtn pay" onclick="markPaid(${id})">Xác nhận đã TT</button>`:''}
+        ${o.status==='pending'?`<button class="qbtn" onclick="quickStatus(${id},'confirmed')">✓ Xác nhận đơn</button>`:''}
+        ${o.status==='confirmed'?`<button class="qbtn" onclick="quickStatus(${id},'shipped')">🚚 Bắt đầu giao</button>`:''}
+        ${o.status==='shipped'?`<button class="qbtn" onclick="quickStatus(${id},'done')">✓ Hoàn thành</button>`:''}
+        ${!['cancelled','done'].includes(o.status)?`<button class="qbtn" onclick="quickStatus(${id},'cancelled')">✕ Hủy đơn</button>`:''}
+        ${o.payStatus!=='paid'?`<button class="qbtn pay" onclick="markPaid(${id})">💳 Xác nhận đã TT</button>`:''}
       </div>
     </div>
-  `,`<button class="btn btn-ghost" onclick="closeModal()">Đóng</button><button class="btn btn-primary" onclick="closeModal();editOrder(${id})"><i class="fas fa-pen"></i> Sửa đơn</button>`,true);
+  `,`<button class="btn btn-ghost" onclick="closeModal()">Đóng</button>`,true);
     }
 
     async function quickStatus(id,status){
@@ -838,52 +983,274 @@
     async function markPaid(id){
         try{await api('PATCH',`/api/orders/${id}/pay`);toast('Đã xác nhận thanh toán');closeModal();await loadSection('orders');}catch(e){toast('Lỗi: '+e.message,'error');}
     }
+    async function quickConfirmOrder(id){
+        if(!confirm(`Xác nhận đơn hàng #${id}?`)) return;
+        try{
+            await api('PATCH',`/api/orders/${id}/status?value=confirmed`);
+            toast('✓ Đã xác nhận đơn hàng #'+id);
+            await loadSection('orders');
+        }catch(e){toast('Lỗi: '+e.message,'error');}
+    }
     async function cancelStock(id){
         if(!confirm(`Hủy phiếu nhập #${id}?`)) return;
         try{await api('PATCH',`/api/stock-imports/${id}/cancel`);toast('Đã hủy phiếu nhập');await loadSection('stock');}catch(e){toast('Lỗi: '+e.message,'error');}
     }
 
+    function viewWarranty(id){
+        const w=allData.warranty.find(x=>(x.id||x.warrantyId)===id);if(!w)return;
+        const prod=allData.products.find(p=>p.productId===w.productId);
+        const wBadge={pending:'b-pending Chờ tiếp nhận',processing:'b-confirmed Đang xử lý',done:'b-done Hoàn trả',cancelled:'b-inactive Từ chối'};
+        const parts=(wBadge[w.status]||'b-inactive –').split(' ');
+        const custName=w.customerName||w.customer_name||'–';
+        const custPhone=w.customerPhone||w.customer_phone||'';
+        openModal(`Chi tiết bảo hành #W${String(id).padStart(4,'0')}`,`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 14px;background:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0">
+      <i class="bi bi-shield-check" style="font-size:22px;color:var(--olive)"></i>
+      <div><div style="font-weight:800;font-size:15px">Phiếu bảo hành #W${String(id).padStart(4,'0')}</div>
+      <div style="font-size:12px;color:var(--sub)">${fmtD(w.receivedDate||w.createdAt)}</div></div>
+      <span class="badge ${parts[0]}" style="margin-left:auto">${parts.slice(1).join(' ')||w.status}</span>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-item"><label>Sản phẩm</label><span style="font-weight:700">${prod?prod.name:`SP #${w.productId}`}</span></div>
+      <div class="detail-item"><label>Khách hàng</label><span>${esc(custName)}<div style="font-size:11px;color:var(--dim)">${esc(custPhone)}</div></span></div>
+      <div class="detail-item"><label>Ngày tiếp nhận</label><span>${fmtD(w.receivedDate||w.createdAt)}</span></div>
+      <div class="detail-item"><label>Dự kiến trả</label><span>${fmtD(w.expectedReturnDate)||'<span style="color:var(--dim)">Chưa xác định</span>'}</span></div>
+    </div>
+    <div style="margin-top:12px"><div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;margin-bottom:5px"><i class="bi bi-chat-left-text"></i> Mô tả lỗi / triệu chứng</div>
+      <div style="background:var(--bg);border-radius:8px;padding:11px 13px;font-size:13px;border-left:3px solid var(--olive)">${esc(w.issueDescription||w.description||'–')}</div></div>
+    ${w.note?`<div style="margin-top:10px"><div style="font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;margin-bottom:5px"><i class="bi bi-sticky"></i> Ghi chú nội bộ</div><div style="background:#fffbeb;border-radius:8px;padding:11px 13px;font-size:13px;border-left:3px solid #fcd34d">${esc(w.note)}</div></div>`:''}
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:700;color:var(--dim);margin-bottom:8px;text-transform:uppercase">Cập nhật trạng thái nhanh</div>
+      <div class="quick-status">
+        ${w.status==='pending'?`<button class="qbtn" onclick="quickWarrantyStatus(${id},'processing')"><i class="bi bi-tools"></i> Bắt đầu xử lý</button>`:''}
+        ${w.status==='processing'?`<button class="qbtn" onclick="quickWarrantyStatus(${id},'done')"><i class="bi bi-check-lg"></i> Hoàn trả khách</button>`:''}
+        ${!['cancelled','done'].includes(w.status)?`<button class="qbtn" onclick="quickWarrantyStatus(${id},'cancelled')"><i class="bi bi-x-lg"></i> Từ chối</button>`:''}
+      </div>
+    </div>`,
+            `<button class="btn btn-ghost" onclick="closeModal()">Đóng</button><button class="btn btn-primary" onclick="closeModal();editWarranty(${id})"><i class="bi bi-pencil"></i> Sửa</button>`,true);
+    }
+    async function quickWarrantyStatus(id,status){
+        try{await api('PATCH',`/api/warranties/${id}/status?value=${status}`);toast(`Cập nhật trạng thái BH → ${status}`);closeModal();await loadSection('warranty');}catch(e){toast('Lỗi: '+e.message,'error');}
+    }
+    async function editWarranty(id){
+        const w=allData.warranty.find(x=>(x.id||x.warrantyId)===id);if(!w)return;
+        const prod=allData.products.find(p=>p.productId===w.productId);
+        const custName=w.customerName||w.customer_name||'';
+        const custPhone=w.customerPhone||w.customer_phone||'';
+        openModal(`Sửa phiếu bảo hành #W${String(id).padStart(4,'0')}`,`
+    <div class="form-section">Thông tin phiếu</div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Mã phiếu BH</label>
+      <input class="form-control" value="#W${String(id).padStart(4,'0')}" readonly style="background:var(--bg);font-family:monospace;font-weight:700;color:var(--olive)">
+    </div><div class="form-group"><label class="form-label">Sản phẩm</label>
+      <select class="form-control" id="f-productId">
+        <option value="">— Chọn sản phẩm —</option>
+        ${allData.products.map(p=>`<option value="${p.productId}" ${p.productId===w.productId?'selected':''}>${p.name}</option>`).join('')}
+      </select>
+    </div></div>
+    <div class="form-section">Thông tin khách hàng</div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Tên khách hàng <span class="req">*</span></label>
+      <input class="form-control" id="f-customerName" value="${esc(custName)}" placeholder="Nguyễn Văn A">
+    </div><div class="form-group"><label class="form-label">Số điện thoại</label>
+      <input class="form-control" id="f-customerPhone" value="${esc(custPhone)}" placeholder="0909...">
+    </div></div>
+    <div class="form-section">Nội dung bảo hành</div>
+    <div class="form-row full"><div class="form-group"><label class="form-label">Mô tả lỗi / triệu chứng <span class="req">*</span></label>
+      <textarea class="form-control" id="f-issueDescription" style="min-height:80px">${esc(w.issueDescription||w.description||'')}</textarea>
+    </div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Ngày tiếp nhận</label>
+      <input class="form-control" id="f-receivedDate" type="date" value="${(w.receivedDate||w.createdAt||'').split('T')[0]}">
+    </div><div class="form-group"><label class="form-label">Ngày dự kiến trả</label>
+      <input class="form-control" id="f-expectedReturnDate" type="date" value="${(w.expectedReturnDate||'').split('T')[0]}">
+    </div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái</label>
+      <select class="form-control" id="f-status">
+        <option value="pending" ${w.status==='pending'?'selected':''}>Chờ tiếp nhận</option>
+        <option value="processing" ${w.status==='processing'?'selected':''}>Đang xử lý</option>
+        <option value="done" ${w.status==='done'?'selected':''}>Đã hoàn trả</option>
+        <option value="cancelled" ${w.status==='cancelled'?'selected':''}>Từ chối</option>
+      </select>
+    </div><div class="form-group"><label class="form-label">Ghi chú nội bộ</label>
+      <input class="form-control" id="f-note" value="${esc(w.note||'')}">
+    </div></div>`,
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
+         <button class="btn btn-primary" onclick="doEditWarranty(${id})"><i class="bi bi-floppy"></i> Cập nhật</button>`);
+    }
+    async function doEditWarranty(id){
+        const fields=['productId','customerName','customerPhone','issueDescription','receivedDate','expectedReturnDate','status','note'];
+        const data={};
+        fields.forEach(f=>{
+            const el=document.getElementById('f-'+f); if(!el) return;
+            const v=el.value.trim(); if(!v) return;
+            if(el.type==='number') data[f]=Number(v); else data[f]=v;
+        });
+        if(!data.customerName){toast('Vui lòng nhập tên khách hàng','warn');return;}
+        if(!data.issueDescription){toast('Vui lòng nhập mô tả lỗi','warn');return;}
+        if(data.productId) data.productId=Number(data.productId);
+        // snake_case fallback
+        if(data.customerName) data.customer_name=data.customerName;
+        if(data.customerPhone) data.customer_phone=data.customerPhone;
+        if(data.issueDescription) data.issue_description=data.issueDescription;
+        try{
+            await api('PUT',`/api/warranties/${id}`,data);
+            toast('✓ Cập nhật bảo hành thành công');
+            closeModal();
+            await loadSection('warranty');
+        }catch(e){toast('Lỗi: '+e.message,'error');}
+    }
+
     // ══ CREATE FORMS ═════════════════════════════════════
-    function openCreate(type){
+    function genBatchCode(){
+        const now=new Date();
+        const yy=now.getFullYear();
+        const mm=String(now.getMonth()+1).padStart(2,'0');
+        // STT tự tăng dựa theo số phiếu nhập hiện có trong db
+        const nextId=allData.stock.length>0?Math.max(...allData.stock.map(s=>s.id||0))+1:1;
+        return `IMP-${yy}${mm}-${String(nextId).padStart(4,'0')}`;
+    }
+    function buildCategoryOpts(selectedId=null){
+        return allData.categories.map(c=>`<option value="${c.id||c.categoryId}" ${(c.id||c.categoryId)===selectedId?'selected':''}>${c.name}</option>`).join('');
+    }
+    function buildProductOpts(selectedId=null){
+        return allData.products.map(p=>`<option value="${p.productId}" ${p.productId===selectedId?'selected':''}>${p.name} (#${p.productId})</option>`).join('');
+    }
+    function buildCustomerOpts(selectedId=null){
+        return allData.customers.map(c=>{const id=c.customerId||c.id;return`<option value="${id}" ${id===selectedId?'selected':''}>${c.fullName||c.name} (${c.phone||'–'})</option>`;}).join('');
+    }
+    function getUniqueSuppliers(){
+        // Lấy NCC distinct từ danh sách sản phẩm (DB lưu trong tra_products, không có bảng riêng)
+        const seen=new Set(), result=[];
+        allData.products.forEach(p=>{
+            if(p.suppName&&!seen.has(p.suppName)){
+                seen.add(p.suppName);
+                result.push({name:p.suppName,contact:p.suppContact||'',phone:p.suppPhone||'',email:p.suppEmail||''});
+            }
+        });
+        // Fallback: nếu API /api/suppliers trả về data riêng thì merge thêm
+        if(allData.suppliers&&allData.suppliers.length){
+            allData.suppliers.forEach(s=>{
+                const n=s.suppName||s.name||'';
+                if(n&&!seen.has(n)){seen.add(n);result.push({name:n,contact:s.suppContact||s.contactPerson||s.contact||'',phone:s.suppPhone||s.phone||'',email:s.suppEmail||s.email||''});}
+            });
+        }
+        return result.sort((a,b)=>a.name.localeCompare(b.name,'vi'));
+    }
+    function buildSupplierOpts(){
+        const suppliers=getUniqueSuppliers();
+        if(!suppliers.length) return '';
+        return suppliers.map(s=>`<option value="${esc(s.name)}" data-contact="${esc(s.contact)}" data-phone="${esc(s.phone)}" data-email="${esc(s.email)}">${esc(s.name)}</option>`).join('');
+    }
+    function onSupplierChange(sel){
+        const opt=sel.options[sel.selectedIndex];
+        if(!opt||!opt.value) return;
+        const fn=$('f-suppName'),fc=$('f-suppContact'),fp=$('f-suppPhone'),fe=$('f-suppEmail');
+        if(fn){fn.value=opt.value||'';fn.dispatchEvent(new Event('input'));}
+        if(fc) fc.value=opt.dataset.contact||'';
+        if(fp) fp.value=opt.dataset.phone||'';
+        if(fe) fe.value=opt.dataset.email||'';
+    }
+
+    async function openCreate(type){
+        // Đảm bảo products đã load trước khi mở form warranty
+        if(type==='warranty'&&allData.products.length===0){
+            try{ const pr=await api('GET','/api/products'); allData.products=Array.isArray(pr)?pr:(pr?.data||[]); }catch{}
+        }
+        // Supplier opts luôn lấy từ products đã load (không cần API riêng)
+        const suppOpts=buildSupplierOpts();
+        const suppSelectHtml=suppOpts
+            ?`<div class="form-row full"><div class="form-group">
+               <label class="form-label"><i class="bi bi-building"></i> Chọn nhà cung cấp <span style="color:var(--dim);font-weight:400">(tự điền các trường bên dưới)</span></label>
+               <select class="form-control" id="f-suppSelect" onchange="onSupplierChange(this)" style="font-weight:600">
+                 <option value="">— Chọn NCC từ danh sách —</option>${suppOpts}
+               </select></div></div>`
+            :'<div style="font-size:12px;color:var(--dim);padding:2px 0 8px"><i class="bi bi-info-circle"></i> Chưa có sản phẩm nào trong DB để lấy danh sách NCC</div>';
         const forms={
             products:`
       <div class="form-section">Thông tin cơ bản</div>
       <div class="form-row"><div class="form-group"><label class="form-label">Tên sản phẩm <span class="req">*</span></label><input class="form-control" id="f-name" placeholder="Ghế xoay văn phòng"></div><div class="form-group"><label class="form-label">Đơn vị <span class="req">*</span></label><input class="form-control" id="f-unit" placeholder="Cái, Bộ, Chiếc..."></div></div>
       <div class="form-row trio"><div class="form-group"><label class="form-label">Giá bán (₫) <span class="req">*</span></label><input class="form-control" id="f-price" type="number" placeholder="1500000"></div><div class="form-group"><label class="form-label">Tồn kho</label><input class="form-control" id="f-stockQty" type="number" placeholder="50"></div><div class="form-group"><label class="form-label">Tồn kho tối thiểu</label><input class="form-control" id="f-minStock" type="number" placeholder="10"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Danh mục ID</label><input class="form-control" id="f-categoryId" type="number" placeholder="1"></div><div class="form-group"><label class="form-label">Cân nặng (kg)</label><input class="form-control" id="f-weightKg" type="number" step="0.1" placeholder="1.5"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Danh mục</label><select class="form-control" id="f-categoryId"><option value="">— Chọn danh mục —</option>${buildCategoryOpts()}</select></div><div class="form-group"><label class="form-label">Cân nặng (kg)</label><input class="form-control" id="f-weightKg" type="number" step="0.1" placeholder="1.5"></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="active">Hoạt động</option><option value="inactive">Ẩn</option></select></div><div class="form-group"><label class="form-label">Nổi bật</label><select class="form-control" id="f-isFeatured"><option value="false">Không</option><option value="true">⭐ Có</option></select></div></div>
       <div class="form-row full"><div class="form-group"><label class="form-label">URL hình ảnh</label><input class="form-control" id="f-imageUrl" placeholder="https://..."></div></div>
       <div class="form-row full"><div class="form-group"><label class="form-label">Mô tả sản phẩm</label><textarea class="form-control" id="f-description" placeholder="Mô tả chi tiết..."></textarea></div></div>
       <div class="form-section">Nhà cung cấp</div>
+      ${suppSelectHtml}
       <div class="form-row"><div class="form-group"><label class="form-label">Tên NCC</label><input class="form-control" id="f-suppName" placeholder="Công ty ABC"></div><div class="form-group"><label class="form-label">Người liên hệ</label><input class="form-control" id="f-suppContact" placeholder="Nguyễn Văn A"></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">SĐT NCC</label><input class="form-control" id="f-suppPhone" placeholder="0909123456"></div><div class="form-group"><label class="form-label">Email NCC</label><input class="form-control" id="f-suppEmail" type="email" placeholder="abc@ncc.vn"></div></div>`,
-            orders:`
-      <div class="form-row"><div class="form-group"><label class="form-label">Khách hàng ID <span class="req">*</span></label><input class="form-control" id="f-customerId" type="number" placeholder="1"></div><div class="form-group"><label class="form-label">Nhân viên ID <span class="req">*</span></label><input class="form-control" id="f-userId" type="number" placeholder="1"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Phương thức TT</label><select class="form-control" id="f-payMethod"><option value="COD">COD</option><option value="Banking">Banking</option><option value="Momo">Momo</option><option value="VNPay">VNPay</option></select></div><div class="form-group"><label class="form-label">Tổng tiền</label><input class="form-control" id="f-totalAmount" type="number" placeholder="500000"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Phí vận chuyển</label><input class="form-control" id="f-shippingFee" type="number" placeholder="30000"></div><div class="form-group"><label class="form-label">Mã giảm giá</label><input class="form-control" id="f-discCode" placeholder="SALE10"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái đơn</label><select class="form-control" id="f-status"><option value="pending">Chờ xử lý</option><option value="confirmed">Đã xác nhận</option><option value="shipped">Đang giao</option><option value="done">Hoàn thành</option><option value="cancelled">Đã hủy</option></select></div><div class="form-group"><label class="form-label">Trạng thái TT</label><select class="form-control" id="f-payStatus"><option value="pending">Chờ thanh toán</option><option value="paid">Đã thanh toán</option><option value="failed">Thất bại</option></select></div></div>
-      <div class="form-row full"><div class="form-group"><label class="form-label">Địa chỉ giao hàng</label><input class="form-control" id="f-shippingAddress" placeholder="123 Nguyễn Huệ, Q1, TP.HCM"></div></div>
-      <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label><textarea class="form-control" id="f-note" placeholder="Ghi chú đặc biệt..."></textarea></div></div>`,
             stock:`
-      <div class="form-row"><div class="form-group"><label class="form-label">Sản phẩm ID <span class="req">*</span></label><input class="form-control" id="f-productId" type="number" placeholder="1"></div><div class="form-group"><label class="form-label">Người tạo (User ID) <span class="req">*</span></label><input class="form-control" id="f-userId" type="number" placeholder="1"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Sản phẩm <span class="req">*</span></label><select class="form-control" id="f-productId"><option value="">— Chọn sản phẩm —</option>${buildProductOpts()}</select></div><div class="form-group"><label class="form-label">Mã phiếu nhập <i class="bi bi-magic" style="color:var(--olive)"></i></label><input class="form-control" id="f-batchCode" value="${genBatchCode()}" readonly style="background:#f0f7ee;font-family:monospace;font-weight:700;color:var(--olive);cursor:default" title="Mã tự động theo số thứ tự"></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">Số lượng nhập <span class="req">*</span></label><input class="form-control" id="f-quantity" type="number" placeholder="100" min="1"></div><div class="form-group"><label class="form-label">Giá nhập / đơn vị (₫) <span class="req">*</span></label><input class="form-control" id="f-importPrice" type="number" placeholder="800000"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Mã lô hàng</label><input class="form-control" id="f-batchCode" placeholder="BATCH-2025-001"></div><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="done">Đã nhập</option><option value="cancelled">Hủy</option></select></div></div>
-      <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label><input class="form-control" id="f-note" placeholder="Nhập hàng đầu tháng 5..."></div></div>`,
+      <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="done">Đã nhập</option><option value="cancelled">Hủy</option></select></div><div class="form-group"><label class="form-label">Người tạo</label><input class="form-control" id="f-userId" type="number" value="${JSON.parse(localStorage.getItem('currentLogin')||'{}').userId||JSON.parse(localStorage.getItem('currentLogin')||'{}').id||''}" readonly style="background:#f0f7ee;cursor:default" title="Tự động lấy từ tài khoản đăng nhập"></div></div>
+      <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label><input class="form-control" id="f-note" placeholder="Nhập hàng tháng..."></div></div>`,
+            warranty:`
+      <div class="form-section">Mã phiếu</div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Mã phiếu BH <i class="bi bi-magic" style="color:var(--olive)"></i></label>
+        <input class="form-control" value="${(()=>{const now=new Date();const nextId=allData.warranty.length>0?Math.max(...allData.warranty.map(w=>w.id||w.warrantyId||0))+1:1;return 'WR-'+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+'-'+String(nextId).padStart(4,'0');})(  )}" readonly style="background:#f0f7ee;font-family:monospace;font-weight:700;color:var(--olive)">
+      </div><div class="form-group"><label class="form-label">Sản phẩm <span class="req">*</span></label>
+        <select class="form-control" id="f-productId"><option value="">— Chọn sản phẩm —</option>${buildProductOpts()}</select>
+      </div></div>
+      <div class="form-section">Thông tin khách hàng</div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Tên khách hàng <span class="req">*</span></label>
+        <input class="form-control" id="f-customerName" placeholder="Nguyễn Văn A">
+      </div><div class="form-group"><label class="form-label">Số điện thoại</label>
+        <input class="form-control" id="f-customerPhone" placeholder="0909123456" type="tel">
+      </div></div>
+      <div class="form-section">Nội dung bảo hành</div>
+      <div class="form-row full"><div class="form-group"><label class="form-label">Mô tả lỗi / triệu chứng <span class="req">*</span></label>
+        <textarea class="form-control" id="f-issueDescription" placeholder="Mô tả chi tiết lỗi, triệu chứng khách phản ánh..." style="min-height:80px"></textarea>
+      </div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Ngày tiếp nhận</label>
+        <input class="form-control" id="f-receivedDate" type="date" value="${new Date().toISOString().split('T')[0]}">
+      </div><div class="form-group"><label class="form-label">Ngày dự kiến trả</label>
+        <input class="form-control" id="f-expectedReturnDate" type="date">
+      </div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái ban đầu</label>
+        <select class="form-control" id="f-status">
+          <option value="pending">Chờ tiếp nhận</option>
+          <option value="processing">Đang xử lý</option>
+        </select>
+      </div><div class="form-group"><label class="form-label">Ghi chú nội bộ</label>
+        <input class="form-control" id="f-note" placeholder="Ghi chú kỹ thuật, phụ kiện kèm theo...">
+      </div></div>`,
             customers:`
       <div class="form-row"><div class="form-group"><label class="form-label">Họ và tên <span class="req">*</span></label><input class="form-control" id="f-fullName" placeholder="Nguyễn Văn A"></div><div class="form-group"><label class="form-label">Điện thoại</label><input class="form-control" id="f-phone" placeholder="0912345678"></div></div>
       <div class="form-row full"><div class="form-group"><label class="form-label">Email</label><input class="form-control" id="f-email" type="email" placeholder="email@example.com"></div></div>
       <div class="form-row full"><div class="form-group"><label class="form-label">Địa chỉ</label><textarea class="form-control" id="f-address" placeholder="Số nhà, đường, quận, thành phố..."></textarea></div></div>`,
             categories:`
-      <div class="form-row full"><div class="form-group"><label class="form-label">Tên danh mục <span class="req">*</span></label><input class="form-control" id="f-name" placeholder="Nhà bếp, Điện gia dụng..."></div></div>
-      <div class="form-row full"><div class="form-group"><label class="form-label">Danh mục cha (Parent ID) <span style="color:var(--dim);font-weight:400">(để trống nếu là gốc)</span></label><input class="form-control" id="f-parentId" type="number" placeholder=""></div></div>`,
+      <div class="form-row full"><div class="form-group">
+        <label class="form-label">Tên danh mục <span class="req">*</span></label>
+        <input class="form-control" id="f-name" placeholder="Nhà bếp, Điện gia dụng...">
+      </div></div>
+      <div class="form-row"><div class="form-group">
+        <label class="form-label">Danh mục cha <span style="color:var(--dim);font-weight:400">(để trống nếu là gốc)</span></label>
+        <select class="form-control" id="f-parentId">
+          <option value="">— Không có (Danh mục gốc) —</option>
+          ${allData.categories.map(x=>{const xid=x.id||x.categoryId;const indent=x.parentId?'\u00a0\u00a0↳ ':'';return`<option value="${xid}">${indent}${x.name}</option>`;}).join('')}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Thứ tự sắp xếp</label>
+        <input class="form-control" id="f-sortOrder" type="number" placeholder="0" min="0">
+      </div></div>
+      <div class="form-row"><div class="form-group">
+        <label class="form-label">Trạng thái</label>
+        <select class="form-control" id="f-status">
+          <option value="active">Hiện (Active)</option>
+          <option value="inactive">Ẩn (Inactive)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mô tả</label>
+        <input class="form-control" id="f-description" placeholder="Mô tả ngắn về danh mục...">
+      </div></div>`,
             users:`
       <div class="form-row"><div class="form-group"><label class="form-label">Tên đăng nhập <span class="req">*</span></label><input class="form-control" id="f-username" placeholder="admin01"></div><div class="form-group"><label class="form-label">Mật khẩu <span class="req">*</span></label><input class="form-control" id="f-password" type="password" placeholder="••••••••"></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">Họ và tên</label><input class="form-control" id="f-fullName" placeholder="Nguyễn Văn A"></div><div class="form-group"><label class="form-label">Điện thoại</label><input class="form-control" id="f-phone" placeholder="0912345678"></div></div>
       <div class="form-row full"><div class="form-group"><label class="form-label">Email</label><input class="form-control" id="f-email" type="email" placeholder="email@example.com"></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">Vai trò</label><select class="form-control" id="f-role"><option value="STAFF">Nhân viên</option><option value="ADMIN">Admin</option></select></div><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="active">Hoạt động</option><option value="inactive">Vô hiệu hóa</option></select></div></div>`
         };
-        const titles={products:'Thêm sản phẩm mới',orders:'Tạo đơn hàng mới',stock:'Tạo phiếu nhập kho',customers:'Thêm khách hàng',categories:'Thêm danh mục',users:'Thêm người dùng'};
-        openModal(titles[type],forms[type],`<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="submitCreate('${type}')"><i class="fas fa-save"></i> Lưu</button>`,true);
+        const titles={products:'Thêm sản phẩm mới',stock:'Tạo phiếu nhập kho',warranty:'Tiếp nhận bảo hành',customers:'Thêm khách hàng',categories:'Thêm danh mục',users:'Thêm người dùng'};
+        openModal(titles[type]||type,forms[type],`<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="submitCreate('${type}')"><i class="bi bi-floppy"></i> Lưu</button>`,true);
+        // parentId select được populate động từ allData.categories trong template string
     }
 
     // ══ GET FORM DATA ════════════════════════════════════
@@ -892,7 +1259,10 @@
         fields.forEach(f=>{
             const el=$('f-'+f);if(!el)return;
             const v=el.value.trim();
-            if(v!=='') obj[f]=el.type==='number'?Number(v):v==='true'?true:v==='false'?false:v;
+            if(v==='') return;
+            // Ép Number: input[type=number] HOẶC field tên kết thúc bằng Id/ID
+            const forceNum=el.type==='number'||(f.endsWith('Id')||f.endsWith('ID'));
+            obj[f]=forceNum?Number(v):v==='true'?true:v==='false'?false:v;
         });
         return obj;
     }
@@ -900,22 +1270,38 @@
     // ══ SUBMIT CREATE ════════════════════════════════════
     const fieldMap={
         products:['name','unit','price','categoryId','stockQty','minStock','weightKg','status','isFeatured','imageUrl','description','suppName','suppContact','suppPhone','suppEmail'],
-        orders:['customerId','userId','payMethod','totalAmount','shippingFee','discCode','status','payStatus','shippingAddress','note'],
         stock:['productId','userId','quantity','importPrice','batchCode','status','note'],
-        customers:['fullName','phone','email','address'],
-        categories:['name','parentId'],
-        users:['username','password','fullName','phone','email','role','status']
+        categories:['name','parentId','sortOrder','status','description'],
+        warranty:['productId','customerName','customerPhone','issueDescription','receivedDate','expectedReturnDate','status','note'],
     };
-    const epMap={products:'/api/products',orders:'/api/orders',stock:'/api/stock-imports',customers:'/api/customers',categories:'/api/categories',users:'/api/auth/register'};
+    const epMap={products:'/api/products',orders:'/api/orders',stock:'/api/stock-imports',categories:'/api/categories',warranty:'/api/warranties'};
 
     async function submitCreate(type){
-        const data=gfd(fieldMap[type]);
+        if(type==='products'&&isStaff()){toast('Nhân viên không có quyền thêm sản phẩm','error');return;}
+        const data=gfd(fieldMap[type]||[]);
         if(type==='products'&&!data.name){toast('Vui lòng nhập tên sản phẩm','warn');return;}
-        if(type==='orders'&&!data.customerId){toast('Vui lòng nhập khách hàng ID','warn');return;}
-        if(type==='stock'&&!data.productId){toast('Vui lòng nhập sản phẩm ID','warn');return;}
-        if(type==='customers'&&!data.fullName){toast('Vui lòng nhập họ tên','warn');return;}
+        if(type==='stock'&&!data.productId){toast('Vui lòng chọn sản phẩm','warn');return;}
         if(type==='categories'&&!data.name){toast('Vui lòng nhập tên danh mục','warn');return;}
-        if(type==='users'&&!data.username){toast('Vui lòng nhập tên đăng nhập','warn');return;}
+        if(type==='warranty'&&!data.productId){toast('Vui lòng chọn sản phẩm','warn');return;}
+        if(type==='warranty'&&!data.customerName){toast('Vui lòng nhập tên khách hàng','warn');return;}
+        if(type==='warranty'&&!data.issueDescription){toast('Vui lòng nhập mô tả lỗi','warn');return;}
+        // snake_case fallback cho warranty (Spring có thể dùng camelCase hoặc snake_case)
+        if(type==='warranty'){
+            if(data.productId)        data.productId        = Number(data.productId);
+            if(data.customerName)     data.customer_name    = data.customerName;
+            if(data.customerPhone)    data.customer_phone   = data.customerPhone;
+            if(data.issueDescription) data.issue_description= data.issueDescription;
+            if(data.receivedDate)     data.received_date    = data.receivedDate;
+            if(data.expectedReturnDate) data.expected_return_date = data.expectedReturnDate;
+        }
+        if(type==='categories'){
+            // parentId: select trả về string → ép thành số, hoặc null nếu rỗng
+            const rawPid=document.getElementById('f-parentId')?.value||'';
+            const pid=rawPid?parseInt(rawPid,10):null;
+            data.parentId=pid;
+            data.parent_id=pid;               // fallback snake_case cho Spring
+            if(data.sortOrder!==undefined) data.sort_order=data.sortOrder;
+        }
         try{
             await api('POST',epMap[type],data);
             toast('✓ Thêm thành công');closeModal(null);$('modal-overlay').classList.remove('open');
@@ -926,18 +1312,57 @@
     // ══ EDIT FUNCTIONS ═══════════════════════════════════
     async function editProduct(id){
         const p=allData.products.find(x=>x.productId===id);if(!p)return;
+        const suppOpts=buildSupplierOpts();
+        // Pre-select NCC hiện tại của sản phẩm nếu có
+        const suppOptsWithSelected=suppOpts.replace(
+            `value="${esc(p.suppName||'')}"`,
+            `value="${esc(p.suppName||'')}" selected`
+        );
+        const suppSelectHtml=suppOpts
+            ?`<div class="form-row full"><div class="form-group">
+               <label class="form-label"><i class="bi bi-building"></i> Nhà cung cấp <span style="color:var(--dim);font-weight:400">(chọn để tự điền, hoặc sửa trực tiếp)</span></label>
+               <select class="form-control" id="f-suppSelect" onchange="onSupplierChange(this)" style="font-weight:600">
+                 <option value="">— Chọn NCC —</option>${suppOptsWithSelected}
+               </select></div></div>`
+            :'';
         openModal('Sửa sản phẩm: '+p.name,`
     <div class="form-section">Thông tin cơ bản</div>
-    <div class="form-row"><div class="form-group"><label class="form-label">Tên sản phẩm</label><input class="form-control" id="f-name" value="${esc(p.name)}"></div><div class="form-group"><label class="form-label">Đơn vị</label><input class="form-control" id="f-unit" value="${esc(p.unit)}"></div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Tên sản phẩm</label><input class="form-control" id="f-name" value="${esc(p.name||'')}"></div><div class="form-group"><label class="form-label">Đơn vị</label><input class="form-control" id="f-unit" value="${esc(p.unit||'')}"></div></div>
     <div class="form-row trio"><div class="form-group"><label class="form-label">Giá bán (₫)</label><input class="form-control" id="f-price" type="number" value="${p.price||''}"></div><div class="form-group"><label class="form-label">Tồn kho</label><input class="form-control" id="f-stockQty" type="number" value="${p.stockQty??''}"></div><div class="form-group"><label class="form-label">Tồn kho tối thiểu</label><input class="form-control" id="f-minStock" type="number" value="${p.minStock??''}"></div></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">Danh mục ID</label><input class="form-control" id="f-categoryId" type="number" value="${p.categoryId||''}"></div><div class="form-group"><label class="form-label">Cân nặng (kg)</label><input class="form-control" id="f-weightKg" type="number" step="0.1" value="${p.weightKg||''}"></div></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="active" ${p.status==='active'?'selected':''}>Hoạt động</option><option value="inactive" ${p.status==='inactive'?'selected':''}>Ẩn</option></select></div><div class="form-group"><label class="form-label">Nổi bật</label><select class="form-control" id="f-isFeatured"><option value="false" ${!p.isFeatured?'selected':''}>Không</option><option value="true" ${p.isFeatured?'selected':''}> Có</option></select></div></div>
-    <div class="form-row full"><div class="form-group"><label class="form-label">URL hình ảnh</label><input class="form-control" id="f-imageUrl" value="${esc(p.imageUrl)}"></div></div>
-    <div class="form-row full"><div class="form-group"><label class="form-label">Mô tả</label><textarea class="form-control" id="f-description">${esc(p.description)}</textarea></div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Danh mục</label><select class="form-control" id="f-categoryId"><option value="">— Chọn danh mục —</option>${buildCategoryOpts(p.categoryId)}</select></div><div class="form-group"><label class="form-label">Cân nặng (kg)</label><input class="form-control" id="f-weightKg" type="number" step="0.1" value="${p.weightKg||''}"></div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="active" ${p.status==='active'?'selected':''}>Hoạt động</option><option value="inactive" ${p.status==='inactive'?'selected':''}>Ẩn</option></select></div><div class="form-group"><label class="form-label">Nổi bật</label><select class="form-control" id="f-isFeatured"><option value="false" ${!p.isFeatured?'selected':''}>Không</option><option value="true" ${p.isFeatured?'selected':''}>⭐ Có</option></select></div></div>
+    <div class="form-row full"><div class="form-group"><label class="form-label">URL hình ảnh</label><input class="form-control" id="f-imageUrl" value="${esc(p.imageUrl||'')}"></div></div>
+    ${p.imageUrl?`<div style="margin:-4px 0 10px;text-align:center"><img src="${esc(p.imageUrl||'')}" style="max-height:100px;max-width:100%;border-radius:8px;border:1px solid var(--border)" onerror="this.style.display='none'"></div>`:''}
+    <div class="form-row full"><div class="form-group"><label class="form-label">Mô tả</label><textarea class="form-control" id="f-description">${esc(p.description||'')}</textarea></div></div>
     <div class="form-section">Nhà cung cấp</div>
-    <div class="form-row"><div class="form-group"><label class="form-label">Tên NCC</label><input class="form-control" id="f-suppName" value="${esc(p.suppName)}"></div><div class="form-group"><label class="form-label">Người liên hệ</label><input class="form-control" id="f-suppContact" value="${esc(p.suppContact)}"></div></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">SĐT NCC</label><input class="form-control" id="f-suppPhone" value="${esc(p.suppPhone)}"></div><div class="form-group"><label class="form-label">Email NCC</label><input class="form-control" id="f-suppEmail" value="${esc(p.suppEmail)}"></div></div>`,
-            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('products',${id},${JSON.stringify(fieldMap.products)})"><i class="fas fa-save"></i> Cập nhật</button>`,true);
+    ${suppSelectHtml}
+    <div class="form-row"><div class="form-group"><label class="form-label">Tên NCC</label><input class="form-control" id="f-suppName" value="${esc(p.suppName||'')}"></div><div class="form-group"><label class="form-label">Người liên hệ</label><input class="form-control" id="f-suppContact" value="${esc(p.suppContact||'')}"></div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">SĐT NCC</label><input class="form-control" id="f-suppPhone" value="${esc(p.suppPhone||'')}"></div><div class="form-group"><label class="form-label">Email NCC</label><input class="form-control" id="f-suppEmail" value="${esc(p.suppEmail||'')}"></div></div>`,
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEditProduct(${id})"><i class="bi bi-floppy"></i> Cập nhật</button>`,true);
+    }
+    async function doEditProduct(id){
+        if(isStaff()){toast('Nhân viên không có quyền sửa sản phẩm','error');return;}
+        // Thu thập dữ liệu từ form
+        const fields=['name','unit','price','categoryId','stockQty','minStock','weightKg','status','isFeatured','imageUrl','description','suppName','suppContact','suppPhone','suppEmail'];
+        const data={};
+        fields.forEach(f=>{
+            const el=document.getElementById('f-'+f);
+            if(!el) return;
+            const v=el.value.trim();
+            if(v==='') return;
+            if(el.type==='number') data[f]=Number(v);
+            else if(v==='true') data[f]=true;
+            else if(v==='false') data[f]=false;
+            else data[f]=v;
+        });
+        if(!data.name){toast('Vui lòng nhập tên sản phẩm','warn');return;}
+        if(data.categoryId) data.categoryId=Number(data.categoryId);
+        try{
+            await api('PUT',`/api/products/${id}`,data);
+            toast('✓ Cập nhật sản phẩm thành công');
+            $('modal-overlay').classList.remove('open');
+            await loadSection('products');
+        }catch(e){toast('Lỗi: '+e.message,'error');}
     }
 
     async function editOrder(id){
@@ -948,16 +1373,16 @@
     <div class="form-row"><div class="form-group"><label class="form-label">Phí ship</label><input class="form-control" id="f-shippingFee" type="number" value="${o.shippingFee||''}"></div><div class="form-group"><label class="form-label">Mã giao dịch TT</label><input class="form-control" id="f-payTxnId" value="${esc(o.payTxnId)}"></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Địa chỉ giao hàng</label><input class="form-control" id="f-shippingAddress" value="${esc(o.shippingAddress)}"></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label><textarea class="form-control" id="f-note">${esc(o.note)}</textarea></div></div>`,
-            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('orders',${id},['status','payStatus','payMethod','totalAmount','shippingFee','payTxnId','shippingAddress','note'])"><i class="fas fa-save"></i> Cập nhật</button>`,true);
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('orders',${id},['status','payStatus','payMethod','totalAmount','shippingFee','payTxnId','shippingAddress','note'])"><i class="bi bi-floppy"></i> Cập nhật</button>`,true);
     }
 
     async function editStock(id){
         const s=allData.stock.find(x=>x.id===id);if(!s)return;
         openModal(`Sửa phiếu nhập #${id}`,`
     <div class="form-row"><div class="form-group"><label class="form-label">Số lượng</label><input class="form-control" id="f-quantity" type="number" value="${s.quantity||''}"></div><div class="form-group"><label class="form-label">Giá nhập (₫)</label><input class="form-control" id="f-importPrice" type="number" value="${s.importPrice||''}"></div></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">Mã lô hàng</label><input class="form-control" id="f-batchCode" value="${esc(s.batchCode)}"></div><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="done" ${s.status==='done'?'selected':''}>Đã nhập</option><option value="cancelled" ${s.status==='cancelled'?'selected':''}>Hủy</option></select></div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Mã phiếu nhập <i class="bi bi-lock" style="color:var(--dim)"></i></label><input class="form-control" id="f-batchCode" value="${esc(s.batchCode)}" readonly style="background:var(--bg);font-family:monospace;font-weight:700;color:var(--olive);cursor:default"></div><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="done" ${s.status==='done'?'selected':''}>Đã nhập</option><option value="cancelled" ${s.status==='cancelled'?'selected':''}>Hủy</option></select></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label><input class="form-control" id="f-note" value="${esc(s.note)}"></div></div>`,
-            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('stock',${id},['quantity','importPrice','batchCode','status','note'])"><i class="fas fa-save"></i> Cập nhật</button>`);
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('stock',${id},['quantity','importPrice','batchCode','status','note'])"><i class="bi bi-floppy"></i> Cập nhật</button>`);
     }
 
     async function editCustomer(id){
@@ -966,17 +1391,83 @@
     <div class="form-row"><div class="form-group"><label class="form-label">Họ tên</label><input class="form-control" id="f-fullName" value="${esc(c.fullName||c.name)}"></div><div class="form-group"><label class="form-label">Điện thoại</label><input class="form-control" id="f-phone" value="${esc(c.phone)}"></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Email</label><input class="form-control" id="f-email" value="${esc(c.email)}"></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Địa chỉ</label><textarea class="form-control" id="f-address">${esc(c.address)}</textarea></div></div>`,
-            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('customers',${id},['fullName','phone','email','address'])"><i class="fas fa-save"></i> Cập nhật</button>`);
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('customers',${id},['fullName','phone','email','address'])"><i class="bi bi-floppy"></i> Cập nhật</button>`);
     }
 
     async function editCategory(id){
         const c=allData.categories.find(x=>(x.id||x.categoryId)===id);if(!c)return;
-        openModal('Sửa danh mục: '+c.name,`
-    <div class="form-row full"><div class="form-group"><label class="form-label">Tên danh mục</label><input class="form-control" id="f-name" value="${esc(c.name)}"></div></div>
-    <div class="form-row full"><div class="form-group"><label class="form-label">Parent ID</label><input class="form-control" id="f-parentId" type="number" value="${c.parentId||''}"></div></div>`,
-            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('categories',${id},['name','parentId'])"><i class="fas fa-save"></i> Cập nhật</button>`);
+        const cid=c.id||c.categoryId;
+        // Đệ quy tìm tất cả con cháu để ngăn vòng lặp
+        function getDescendants(pid){
+            const children=allData.categories.filter(x=>x.parentId===(pid));
+            let ids=new Set(children.map(x=>x.id||x.categoryId));
+            children.forEach(child=>{ getDescendants(child.id||child.categoryId).forEach(i=>ids.add(i)); });
+            return ids;
+        }
+        const descendantIds=getDescendants(cid);
+        // Loại trừ chính nó và con cháu để tránh vòng lặp cấu trúc
+        const validParents=allData.categories.filter(x=>{
+            const xid=x.id||x.categoryId;
+            return xid!==cid && !descendantIds.has(xid);
+        });
+        const parentOpts=validParents.map(x=>{
+            const xid=x.id||x.categoryId;
+            const indent=x.parentId?'&nbsp;&nbsp;↳ ':'';
+            return `<option value="${xid}" ${xid===c.parentId?'selected':''}>${indent}${x.name}</option>`;
+        }).join('');
+        const parentField = `<div class="form-group"><label class="form-label">Danh mục cha</label>
+               <select class="form-control" id="f-parentId">
+                 <option value="" ${!c.parentId?'selected':''}>— Không có (Danh mục gốc) —</option>
+                 ${parentOpts}
+               </select>
+               </div>`;
+        openModal('Sửa danh mục: '+esc(c.name||''),`
+        <div class="form-row full"><div class="form-group"><label class="form-label">Tên danh mục <span class="req">*</span></label>
+            <input class="form-control" id="f-name" value="${esc(c.name||'')}"></div></div>
+        <div class="form-row">
+            ${parentField}
+        <div class="form-group"><label class="form-label">Thứ tự sắp xếp</label>
+            <input class="form-control" id="f-sortOrder" type="number" value="${c.sortOrder??0}" min="0">
+        </div></div>
+        <div class="form-row"><div class="form-group">
+            <label class="form-label">Trạng thái</label>
+            <select class="form-control" id="f-status">
+                <option value="active" ${(c.status||'active')==='active'?'selected':''}>Hiện (Active)</option>
+                <option value="inactive" ${c.status==='inactive'?'selected':''}>Ẩn (Inactive)</option>
+            </select>
+        </div>
+        <div class="form-group"><label class="form-label">Mô tả</label>
+            <input class="form-control" id="f-description" value="${esc(c.description||'')}">
+        </div></div>`,
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEditCategory(${id})"><i class="bi bi-floppy"></i> Cập nhật</button>`);
     }
 
+    async function doEditCategory(id){
+        const name=($('f-name')?.value||'').trim();
+        const rawParent=($('f-parentId')?.value||'').trim();
+        const description=($('f-description')?.value||'').trim();
+        const status=$('f-status')?.value||'active';
+        const sortOrder=parseInt($('f-sortOrder')?.value||'0',10)||0;
+        if(!name){toast('Vui lòng nhập tên danh mục','warn');return;}
+        const parentId=rawParent?parseInt(rawParent,10):null;
+        // Gửi đầy đủ payload - thử cả camelCase và snake_case để tương thích backend
+        const payload={
+            name,
+            description:description||null,
+            status,
+            sortOrder,
+            sort_order:sortOrder,         // fallback snake_case
+            parentId:parentId,
+            parent_id:parentId            // fallback snake_case
+        };
+        try{
+            const result=await api('PUT',`/api/categories/${id}`,payload);
+            console.log('Category update result:',result);
+            toast('✓ Cập nhật danh mục thành công');
+            closeModal();
+            await loadSection('categories');
+        }catch(e){toast('Lỗi cập nhật: '+e.message,'error');}
+    }
     async function editUser(id){
         const u=allData.users.find(x=>(x.userId||x.id)===id);if(!u)return;
         openModal('Sửa người dùng: '+u.username,`
@@ -984,21 +1475,31 @@
     <div class="form-row full"><div class="form-group"><label class="form-label">Email</label><input class="form-control" id="f-email" value="${esc(u.email)}"></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">Vai trò</label><select class="form-control" id="f-role"><option value="STAFF" ${u.role==='STAFF'?'selected':''}>Nhân viên</option><option value="ADMIN" ${u.role==='ADMIN'?'selected':''}>Admin</option></select></div><div class="form-group"><label class="form-label">Trạng thái</label><select class="form-control" id="f-status"><option value="active" ${u.status!=='inactive'?'selected':''}>Hoạt động</option><option value="inactive" ${u.status==='inactive'?'selected':''}>Vô hiệu hóa</option></select></div></div>
     <div class="form-row full"><div class="form-group"><label class="form-label">Mật khẩu mới <span style="color:var(--dim);font-weight:400">(để trống nếu không đổi)</span></label><input class="form-control" id="f-password" type="password" placeholder="••••••••"></div></div>`,
-            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('users',${id},['fullName','phone','email','role','status','password'])"><i class="fas fa-save"></i> Cập nhật</button>`);
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="doEdit('users',${id},['fullName','phone','email','role','status','password'])"><i class="bi bi-floppy"></i> Cập nhật</button>`);
     }
 
     async function doEdit(type,id,fields){
         const data=gfd(fields);
-        // users: backend chỉ có PATCH /status; với PUT thông thường cho các entity khác
         if(type==='users'){
             try{
+                // Cập nhật status nếu có
                 if(data.status) await api('PATCH',`/api/auth/users/${id}/status`,{status:data.status});
+                // Cập nhật thông tin profile nếu backend có endpoint
+                const profileData={};
+                if(data.fullName) profileData.fullName=data.fullName;
+                if(data.phone) profileData.phone=data.phone;
+                if(data.email) profileData.email=data.email;
+                if(data.role) profileData.role=data.role;
+                if(data.password) profileData.password=data.password;
+                if(Object.keys(profileData).length>0){
+                    try{ await api('PUT',`/api/auth/users/${id}`,profileData); }catch{}
+                }
                 toast('✓ Cập nhật thành công');$('modal-overlay').classList.remove('open');
                 await loadSection('users');
             }catch(e){toast('Lỗi: '+e.message,'error');}
             return;
         }
-        const pathMap={products:`/api/products/${id}`,orders:`/api/orders/${id}`,stock:`/api/stock-imports/${id}`,customers:`/api/customers/${id}`,categories:`/api/categories/${id}`};
+        const pathMap={orders:`/api/orders/${id}`,stock:`/api/stock-imports/${id}`,categories:`/api/categories/${id}`,warranty:`/api/warranties/${id}`};
         try{
             await api('PUT',pathMap[type],data);
             toast('✓ Cập nhật thành công');$('modal-overlay').classList.remove('open');
@@ -1008,10 +1509,12 @@
 
     // ══ DELETE ═══════════════════════════════════════════
     function deleteItem(type,id,name){
+        if(type==='products'&&isStaff()){toast('Nhân viên không có quyền xóa sản phẩm','error');return;}
+        if(type==='categories'&&isStaff()){toast('Nhân viên không có quyền xóa danh mục','error');return;}
         openModal('Xác nhận xóa',`<div style="text-align:center;padding:10px 0"><div style="font-size:52px;margin-bottom:14px">🗑️</div><h3 style="font-size:17px;font-weight:800;margin-bottom:6px">Xóa "${name}"?</h3><p style="font-size:13.5px;color:var(--sub)">Thao tác này không thể hoàn tác. Dữ liệu sẽ bị xóa vĩnh viễn.</p></div>`,
-            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-danger" onclick="confirmDelete('${type}',${id})"><i class="fas fa-trash"></i> Xác nhận xóa</button>`);
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-danger" onclick="confirmDelete('${type}',${id})"><i class="bi bi-trash3"></i> Xác nhận xóa</button>`);
     }
-    const delMap={products:'/api/products/',orders:'/api/orders/',stock:'/api/stock-imports/',customers:'/api/customers/',categories:'/api/categories/',users:'/api/auth/users/'};
+    const delMap={products:'/api/products/',orders:'/api/orders/',stock:'/api/stock-imports/',categories:'/api/categories/',warranty:'/api/warranties/'};
     async function confirmDelete(type,id){
         try{
             await api('DELETE',delMap[type]+id);
@@ -1020,19 +1523,232 @@
         }catch(e){toast('Lỗi: '+e.message,'error');}
     }
 
-    // ══ AUTH ═════════════════════════════════════════════
+    // ══ AUTH & PHÂN QUYỀN ═══════════════════════════════
+    function getCurrentRole(){
+        const u=JSON.parse(localStorage.getItem('currentLogin')||'null');
+        return (u?.role||'ADMIN').toUpperCase();
+    }
+    function isAdmin(){ return getCurrentRole()==='ADMIN'; }
+    function isStaff(){ return getCurrentRole()==='STAFF'; }
+
+    function applyRolePermissions(){
+        const role=getCurrentRole();
+        const staff=role==='STAFF';
+
+        // Cập nhật role badge trong sidebar
+        const roleEl=document.querySelector('.sb-user-role');
+        if(roleEl) roleEl.textContent=staff?'Nhân viên':'Quản trị viên';
+        if(roleEl) roleEl.style.color=staff?'rgba(255,200,100,.7)':'rgba(255,255,255,.35)';
+
+        // Products: ẩn nút Thêm sản phẩm với STAFF
+        const addProdBtn=document.querySelector('#section-products .btn-primary');
+        if(addProdBtn&&staff) addProdBtn.style.display='none';
+    }
+
+    // Gọi sau mỗi lần render để kiểm soát nút theo role
+    function applyProductRoleUI(){
+        if(!isStaff()) return;
+        // Ẩn nút Sửa và Xóa sản phẩm trong bảng
+        document.querySelectorAll('#products-tbody .btn-edit, #products-tbody .btn-danger').forEach(b=>b.style.display='none');
+        // Chỉ cho phép nút "Cập nhật tồn kho" (thêm nút riêng nếu cần)
+    }
+    function applyOrderRoleUI(){
+        if(!isStaff()) return;
+        // STAFF không được xóa đơn hàng
+        document.querySelectorAll('#orders-tbody .btn-danger').forEach(b=>b.style.display='none');
+    }
+    function applyCategoryRoleUI(){
+        if(!isStaff()) return;
+        // STAFF không được sửa/xóa danh mục
+        document.querySelectorAll('#categories-tbody .btn-edit, #categories-tbody .btn-danger').forEach(b=>b.style.display='none');
+        const addCatBtn=document.querySelector('#section-categories .btn-primary');
+        if(addCatBtn) addCatBtn.style.display='none';
+    }
+    function applyOrderLogsRoleUI(){
+        if(!isStaff()) return;
+        // STAFF không được xóa log
+        document.querySelectorAll('#orderlogs-tbody .btn-danger').forEach(b=>b.style.display='none');
+    }
+
+    // ══ ORDER LOGS RENDER & FILTER ═════════════════════════
+    const LOG_STATUS_BADGE={
+        PENDING:'b-pending',CONFIRMED:'b-confirmed',PROCESSING:'b-confirmed',
+        SHIPPED:'b-shipped',DELIVERED:'b-active',DONE:'b-done',CANCELLED:'b-cancelled'
+    };
+    function renderOrderLogs(data){
+        const tb=$('orderlogs-tbody');
+        if(!data||!data.length){
+            tb.innerHTML=`<tr><td colspan="9"><div class="empty-state"><div class="em-icon"><i class="bi bi-journal-x" style="font-size:32px;opacity:.3"></i></div><p>Không có log nào</p></div></td></tr>`;
+            return;
+        }
+        const isStaffRole=getCurrentRole()==='STAFF';
+        tb.innerHTML=data.map((log,idx)=>{
+            const lid=log.id||log.logId;
+            const oldBadge=log.oldStatus?`<span class="badge ${LOG_STATUS_BADGE[log.oldStatus]||'b-inactive'}" style="opacity:.75">${log.oldStatus}</span>`:`<span style="color:var(--dim);font-size:12px">–</span>`;
+            const newBadge=`<span class="badge ${LOG_STATUS_BADGE[log.newStatus]||'b-inactive'}">${log.newStatus||'–'}</span>`;
+            const timeStr=log.updatedAt||log.changedAt||log.createdAt;
+            return `<tr data-id="${lid}">
+    <td style="color:var(--dim);font-size:12px;text-align:center">${idx+1}</td>
+    <td style="font-family:monospace;font-weight:600;color:var(--olive)">#${lid}</td>
+    <td style="font-weight:700"><a href="#" onclick="gotoSection('orders',document.querySelector('.nav-item[onclick*=orders]'));return false" style="color:var(--blue);text-decoration:none" title="Xem đơn hàng">#${log.orderId||'–'}</a></td>
+    <td>${oldBadge}</td>
+    <td>${newBadge}</td>
+    <td style="color:var(--sub);font-size:12.5px">${log.changedBy?'NV #'+log.changedBy:'<span style="color:var(--dim)">–</span>'}</td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--sub)" title="${esc(log.note||'')}">${log.note?esc(log.note):'<i style="color:var(--dim)">Không có</i>'}</td>
+    <td style="font-size:12px;color:var(--sub)">${timeStr?new Date(timeStr).toLocaleString('vi-VN'):'–'}</td>
+    <td><div class="td-actions" style="justify-content:flex-end">
+      <button class="btn btn-edit btn-sm" onclick="editOrderLog(${lid})" title="Sửa"><i class="bi bi-pencil"></i></button>
+      ${!isStaffRole?`<button class="btn btn-danger btn-sm" onclick="deleteOrderLog(${lid})" title="Xóa"><i class="bi bi-trash3"></i></button>`:''}
+    </div></td>
+  </tr>`;
+        }).join('');
+    }
+
+    function filterOrderLogs(){
+        const q=($('search-orderlogs')?.value||'').toLowerCase();
+        const sf=($('log-newstatus-f')?.value||'');
+        const filtered=allData.orderlogs.filter(log=>{
+            const text=(String(log.orderId||'')+(log.newStatus||'')+(log.oldStatus||'')+(log.note||'')+(log.changedBy||'')).toLowerCase();
+            return(!q||text.includes(q))&&(!sf||log.newStatus===sf);
+        });
+        pages.orderlogs=1;
+        paginate('orderlogs',filtered,renderOrderLogs);
+        setTimeout(applyOrderLogsRoleUI,50);
+    }
+
+    function openCreateOrderLog(){
+        openModal('Thêm Order Log',`
+    <div class="form-row"><div class="form-group"><label class="form-label">Order ID <span class="req">*</span></label>
+      <input class="form-control" id="f-orderId" type="number" placeholder="1">
+    </div><div class="form-group"><label class="form-label">Người thay đổi (User ID)</label>
+      <input class="form-control" id="f-changedBy" type="number" placeholder="Bỏ trống nếu hệ thống">
+    </div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái cũ</label>
+      <select class="form-control" id="f-oldStatus">
+        <option value="">— Không có —</option>
+        <option>PENDING</option><option>CONFIRMED</option><option>PROCESSING</option>
+        <option>SHIPPED</option><option>DELIVERED</option><option>DONE</option><option>CANCELLED</option>
+      </select>
+    </div><div class="form-group"><label class="form-label">Trạng thái mới <span class="req">*</span></label>
+      <select class="form-control" id="f-newStatus">
+        <option value="">— Chọn —</option>
+        <option>PENDING</option><option>CONFIRMED</option><option>PROCESSING</option>
+        <option>SHIPPED</option><option>DELIVERED</option><option>DONE</option><option>CANCELLED</option>
+      </select>
+    </div></div>
+    <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label>
+      <textarea class="form-control" id="f-note" placeholder="Lý do thay đổi trạng thái..."></textarea>
+    </div></div>`,
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="submitCreateOrderLog()"><i class="bi bi-floppy"></i> Lưu</button>`,true);
+    }
+
+    async function submitCreateOrderLog(){
+        const orderId=parseInt($('f-orderId')?.value||'0',10);
+        const newStatus=$('f-newStatus')?.value||'';
+        if(!orderId){toast('Vui lòng nhập Order ID','warn');return;}
+        if(!newStatus){toast('Vui lòng chọn trạng thái mới','warn');return;}
+        const data={
+            orderId,
+            newStatus,
+            oldStatus:$('f-oldStatus')?.value||null,
+            changedBy:$('f-changedBy')?.value?parseInt($('f-changedBy').value,10):null,
+            note:$('f-note')?.value||''
+        };
+        try{
+            await api('POST','/api/order-logs',data);
+            toast('✓ Thêm log thành công');
+            $('modal-overlay').classList.remove('open');
+            await loadSection('orderlogs');
+        }catch(e){toast('Lỗi: '+e.message,'error');}
+    }
+
+    async function editOrderLog(id){
+        const log=allData.orderlogs.find(l=>(l.id||l.logId)===id);if(!log)return;
+        openModal(`Sửa Order Log #${id}`,`
+    <div class="form-row"><div class="form-group"><label class="form-label">Order ID <span class="req">*</span></label>
+      <input class="form-control" id="f-orderId" type="number" value="${log.orderId||''}">
+    </div><div class="form-group"><label class="form-label">Người thay đổi (User ID)</label>
+      <input class="form-control" id="f-changedBy" type="number" value="${log.changedBy||''}">
+    </div></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">Trạng thái cũ</label>
+      <select class="form-control" id="f-oldStatus">
+        <option value="">— Không có —</option>
+        ${['PENDING','CONFIRMED','PROCESSING','SHIPPED','DELIVERED','DONE','CANCELLED'].map(s=>`<option ${log.oldStatus===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div><div class="form-group"><label class="form-label">Trạng thái mới <span class="req">*</span></label>
+      <select class="form-control" id="f-newStatus">
+        <option value="">— Chọn —</option>
+        ${['PENDING','CONFIRMED','PROCESSING','SHIPPED','DELIVERED','DONE','CANCELLED'].map(s=>`<option ${log.newStatus===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div></div>
+    <div class="form-row full"><div class="form-group"><label class="form-label">Ghi chú</label>
+      <textarea class="form-control" id="f-note">${esc(log.note||'')}</textarea>
+    </div></div>`,
+            `<button class="btn btn-ghost" onclick="closeModal()">Hủy</button><button class="btn btn-primary" onclick="submitUpdateOrderLog(${id})"><i class="bi bi-floppy"></i> Cập nhật</button>`,true);
+    }
+
+    async function submitUpdateOrderLog(id){
+        const orderId=parseInt($('f-orderId')?.value||'0',10);
+        const newStatus=$('f-newStatus')?.value||'';
+        if(!orderId){toast('Vui lòng nhập Order ID','warn');return;}
+        if(!newStatus){toast('Vui lòng chọn trạng thái mới','warn');return;}
+        const data={
+            orderId,newStatus,
+            oldStatus:$('f-oldStatus')?.value||null,
+            changedBy:$('f-changedBy')?.value?parseInt($('f-changedBy').value,10):null,
+            note:$('f-note')?.value||''
+        };
+        try{
+            await api('PUT',`/api/order-logs/${id}`,data);
+            toast('✓ Cập nhật log thành công');
+            $('modal-overlay').classList.remove('open');
+            await loadSection('orderlogs');
+        }catch(e){toast('Lỗi: '+e.message,'error');}
+    }
+
+    async function deleteOrderLog(id){
+        if(!confirm(`Xóa Order Log #${id}?`)) return;
+        try{
+            await api('DELETE',`/api/order-logs/${id}`);
+            toast('✓ Đã xóa log');
+            await loadSection('orderlogs');
+        }catch(e){toast('Lỗi: '+e.message,'error');}
+    }
+
+    function applyUsersRoleUI(){} // stub - section users đã bị xóa
+
+    // Override gotoSection để chặn STAFF truy cập users
+    const _origGoto=typeof gotoSection!=='undefined'?gotoSection:null;
+
     function logout(){
         if(confirm('Bạn có chắc muốn đăng xuất?')){localStorage.removeItem('currentLogin');window.location.href='login.html';}
     }
 
     // ══ INIT ═════════════════════════════════════════════
-    window.onload=()=>{
+    function retryConnect(){
+        const w=document.getElementById('api-warn');
+        if(w) w.style.display='none';
+        loadDashboard();
+    }
+
+    // Đồng bộ kiểu index.html: initAccountMenu + window.onload
+    function initAccountMenu(){
         const u=JSON.parse(localStorage.getItem('currentLogin')||'null');
-        if(u){
-            $('sb-name').textContent=u.username||'Admin';
-            const a=$('sb-avatar');a.textContent=(u.username||'A')[0].toUpperCase();
-        }
+        if(!u) return;
+        $('sb-name').textContent=u.fullName||u.username||'Admin';
+        const a=$('sb-avatar');
+        a.textContent=(u.username||'A')[0].toUpperCase();
+        if((u.role||'').toUpperCase()==='STAFF')
+            a.style.background='linear-gradient(135deg,#f59e0b,#d97706)';
+    }
+
+    window.onload=()=>{
+        initAccountMenu();
+        const warnUrl=document.getElementById('api-warn-url');
+        if(warnUrl) warnUrl.textContent=B();
         $('clock').textContent=new Date().toLocaleTimeString('vi-VN');
+        setInterval(()=>{ $('clock').textContent=new Date().toLocaleTimeString('vi-VN'); },1000);
+        applyRolePermissions();
         loadDashboard();
     };
 </script>
