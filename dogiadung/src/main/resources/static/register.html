@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNC Shop - Đăng Ký Tài Khoản</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tncGreen: '#1e4620',
+                        tncGreenHover: '#143016',
+                        tncBg: '#f4f7f4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-tncBg min-h-screen flex items-center justify-center font-sans">
+
+<div class="max-w-md w-full mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
+
+    <!-- Header -->
+    <div class="bg-tncGreen text-white p-8 text-center">
+        <div class="flex justify-center mb-4">
+            <div class="bg-white/20 p-4 rounded-2xl">
+                <i class="fa-solid fa-house-chimney text-4xl"></i>
+            </div>
+        </div>
+        <h1 class="text-3xl font-bold">TNC Shop</h1>
+        <p class="text-green-100 mt-1">Đồ Gia Dụng Thông Minh</p>
+    </div>
+
+    <div class="p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-1">Tạo tài khoản mới</h2>
+        <p class="text-gray-500 mb-6">Vui lòng điền thông tin để đăng ký</p>
+
+        <div id="alert-box" class="hidden mb-4 p-4 rounded-2xl text-sm font-medium text-center"></div>
+
+        <form id="register-form" class="space-y-5">
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập <span class="text-red-500">*</span></label>
+                <input type="text" id="reg-username" required
+                       class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen transition-all"
+                       placeholder="Ví dụ: nguyenlinhchi">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Họ và tên <span class="text-red-500">*</span></label>
+                <input type="text" id="reg-fullname" required
+                       class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen transition-all"
+                       placeholder="Nguyễn Linh Chi">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Giới tính</label>
+                    <select id="reg-gender"
+                            class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen transition-all">
+                        <option value="">Chọn giới tính</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ngày sinh</label>
+                    <input type="date" id="reg-birthdate"
+                           class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen transition-all">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
+                <input type="email" id="reg-email" required
+                       class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen transition-all"
+                       placeholder="linhchi@gmail.com">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+                <input type="tel" id="reg-phone"
+                       class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen transition-all"
+                       placeholder="0901 234 567">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <input type="password" id="reg-password" required
+                           class="w-full px-5 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:border-tncGreen transition-all"
+                           placeholder="Nhập mật khẩu">
+                    <span onclick="togglePassword()"
+                          class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-tncGreen cursor-pointer">
+                        <i class="fa-solid fa-eye" id="toggle-icon"></i>
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-tncGreen hover:bg-tncGreenHover text-white font-bold py-4 rounded-2xl transition-all text-lg shadow-md">
+                Đăng Ký Tài Khoản
+            </button>
+        </form>
+
+        <p class="text-center text-gray-600 mt-6">
+            Đã có tài khoản?
+            <a href="login.html" class="text-tncGreen font-semibold hover:underline">Đăng nhập ngay</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    const API_BASE_URL = 'http://localhost:8080/api/auth';
+    const alertBox = document.getElementById('alert-box');
+
+<<<<<<< HEAD
+=======
+    // Đồng bộ kiểu index.html: nếu đã đăng nhập thì về trang chủ
+    (function initAccountMenu() {
+        const user = JSON.parse(localStorage.getItem('currentLogin') || 'null');
+        if (user) window.location.replace('index.html');
+    })();
+
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+    function showNotification(message, isSuccess) {
+        alertBox.textContent = message;
+        alertBox.className = `mb-4 p-4 rounded-2xl text-sm font-medium text-center ${
+            isSuccess ? 'bg-green-100 text-green-700 border border-green-300'
+                : 'bg-red-100 text-red-700 border border-red-300'
+        }`;
+        alertBox.classList.remove('hidden');
+        setTimeout(() => alertBox.classList.add('hidden'), 5000);
+    }
+
+    function togglePassword() {
+        const passwordField = document.getElementById('reg-password');
+        const icon = document.getElementById('toggle-icon');
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            icon.classList.replace("fa-eye-slash", "fa-eye");
+        }
+    }
+
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const userData = {
+            username: document.getElementById('reg-username').value.trim(),
+            fullName: document.getElementById('reg-fullname').value.trim(),
+            email: document.getElementById('reg-email').value.trim(),
+            phone: document.getElementById('reg-phone').value.trim(),
+            gender: document.getElementById('reg-gender').value,
+            birthdate: document.getElementById('reg-birthdate').value,
+            passwordHash: document.getElementById('reg-password').value,
+            role: "customer"
+        };
+
+        if (!userData.username || !userData.fullName || !userData.email || !userData.passwordHash) {
+            showNotification("Vui lòng điền đầy đủ thông tin bắt buộc (*)", false);
+            return;
+        }
+
+        if (userData.passwordHash.length < 6) {
+            showNotification("Mật khẩu phải có ít nhất 6 ký tự!", false);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+<<<<<<< HEAD
+                showNotification("🎉 Đăng ký tài khoản thành công!", true);
+                localStorage.setItem('currentUser', JSON.stringify(result.user || result));
+=======
+                showNotification(" Đăng ký tài khoản thành công!", true);
+                localStorage.setItem('currentLogin', JSON.stringify(result.user || result));
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+
+                setTimeout(() => {
+                    window.location.href = 'profile.html';
+                }, 1200);
+            } else {
+                showNotification(result.message || "Đăng ký thất bại!", false);
+            }
+        } catch (error) {
+            console.error(error);
+            showNotification("Lỗi kết nối server. Vui lòng thử lại!", false);
+        }
+    });
+</script>
+</body>
+</html>

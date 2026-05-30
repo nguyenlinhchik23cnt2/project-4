@@ -1,77 +1,78 @@
 package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
-import org.nguyenlinhchi.dogiadung.DTO.LoginRequest;
-import org.nguyenlinhchi.dogiadung.DTO.LoginResponse;
-import org.nguyenlinhchi.dogiadung.ENTITY.User;
-import org.nguyenlinhchi.dogiadung.REPOSITORY.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.nguyenlinhchi.dogiadung.ENTITY.NgaUser;
+import org.nguyenlinhchi.dogiadung.SERVICE.NgaUserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final NgaUserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthController(NgaUserService userService) {
+        this.userService = userService;
+    }
 
+    // ĐĂNG NHẬP
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginRequest) {
+        String username = loginRequest.get("username");
+        String password = loginRequest.get("password");
 
-        System.out.println("=== LOGIN ATTEMPT ===");
-        System.out.println("Username: " + loginRequest.getUsername());
-        System.out.println("Password length: " + loginRequest.getPassword().length());
+        Map<String, Object> result = userService.login(username, password);
+        return Boolean.TRUE.equals(result.get("success"))
+                ? ResponseEntity.ok(result)
+                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
+    }
 
-        User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
-
-        if (user == null) {
-            System.out.println("❌ Không tìm thấy username: " + loginRequest.getUsername());
-            return ResponseEntity.badRequest().body("❌ Sai tên đăng nhập!");
+    // ĐĂNG KÝ
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, Object>> register(@RequestBody NgaUser user) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            NgaUser savedUser = userService.register(user);
+            response.put("success", true);
+            response.put("message", "Đăng ký tài khoản thành công!");
+            response.put("user", savedUser);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Đăng ký thất bại: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
+    }
 
-        System.out.println("✅ Tìm thấy user: " + user.getUsername());
-        System.out.println("Role: " + user.getRole());
-        System.out.println("Status: " + user.getStatus());
-        System.out.println("Password hash trong DB: " + user.getPasswordHash());
+    // ĐỔI MẬT KHẨU (Người dùng tự đổi)
+    @PostMapping("/change-password")
+    public ResponseEntity<Map<String, Object>> changePassword(@RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Integer userId = Integer.parseInt(request.get("userId"));
+            String oldPassword = request.get("oldPassword");
+            String newPassword = request.get("newPassword");
 
-        String inputPassword = loginRequest.getPassword();
-        String storedPassword = user.getPasswordHash();
+            boolean success = userService.changePassword(userId, oldPassword, newPassword);
 
-        boolean passwordMatch = passwordEncoder.matches(inputPassword, storedPassword);
-
-        System.out.println("BCrypt match result: " + passwordMatch);
-
-        // Fallback cho mật khẩu plain text (tài khoản cũ)
-        if (!passwordMatch && inputPassword.equals(storedPassword)) {
-            passwordMatch = true;
-            System.out.println("⚠️ Sử dụng mật khẩu plain text");
+            if (success) {
+                response.put("success", true);
+                response.put("message", "Đổi mật khẩu thành công!");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("message", "Mật khẩu cũ không chính xác!");
+                return ResponseEntity.badRequest().body(response);
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Lỗi: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
-
-        if (!passwordMatch) {
-            System.out.println("❌ Sai mật khẩu!");
-            return ResponseEntity.badRequest().body("❌ Sai mật khẩu!");
-        }
-
-        if (!"active".equals(user.getStatus())) {
-            System.out.println("❌ Tài khoản không active");
-            return ResponseEntity.badRequest().body("❌ Tài khoản đã bị khóa!");
-        }
-
-        System.out.println("✅ ĐĂNG NHẬP THÀNH CÔNG!");
-        user.setRole("ADMIN");
-        LoginResponse response = new LoginResponse(
-                user.getUserId(),
-                user.getUsername(),
-                user.getFullName(),
-                user.getRole()
-
-        );
-
-        return ResponseEntity.ok(response);
     }
 }

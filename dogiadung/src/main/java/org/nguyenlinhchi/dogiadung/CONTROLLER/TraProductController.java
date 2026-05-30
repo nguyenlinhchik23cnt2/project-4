@@ -2,11 +2,10 @@ package org.nguyenlinhchi.dogiadung.CONTROLLER;
 
 import lombok.RequiredArgsConstructor;
 import org.nguyenlinhchi.dogiadung.ENTITY.TraProduct;
-import org.nguyenlinhchi.dogiadung.SERVICE.Tra_productService;
+import org.nguyenlinhchi.dogiadung.SERVICE.TraProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class TraProductController {
 
-    private final Tra_productService service;
+    private final TraProductService service;
 
     // GET /api/products
     @GetMapping

@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+    <title>Bảo Hành - TNC Shop | Đồ Gia Dụng Thông Minh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+=======
+    <title>Bảo Hành – TNC Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+    <style>
+        :root{
+            --olive:#4a7043;--olive-d:#3a5a34;--olive-l:#e8f0e6;
+            --red:#e11d48;--bg:#f7f6f2;--white:#fff;
+            --text:#1c1f1a;--sub:#5a6258;--dim:#9aa398;--border:#e0ddd7;
+<<<<<<< HEAD
+            --r:14px;
+        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+        /* === COPY CSS TỪ INDEX.HTML === */
+        #topBar{background:var(--olive);color:#fff;text-align:center;font-size:13px;padding:8px 16px;position:relative}
+        .topbar-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer}
+=======
+            --shadow:0 4px 20px rgba(74,112,67,.12);--r:14px;
+        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+        a{text-decoration:none;color:inherit}
+        /* TOP BAR */
+        #topBar{background:var(--olive);color:#fff;text-align:center;font-size:13px;padding:8px 16px;position:relative}
+        #topBar span{opacity:.9}#topBar b{color:#fde68a;margin:0 4px}
+        .topbar-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer}
+        .topbar-close:hover{color:#fff}
+        /* HEADER */
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+        header{background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.07);position:sticky;top:0;z-index:999}
+        .header-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:14px 24px}
+        .brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .brand-icon{width:42px;height:42px;background:var(--olive);border-radius:10px;display:flex;align-items:center;justify-content:center}
+        .brand-icon svg{width:24px;height:24px;fill:#fff}
+<<<<<<< HEAD
+        .brand-name{font-size:20px;font-weight:800;color:var(--olive);letter-spacing:-.02em}
+        .nav-links{background:#fff;border-top:1px solid var(--border)}
+        .nav-links ul{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;list-style:none}
+        .nav-links li a{display:block;padding:12px 16px;font-size:13.5px;font-weight:600;color:var(--sub);transition:color .2s}
+        .nav-links li a:hover,.nav-links li a.active{color:var(--olive)}
+
+        .section{max-width:1280px;margin:0 auto;padding:52px 24px}
+        .section-title{font-size:clamp(26px,3vw,36px);font-weight:800;letter-spacing:-.02em;color:var(--text)}
+        .card-policy{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:24px;transition:all .3s}
+        .card-policy:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+        .toggle-header{cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+        .toggle-content{display:none;margin-top:20px}
+        .toggle-content.show{display:block}
+=======
+        .brand-name{font-size:20px;font-weight:800;color:var(--olive);letter-spacing:-.02em;line-height:1.1}
+        .brand-name small{display:block;font-size:10px;font-weight:500;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}
+        .header-search{flex:1;max-width:560px;display:flex;align-items:stretch;border:2px solid var(--border);border-radius:50px;overflow:hidden;transition:border-color .2s;background:#fff}
+        .header-search:focus-within{border-color:var(--olive)}
+        .search-cat{border:none;border-right:1px solid var(--border);background:var(--bg);padding:0 14px;font-family:inherit;font-size:13px;color:var(--sub);cursor:pointer;white-space:nowrap;font-weight:500}
+        .search-cat:focus{outline:none}
+        .header-search input{border:none;flex:1;padding:0 16px;font-family:inherit;font-size:14px;color:var(--text);background:transparent}
+        .header-search input:focus{outline:none}
+        .search-btn{background:var(--olive);border:none;color:#fff;padding:0 20px;font-size:15px;cursor:pointer;transition:background .2s}
+        .search-btn:hover{background:var(--olive-d)}
+        .header-icons{display:flex;align-items:center;gap:8px;flex-shrink:0}
+        .icon-btn{position:relative;width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--sub);cursor:pointer;transition:all .2s}
+        .icon-btn:hover{border-color:var(--olive);color:var(--olive);background:var(--olive-l)}
+        .icon-btn .badge-count{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-size:10px;font-weight:700;border-radius:20px;padding:1px 5px;min-width:18px;text-align:center}
+        .account-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:50px;padding:7px 14px;background:#fff;cursor:pointer;transition:all .2s}
+        .account-btn:hover{border-color:var(--olive);background:var(--olive-l)}
+        .account-btn span{font-size:13px;font-weight:600;color:var(--text)}
+        /* NAV */
+        .nav-links{background:#fff;border-top:1px solid var(--border)}
+        .nav-links ul{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;list-style:none}
+        .nav-links li a{display:block;padding:12px 16px;font-size:13.5px;font-weight:600;color:var(--sub);transition:color .2s;white-space:nowrap;position:relative}
+        .nav-links li a:hover,.nav-links li a.active{color:var(--olive)}
+        .nav-links li a.active::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--olive);border-radius:2px}
+        .sale-link a{color:var(--red)!important}
+        /* HERO */
+        .page-hero{background:linear-gradient(135deg,#1c2c1a 0%,#2d4a2a 60%,#3a5a34 100%);padding:60px 0 52px;position:relative;overflow:hidden}
+        .page-hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+        .page-hero-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+        .page-hero-breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:18px}
+        .page-hero-breadcrumb a{color:rgba(255,255,255,.5);transition:color .2s}
+        .page-hero-breadcrumb a:hover{color:#fff}
+        .page-hero-text h1{font-size:clamp(26px,4vw,44px);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.15;margin-bottom:14px}
+        .page-hero-text h1 em{color:#86efac;font-style:normal}
+        .page-hero-desc{font-size:15px;color:rgba(255,255,255,.7);max-width:480px;line-height:1.7;margin-bottom:24px}
+        .page-hero-badges{display:flex;flex-wrap:wrap;gap:10px}
+        .hero-badge{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:50px;padding:7px 14px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.85)}
+        .hero-badge i{font-size:14px;color:#86efac}
+        .page-hero-stats{display:flex;gap:24px;flex-shrink:0}
+        .hero-stat{text-align:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:20px 28px}
+        .hero-stat-num{display:block;font-size:28px;font-weight:800;color:#fff;letter-spacing:-.02em}
+        .hero-stat-lbl{font-size:12px;color:rgba(255,255,255,.55);margin-top:4px;font-weight:500}
+        /* TRUST */
+        .trust-strip{background:#fff;border-bottom:1px solid var(--border)}
+        .trust-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:stretch}
+        .trust-item{flex:1;display:flex;align-items:center;gap:12px;padding:18px 16px;border-right:1px solid var(--border)}
+        .trust-item:last-child{border-right:none}
+        .trust-icon{font-size:26px;flex-shrink:0}
+        .trust-text strong{display:block;font-size:13px;font-weight:700;color:var(--text)}
+        .trust-text span{font-size:12px;color:var(--sub)}
+        /* CONTENT */
+        .content-wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+        /* LOOKUP */
+        .lookup-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:32px;margin-bottom:24px;box-shadow:var(--shadow)}
+        .lookup-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:24px}
+        .lookup-icon-wrap{width:52px;height:52px;background:var(--olive-l);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--olive);flex-shrink:0}
+        .lookup-header-text h2{font-size:19px;font-weight:800;letter-spacing:-.02em;margin-bottom:5px}
+        .lookup-header-text p{font-size:13.5px;color:var(--sub);line-height:1.6}
+        .lookup-form{display:flex;gap:12px;margin-bottom:12px}
+        .lookup-form input{flex:1;border:2px solid var(--border);border-radius:12px;padding:12px 16px;font-family:inherit;font-size:14px;color:var(--text);transition:border-color .2s;outline:none}
+        .lookup-form input:focus{border-color:var(--olive)}
+        .lookup-form button{background:var(--olive);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap;display:flex;align-items:center;gap:8px}
+        .lookup-form button:hover{background:var(--olive-d)}
+        .lookup-hint{font-size:12.5px;color:var(--dim)}
+        /* RESULT */
+        .lookup-result{display:none;margin-top:20px;border-radius:12px;padding:20px;border:1.5px solid var(--border);background:var(--bg)}
+        .lookup-result.show{display:block}
+        .lookup-result.error{border-color:#fecdd3;background:#fff1f2}
+        .result-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+        .result-icon{width:42px;height:42px;border-radius:50%;background:var(--olive);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+        .result-icon.err{background:var(--red)}
+        .result-title{font-size:15px;font-weight:700}
+        .result-sub{font-size:12.5px;color:var(--sub);margin-top:2px}
+        .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+        .result-field{background:#fff;border-radius:8px;padding:10px 13px;border:1px solid var(--border)}
+        .result-field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);display:block;margin-bottom:3px}
+        .result-field span{font-size:13px;font-weight:600;color:var(--text)}
+        .result-field span.active{color:var(--olive)}
+        .result-field span.expired{color:var(--red)}
+        /* FORM */
+        .form-card{display:none;background:#fff;border-radius:20px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:24px;box-shadow:var(--shadow)}
+        .form-card.show{display:block}
+        .form-banner{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,var(--olive),var(--olive-d));padding:24px 32px}
+        .form-banner-icon{width:48px;height:48px;background:rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0}
+        .form-banner-text h2{font-size:18px;font-weight:800;color:#fff;margin-bottom:4px}
+        .form-banner-text p{font-size:13px;color:rgba(255,255,255,.75)}
+        .form-body{padding:28px 32px}
+        .form-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--olive);margin-bottom:14px;padding-bottom:8px;border-bottom:1.5px solid var(--olive-l)}
+        .form-group label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;display:block}
+        .form-group .req{color:var(--red)}
+        .form-control{border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:inherit;font-size:13.5px;width:100%;transition:border-color .2s;outline:none;color:var(--text)}
+        .form-control:focus{border-color:var(--olive)}
+        textarea.form-control{resize:vertical;min-height:90px}
+        .btn-submit{background:var(--olive);color:#fff;border:none;border-radius:50px;padding:12px 30px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+        .btn-submit:hover{background:var(--olive-d);transform:translateY(-1px)}
+        .btn-cancel{background:#fff;color:var(--sub);border:1.5px solid var(--border);border-radius:50px;padding:11px 24px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+        .btn-cancel:hover{border-color:var(--red);color:var(--red)}
+        /* ACCORDION GRID */
+        .content-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+        .acc-card{background:#fff;border-radius:16px;border:1.5px solid var(--border);overflow:hidden;transition:box-shadow .2s}
+        .acc-card:hover{box-shadow:var(--shadow)}
+        .acc-card.open{border-color:var(--olive)}
+        .acc-header{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;cursor:pointer;gap:12px}
+        .acc-header-left{display:flex;align-items:center;gap:14px}
+        .acc-hicon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+        .acc-hicon.green{background:#dcfce7;color:#16a34a}
+        .acc-hicon.orange{background:#fff7ed;color:#ea580c}
+        .acc-hicon.blue{background:#eff6ff;color:#2563eb}
+        .acc-hicon.purple{background:#faf5ff;color:#7c3aed}
+        .acc-htext h3{font-size:14px;font-weight:700;margin-bottom:2px}
+        .acc-htext p{font-size:12px;color:var(--sub)}
+        .acc-chevron{color:var(--dim);font-size:14px;transition:transform .3s;flex-shrink:0}
+        .acc-card.open .acc-chevron{transform:rotate(180deg)}
+        .acc-body{display:none;padding:0 22px 20px}
+        .acc-card.open .acc-body{display:block}
+        .acc-divider{height:1px;background:var(--border);margin-bottom:16px}
+        .acc-body ul,.acc-body ol{padding-left:18px;display:flex;flex-direction:column;gap:8px}
+        .acc-body li{font-size:13.5px;color:var(--sub);line-height:1.6}
+        .acc-body li strong{color:var(--text)}
+        .no-cover-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        .no-cover-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--sub);background:var(--bg);border-radius:8px;padding:8px 10px}
+        .no-cover-item::before{content:'✗';color:var(--red);font-weight:700;flex-shrink:0}
+        /* STEPS */
+        .steps-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:32px;margin-bottom:24px}
+        .steps-card h2{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+        .steps-card>p{font-size:13.5px;color:var(--sub);margin-bottom:28px}
+        .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative}
+        .steps-grid::before{content:'';position:absolute;top:28px;left:calc(12.5% + 8px);right:calc(12.5% + 8px);height:2px;background:linear-gradient(90deg,var(--olive-l),var(--olive),var(--olive-l));z-index:0}
+        .step-item{text-align:center;position:relative;z-index:1}
+        .step-num{width:56px;height:56px;border-radius:50%;background:var(--olive);color:#fff;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 4px 14px rgba(74,112,67,.35)}
+        .step-title{font-size:14px;font-weight:700;margin-bottom:6px}
+        .step-desc{font-size:12.5px;color:var(--sub);line-height:1.6}
+        /* BRANCHES */
+        .branches-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:32px;margin-bottom:24px}
+        .branches-card h2{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+        .branches-card>p{font-size:13.5px;color:var(--sub);margin-bottom:24px}
+        .branch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+        .branch-item{border:1.5px solid var(--border);border-radius:14px;padding:18px 16px;cursor:pointer;transition:all .25s}
+        .branch-item:hover{border-color:var(--olive);box-shadow:var(--shadow);transform:translateY(-3px)}
+        .branch-pin{font-size:26px;margin-bottom:10px}
+        .branch-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--olive);background:var(--olive-l);padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:7px}
+        .branch-info h4{font-size:13.5px;font-weight:700;margin-bottom:4px}
+        .branch-info address{font-size:12px;color:var(--sub);font-style:normal;margin-bottom:8px;line-height:1.5}
+        .branch-hotline{font-size:12.5px;font-weight:600;color:var(--olive);display:flex;align-items:center;gap:5px}
+        /* CART DRAWER */
+        .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1100;display:none}
+        .cart-overlay.show{display:block}
+        .cart-drawer{position:fixed;right:0;top:0;bottom:0;width:360px;background:#fff;z-index:1101;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.12)}
+        .cart-drawer.show{transform:translateX(0)}
+        .cart-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+        .cart-head h3{font-size:16px;font-weight:800}
+        .cart-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--sub)}
+        .cart-items{flex:1;overflow-y:auto;padding:14px 22px;display:flex;flex-direction:column;gap:10px}
+        .cart-empty{text-align:center;padding:60px 20px;color:var(--dim)}
+        .cart-empty i{font-size:44px;margin-bottom:14px;display:block;opacity:.3}
+        .cart-item{display:flex;gap:10px;align-items:center;background:var(--bg);border-radius:10px;padding:9px}
+        .cart-item-info{flex:1;min-width:0}
+        .cart-item-name{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .cart-item-price{font-size:12.5px;color:var(--red);font-weight:700}
+        .cart-item-qty{display:flex;align-items:center;gap:5px;margin-top:3px}
+        .cqb{width:22px;height:22px;border-radius:4px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center}
+        .cart-qty-val{font-size:12.5px;font-weight:700;min-width:18px;text-align:center}
+        .cart-remove{background:none;border:none;color:var(--dim);cursor:pointer;font-size:15px;padding:3px;flex-shrink:0}
+        .cart-remove:hover{color:var(--red)}
+        .cart-foot{padding:18px 22px;border-top:1px solid var(--border)}
+        .cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+        .cart-total span{font-size:13.5px;color:var(--sub)}
+        .cart-total strong{font-size:19px;font-weight:800;color:var(--red)}
+        .btn-checkout{width:100%;background:var(--olive);color:#fff;border:none;border-radius:11px;padding:13px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+        .btn-checkout:hover{background:var(--olive-d)}
+        /* FOOTER */
+        footer{background:#1c2c1a;color:rgba(255,255,255,.7);padding:52px 0 0}
+        .footer-inner{max-width:1280px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px}
+        .footer-brand-name{font-size:20px;font-weight:800;color:#fff;display:block;margin-bottom:10px}
+        .footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-bottom:18px}
+        .footer-nl{display:flex;border:1px solid rgba(255,255,255,.15);border-radius:50px;overflow:hidden;background:rgba(255,255,255,.07)}
+        .footer-nl input{flex:1;background:transparent;border:none;color:#fff;padding:9px 14px;font-family:inherit;font-size:13px}
+        .footer-nl input::placeholder{color:rgba(255,255,255,.3)}
+        .footer-nl input:focus{outline:none}
+        .footer-nl button{background:var(--olive);border:none;color:#fff;padding:9px 16px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:background .2s}
+        .footer-nl button:hover{background:#5a8a52}
+        .footer-col h4{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:14px}
+        .footer-col ul{list-style:none}
+        .footer-col ul li{margin-bottom:9px}
+        .footer-col ul li a{font-size:13px;color:rgba(255,255,255,.5);transition:color .2s}
+        .footer-col ul li a:hover{color:#fff}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:18px 24px;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+        .footer-bottom p{font-size:12px;color:rgba(255,255,255,.3)}
+        .pay-badges{display:flex;gap:6px}
+        .pay-b{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:3px 7px;font-size:9px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.04em}
+        /* SCROLL TOP */
+        #scrollTop{position:fixed;bottom:24px;right:24px;z-index:500;width:42px;height:42px;border-radius:50%;background:var(--olive);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(20px);transition:all .3s;box-shadow:0 4px 16px rgba(74,112,67,.4)}
+        #scrollTop.show{opacity:1;transform:translateY(0)}
+        #scrollTop:hover{background:var(--olive-d);transform:translateY(-3px)}
+        /* RESPONSIVE */
+        @media(max-width:900px){
+            .content-grid{grid-template-columns:1fr}
+            .steps-grid{grid-template-columns:1fr 1fr}
+            .steps-grid::before{display:none}
+            .branch-grid{grid-template-columns:1fr 1fr}
+            .page-hero-inner{flex-direction:column}
+            .page-hero-stats{width:100%;justify-content:center}
+            .footer-inner{grid-template-columns:1fr 1fr}
+            .result-grid{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:600px){
+            .header-search{display:none}
+            .trust-inner{flex-direction:column}
+            .trust-item{border-right:none;border-bottom:1px solid var(--border)}
+            .branch-grid{grid-template-columns:1fr}
+            .steps-grid{grid-template-columns:1fr}
+            .footer-inner{grid-template-columns:1fr}
+            .cart-drawer{width:100%}
+            .lookup-form{flex-direction:column}
+            .page-hero-stats{flex-wrap:wrap;gap:12px}
+        }
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+    </style>
+</head>
+<body>
+
+<<<<<<< HEAD
+<!-- Top Bar -->
+<div id="topBar">
+    <span>Miễn phí vận chuyển cho đơn từ <b>500.000₫</b> · Bảo hành chính hãng 12 tháng</span>
+    <button class="topbar-close" onclick="this.closest('div').style.display='none'">×</button>
+</div>
+
+<!-- Header -->
+=======
+<!-- TOP BAR -->
+<div id="topBar">
+    <span>🎉 Miễn phí vận chuyển cho đơn hàng từ <b>500.000₫</b> · Hotline bảo hành: <b>1800 1234</b></span>
+    <button class="topbar-close" onclick="this.parentElement.style.display='none'">×</button>
+</div>
+
+<!-- HEADER -->
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+<header>
+    <div class="header-inner">
+        <a href="index.html" class="brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22" fill="none" stroke="#fff" stroke-width="2"/></svg>
+            </div>
+            <div class="brand-name">TNC Shop<small>Đồ Gia Dụng Thông Minh</small></div>
+        </a>
+<<<<<<< HEAD
+        <div class="header-icons ms-auto">
+            <button class="icon-btn" onclick="toggleCart()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="badge-count" id="cartCount">0</span>
+            </button>
+=======
+        <div class="header-search">
+            <select class="search-cat" id="headerCatSelect">
+                <option value="all">Tất cả</option>
+            </select>
+            <input type="text" id="headerSearch" placeholder="Bạn cần tìm gì hôm nay?" onkeydown="if(event.key==='Enter')goSearch()">
+            <button class="search-btn" onclick="goSearch()"><i class="ri-search-line"></i></button>
+        </div>
+        <div class="header-icons">
+            <button class="icon-btn" id="cartIcon" onclick="toggleCart()" title="Giỏ hàng">
+                <i class="ri-shopping-cart-line"></i>
+                <span class="badge-count" id="cartCount">0</span>
+            </button>
+            <div class="dropdown">
+                <button class="account-btn" type="button" data-bs-toggle="dropdown">
+                    <i class="ri-user-line" style="font-size:16px;color:var(--sub)"></i>
+                    <span id="userDisplay">Tài khoản</span>
+                    <i class="ri-arrow-down-s-line" style="font-size:10px;color:var(--dim)"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2 mt-2">
+                    <li id="menuLogin"><a class="dropdown-item py-2" href="login.html"><i class="ri-login-box-line me-2 text-muted"></i>Đăng nhập</a></li>
+                    <li id="menuRegister"><a class="dropdown-item py-2" href="register.html"><i class="ri-user-line-plus me-2 text-muted"></i>Đăng ký</a></li>
+                    <li id="menuProfile" style="display:none"><a class="dropdown-item py-2" href="profile.html"><i class="ri-user-line me-2 text-muted"></i>Tài khoản của tôi</a></li>
+                    <li id="menuOrders" style="display:none"><a class="dropdown-item py-2" href="my-orders.html"><i class="ri-box-3-line me-2 text-muted"></i>Đơn hàng của tôi</a></li>
+                    <li id="menuDividerLogout" style="display:none"><hr class="dropdown-divider"></li>
+                    <li id="menuLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="ri-logout-box-line me-2"></i>Đăng xuất</a></li>
+                    <li id="adminMenu" style="display:none"><a class="dropdown-item text-primary fw-bold py-2" href="admin.html"><i class="ri-tools-line me-2"></i>Trang quản trị</a></li>
+                    <li id="adminLogoutDivider" style="display:none"><hr class="dropdown-divider"></li>
+                    <li id="adminLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="ri-logout-box-line me-2"></i>Đăng xuất</a></li>
+                    <li id="staffMenu" style="display:none"><a class="dropdown-item text-success fw-bold py-2" href="admin.html"><i class="ri-user-line-tie me-2"></i>Trang nhân viên</a></li>
+                    <li id="staffLogoutDivider" style="display:none"><hr class="dropdown-divider"></li>
+                    <li id="staffLogout" style="display:none"><a class="dropdown-item py-2 text-danger" href="#" onclick="logout()"><i class="ri-logout-box-line me-2"></i>Đăng xuất</a></li>
+                </ul>
+            </div>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+        </div>
+    </div>
+    <nav class="nav-links">
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="Product.html">Sản phẩm</a></li>
+<<<<<<< HEAD
+            <li><a href="Guarantee.html" class="active">Bảo hành</a></li>
+            <li><a href="Contact.html">Liên hệ</a></li>
+            <li><a href="About.html">Về chúng tôi</a></li>
+=======
+            <li><a href="Category.html">Danh mục</a></li>
+            <li><a href="News.html">Tin tức</a></li>
+            <li><a href="Contact.html">Liên hệ</a></li>
+            <li><a href="About.html">Về chúng tôi</a></li>
+            <li><a href="Guarantee.html" class="active">Chính sách bảo mật</a></li>
+            <li class="sale-link"><a href="#">Flash Sale</a></li>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+        </ul>
+    </nav>
+</header>
+
+<<<<<<< HEAD
+<div class="section">
+    <h1 class="section-title text-center mb-5">TRUNG TÂM BẢO HÀNH TNC SHOP</h1>
+
+    <!-- Tra cứu -->
+    <div class="card-policy">
+        <h4><i class="fas fa-search text-success me-2"></i> Tra cứu bảo hành điện tử</h4>
+        <p class="text-muted mb-3">Nhập mã bảo hành in trên tem sản phẩm hoặc hóa đơn</p>
+        <div class="input-group">
+            <input type="text" id="warrantyCode" class="form-control" placeholder="Ví dụ: BH2026TNC98765" style="border-radius:50px 0 0 50px">
+            <button class="btn btn-success px-4" onclick="checkWarrantyCode()" style="border-radius:0 50px 50px 0">Tra cứu</button>
+        </div>
+    </div>
+
+    <!-- Form Yêu cầu Bảo hành -->
+    <div id="warrantyForm" class="card-policy" style="display:none">
+        <h3 class="text-center mb-4" style="color:var(--red)">YÊU CẦU BẢO HÀNH TRỰC TUYẾN</h3>
+        <form id="warrantyRequestForm">
+            <!-- Thông tin khách hàng và sản phẩm (giống trước) -->
+            <div class="row g-3">
+                <div class="col-md-6"><label>SĐT mua hàng <span class="text-danger">*</span></label><input type="tel" class="form-control" required></div>
+                <div class="col-md-6"><label>SĐT liên hệ <span class="text-danger">*</span></label><input type="tel" class="form-control" required></div>
+                <div class="col-12"><label>Họ và tên <span class="text-danger">*</span></label><input type="text" class="form-control" required></div>
+                <div class="col-12"><label>Địa chỉ <span class="text-danger">*</span></label><input type="text" class="form-control" required></div>
+                <div class="col-12"><label>Sản phẩm cần bảo hành <span class="text-danger">*</span></label><input type="text" class="form-control" required></div>
+                <div class="col-12"><label>Mô tả lỗi / Tình trạng <span class="text-danger">*</span></label><textarea class="form-control" rows="4" required></textarea></div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-danger px-5 py-3" style="border-radius:50px;font-weight:700">GỬI YÊU CẦU BẢO HÀNH</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Chính sách & Hướng dẫn (Accordion) -->
+    <div class="card-policy">
+        <div class="toggle-header" onclick="toggleSection(this)">
+            <h4><i class="fas fa-shield-alt text-success me-2"></i> CHÍNH SÁCH BẢO HÀNH</h4>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="toggle-content">
+            <ul>
+                <li><strong>Bảo hành chính hãng 12 tháng</strong> kể từ ngày mua.</li>
+                <li>Đổi trả miễn phí trong <strong>30 ngày</strong> nếu lỗi nhà sản xuất.</li>
+                <li>Miễn phí vận chuyển bảo hành 2 chiều tại Hà Nội & TP.HCM.</li>
+                <li>Sửa chữa trong vòng 48 giờ làm việc.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card-policy">
+        <div class="toggle-header" onclick="toggleSection(this)">
+            <h4><i class="fas fa-book text-primary me-2"></i> HƯỚNG DẪN BẢO HÀNH</h4>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="toggle-content">
+            <ol>
+                <li>Tra cứu mã bảo hành bằng form trên.</li>
+                <li>Điền đầy đủ thông tin và gửi yêu cầu.</li>
+                <li>Nhân viên TNC Shop sẽ liên hệ xác nhận trong 24 giờ.</li>
+                <li>Mang sản phẩm + hóa đơn đến trung tâm bảo hành gần nhất.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Chi nhánh bảo hành -->
+    <div class="card-policy">
+        <h4 class="mb-4"><i class="fas fa-map-marker-alt text-danger me-2"></i> CÁC CHI NHÁNH BẢO HÀNH</h4>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <strong>Hà Nội</strong><br>
+                128 Nguyễn Trãi, Thanh Xuân<br>
+                Hotline: 1800 1234 (nhánh 1)
+            </div>
+            <div class="col-md-6">
+                <strong>TP. Hồ Chí Minh</strong><br>
+                456 Nguyễn Văn Linh, Quận 7<br>
+                Hotline: 1800 1234 (nhánh 2)
+            </div>
+            <div class="col-md-6">
+                <strong>Đà Nẵng</strong><br>
+                89 Nguyễn Thị Minh Khai, Hải Châu<br>
+                Hotline: 1800 1234 (nhánh 3)
+            </div>
+            <div class="col-md-6">
+                <strong>Cần Thơ</strong><br>
+                234 Đường 30/4, Ninh Kiều<br>
+                Hotline: 1800 1234 (nhánh 4)
+            </div>
+=======
+<!-- HERO -->
+<div class="page-hero">
+    <div class="page-hero-inner">
+        <div class="page-hero-text">
+            <div class="page-hero-breadcrumb">
+                <a href="index.html"><i class="ri-home-3-line me-1"></i>Trang chủ</a>
+                <span>/</span>
+                <span style="color:rgba(255,255,255,.8)">Bảo hành</span>
+            </div>
+            <h1>Trung tâm <em>Bảo Hành</em><br>TNC Shop</h1>
+            <p class="page-hero-desc">Dịch vụ bảo hành chính hãng — nhanh chóng, minh bạch, tận tâm. Tra cứu mã bảo hành và gửi yêu cầu ngay tại đây.</p>
+            <div class="page-hero-badges">
+                <div class="hero-badge"><i class="ri-shield-check-line"></i>Bảo hành 12 tháng</div>
+                <div class="hero-badge"><i class="ri-truck-line"></i>Vận chuyển 2 chiều miễn phí</div>
+                <div class="hero-badge"><i class="ri-time-line"></i>Xử lý trong 48 giờ</div>
+            </div>
+        </div>
+        <div class="page-hero-stats">
+            <div class="hero-stat"><span class="hero-stat-num">12K+</span><div class="hero-stat-lbl">Đã bảo hành</div></div>
+            <div class="hero-stat"><span class="hero-stat-num">98%</span><div class="hero-stat-lbl">Hài lòng</div></div>
+            <div class="hero-stat"><span class="hero-stat-num">48h</span><div class="hero-stat-lbl">Thời gian sửa</div></div>
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+        </div>
+    </div>
+</div>
+
+<<<<<<< HEAD
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function checkWarrantyCode() {
+        const code = document.getElementById('warrantyCode').value.trim();
+        if (code.length > 5) {
+            document.getElementById('warrantyForm').style.display = 'block';
+            document.getElementById('warrantyForm').scrollIntoView({ behavior: "smooth" });
+        } else {
+            alert("Vui lòng nhập mã bảo hành hợp lệ!");
+        }
+    }
+
+    function toggleSection(el) {
+        const content = el.nextElementSibling;
+        content.classList.toggle('show');
+        const icon = el.querySelector('i:last-child');
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up');
+    }
+
+    document.getElementById('warrantyRequestForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert("Yêu cầu bảo hành đã được gửi thành công!\nTNC Shop sẽ liên hệ bạn trong vòng 24 giờ.");
+        this.reset();
+    });
+
+    // Cart count
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem("tnc_cart") || "[]");
+        document.getElementById('cartCount').textContent = cart.reduce((a,i)=>a+i.quantity,0);
+    }
+    window.onload = updateCartCount;
+=======
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+    <div class="trust-inner">
+        <div class="trust-item"><div class="trust-icon">️</div><div class="trust-text"><strong>Bảo hành chính hãng</strong><span>12 tháng kể từ ngày mua</span></div></div>
+        <div class="trust-item"><div class="trust-icon"></div><div class="trust-text"><strong>Đổi trả 30 ngày</strong><span>Không cần lý do</span></div></div>
+        <div class="trust-item"><div class="trust-icon"></div><div class="trust-text"><strong>Miễn phí vận chuyển</strong><span>2 chiều tại HN & HCM</span></div></div>
+        <div class="trust-item"><div class="trust-icon"></div><div class="trust-text"><strong>Xử lý nhanh</strong><span>Trong 48 giờ làm việc</span></div></div>
+        <div class="trust-item"><div class="trust-icon"></div><div class="trust-text"><strong>Hỗ trợ 24/7</strong><span>Hotline 1800 1234</span></div></div>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content-wrap">
+
+    <!-- LOOKUP -->
+    <div class="lookup-card">
+        <div class="lookup-header">
+            <div class="lookup-icon-wrap"><i class="ri-search-line"></i></div>
+            <div class="lookup-header-text">
+                <h2>Tra cứu bảo hành điện tử</h2>
+                <p>Nhập mã bảo hành in trên tem sản phẩm hoặc hóa đơn để kiểm tra trạng thái và thời hạn bảo hành.</p>
+            </div>
+        </div>
+        <div class="lookup-form">
+            <input type="text" id="warrantyCode" placeholder="Ví dụ: BH2026TNC98765" maxlength="30">
+            <button onclick="checkWarrantyCode()"><i class="ri-search-line"></i>Tra cứu</button>
+        </div>
+        <p class="lookup-hint">Mã bảo hành gồm <b>15–20 ký tự</b>, thường bắt đầu bằng <b>BH + năm + TNC</b></p>
+        <div class="lookup-result" id="lookupResult"></div>
+    </div>
+
+    <!-- WARRANTY FORM -->
+    <div class="form-card" id="warrantyFormCard">
+        <div class="form-banner">
+            <div class="form-banner-icon"><i class="ri-tools-line"></i></div>
+            <div class="form-banner-text">
+                <h2>Yêu cầu bảo hành trực tuyến</h2>
+                <p>Điền đầy đủ thông tin bên dưới. Nhân viên sẽ liên hệ xác nhận trong vòng 24 giờ.</p>
+            </div>
+        </div>
+        <div class="form-body">
+            <div class="form-section-label">Thông tin khách hàng</div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Họ và tên <span class="req">*</span></label>
+                        <input type="text" class="form-control" placeholder="Nguyễn Văn A" id="fName">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>SĐT mua hàng <span class="req">*</span></label>
+                        <input type="tel" class="form-control" placeholder="0901 234 567" id="fPhone1">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>SĐT liên hệ <span class="req">*</span></label>
+                        <input type="tel" class="form-control" placeholder="0901 234 567" id="fPhone2">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="email@example.com" id="fEmail">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Địa chỉ <span class="req">*</span></label>
+                        <input type="text" class="form-control" placeholder="Số nhà, đường, quận/huyện, tỉnh/thành" id="fAddress">
+                    </div>
+                </div>
+            </div>
+            <div class="form-section-label">Thông tin sản phẩm</div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Sản phẩm cần bảo hành <span class="req">*</span></label>
+                        <input type="text" class="form-control" placeholder="Tên sản phẩm, model..." id="fProduct">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Mã bảo hành</label>
+                        <input type="text" class="form-control" id="fCode" readonly style="background:#f7f6f2;color:var(--sub)">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Mô tả lỗi / Tình trạng <span class="req">*</span></label>
+                        <textarea class="form-control" id="fDesc" placeholder="Mô tả chi tiết lỗi đang gặp phải, khi nào xảy ra, tần suất..."></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Hình thức xử lý mong muốn</label>
+                        <select class="form-control" id="fType">
+                            <option>Sửa chữa tại trung tâm</option>
+                            <option>Kỹ thuật viên đến tận nhà</option>
+                            <option>Đổi sản phẩm mới</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Ngày mua hàng</label>
+                        <input type="date" class="form-control" id="fDate">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center flex-wrap gap-2">
+                <button class="btn-cancel" onclick="cancelForm()"><i class="ri-close-line me-2"></i>Hủy</button>
+                <button class="btn-submit" onclick="submitWarranty()"><i class="ri-send-plane-line me-2"></i>Gửi yêu cầu bảo hành</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POLICY ACCORDION -->
+    <div class="content-grid">
+        <div class="acc-card" id="acc1">
+            <div class="acc-header" onclick="toggleAcc('acc1')">
+                <div class="acc-header-left">
+                    <div class="acc-hicon green"><i class="ri-shield-check-line"></i></div>
+                    <div class="acc-htext"><h3>Chính sách bảo hành</h3><p>Điều kiện và phạm vi bảo hành</p></div>
+                </div>
+                <div class="acc-chevron"><i class="ri-arrow-down-s-line"></i></div>
+            </div>
+            <div class="acc-body">
+                <div class="acc-divider"></div>
+                <ul>
+                    <li><strong>Bảo hành chính hãng 12 tháng</strong> kể từ ngày mua có hóa đơn.</li>
+                    <li>Đổi trả <strong>miễn phí trong 30 ngày</strong> nếu lỗi do nhà sản xuất.</li>
+                    <li>Miễn phí vận chuyển bảo hành <strong>2 chiều</strong> tại Hà Nội & TP.HCM.</li>
+                    <li>Sửa chữa hoàn thành trong vòng <strong>48 giờ làm việc</strong>.</li>
+                    <li>Hỗ trợ kỹ thuật viên <strong>tận nhà</strong> trong bán kính 10km từ chi nhánh.</li>
+                    <li>Bảo hành <strong>miễn phí linh kiện thay thế</strong> trong thời hạn bảo hành.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="acc-card" id="acc2">
+            <div class="acc-header" onclick="toggleAcc('acc2')">
+                <div class="acc-header-left">
+                    <div class="acc-hicon orange"><i class="ri-error-warning-line"></i></div>
+                    <div class="acc-htext"><h3>Trường hợp không bảo hành</h3><p>Các tình huống ngoài phạm vi bảo hành</p></div>
+                </div>
+                <div class="acc-chevron"><i class="ri-arrow-down-s-line"></i></div>
+            </div>
+            <div class="acc-body">
+                <div class="acc-divider"></div>
+                <div class="no-cover-grid">
+                    <div class="no-cover-item">Hư hỏng do va đập, rơi vỡ</div>
+                    <div class="no-cover-item">Ngấm nước, ẩm ướt</div>
+                    <div class="no-cover-item">Tự ý tháo lắp, sửa chữa</div>
+                    <div class="no-cover-item">Hết hạn bảo hành</div>
+                    <div class="no-cover-item">Mất tem, phiếu bảo hành</div>
+                    <div class="no-cover-item">Dùng sai công suất điện</div>
+                    <div class="no-cover-item">Hư hỏng do thiên tai</div>
+                    <div class="no-cover-item">Hao mòn tự nhiên</div>
+                </div>
+            </div>
+        </div>
+        <div class="acc-card" id="acc3">
+            <div class="acc-header" onclick="toggleAcc('acc3')">
+                <div class="acc-header-left">
+                    <div class="acc-hicon blue"><i class="ri-book-open-line"></i></div>
+                    <div class="acc-htext"><h3>Hướng dẫn gửi bảo hành</h3><p>Quy trình từng bước để gửi yêu cầu</p></div>
+                </div>
+                <div class="acc-chevron"><i class="ri-arrow-down-s-line"></i></div>
+            </div>
+            <div class="acc-body">
+                <div class="acc-divider"></div>
+                <ol>
+                    <li>Tra cứu mã bảo hành trên tem sản phẩm hoặc hóa đơn.</li>
+                    <li>Điền đầy đủ thông tin vào form yêu cầu bảo hành phía trên.</li>
+                    <li>Nhân viên TNC Shop liên hệ xác nhận <strong>trong 24 giờ</strong>.</li>
+                    <li>Mang sản phẩm + hóa đơn gốc đến chi nhánh gần nhất.</li>
+                    <li>Nhận biên nhận bảo hành và theo dõi tiến trình qua hotline.</li>
+                </ol>
+            </div>
+        </div>
+        <div class="acc-card" id="acc4">
+            <div class="acc-header" onclick="toggleAcc('acc4')">
+                <div class="acc-header-left">
+                    <div class="acc-hicon purple"><i class="ri-price-tag-3-line"></i></div>
+                    <div class="acc-htext"><h3>Phí dịch vụ ngoài bảo hành</h3><p>Chi phí sửa chữa khi hết hạn hoặc ngoài phạm vi</p></div>
+                </div>
+                <div class="acc-chevron"><i class="ri-arrow-down-s-line"></i></div>
+            </div>
+            <div class="acc-body">
+                <div class="acc-divider"></div>
+                <p style="margin-bottom:12px;font-size:13.5px;color:var(--sub)">Với các trường hợp ngoài phạm vi bảo hành, TNC Shop vẫn cung cấp dịch vụ sửa chữa với chi phí minh bạch:</p>
+                <ul>
+                    <li>Phí kiểm tra / chẩn đoán: <strong>miễn phí</strong> trong 30 phút đầu.</li>
+                    <li>Phí linh kiện: <strong>theo giá thị trường</strong>, báo giá trước khi sửa.</li>
+                    <li>Phí nhân công: <strong>50.000 – 200.000₫</strong> tùy độ phức tạp.</li>
+                    <li>Bảo hành dịch vụ sửa chữa: <strong>3 tháng</strong> đối với linh kiện thay thế.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUY TRÌNH -->
+    <div class="steps-card">
+        <h2>Quy trình bảo hành</h2>
+        <p>Chỉ 4 bước đơn giản để hoàn tất yêu cầu bảo hành tại TNC Shop</p>
+        <div class="steps-grid">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-title">Tra cứu</div>
+                <p class="step-desc">Nhập mã bảo hành để kiểm tra trạng thái & thời hạn</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-title">Gửi yêu cầu</div>
+                <p class="step-desc">Điền thông tin và mô tả lỗi vào form trực tuyến</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-title">Xác nhận</div>
+                <p class="step-desc">Nhân viên liên hệ trong 24h, hẹn lịch & hướng dẫn gửi máy</p>
+            </div>
+            <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-title">Nhận máy</div>
+                <p class="step-desc">Sửa xong trong 48h, miễn phí ship trả tại HN & HCM</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHI NHÁNH -->
+    <div class="branches-card">
+        <h2>Các chi nhánh bảo hành</h2>
+        <p>Hệ thống 4 trung tâm bảo hành trên toàn quốc, phục vụ từ 8:00 – 17:30 (T2–CN)</p>
+        <div class="branch-grid">
+            <div class="branch-item" onclick="window.open('https://maps.google.com/?q=128+Nguyen+Trai,+Thanh+Xuan,+Ha+Noi','_blank')">
+                <div class="branch-pin"></div>
+                <div class="branch-info">
+                    <span class="branch-tag"><i class="ri-map-pin-line"></i>Hà Nội</span>
+                    <h4>Trung tâm Bảo hành HN</h4>
+                    <address>128 Nguyễn Trãi, Thanh Xuân, Hà Nội</address>
+                    <div class="branch-hotline"><i class="ri-phone-line"></i>1800 1234 (nhánh 1)</div>
+                </div>
+            </div>
+            <div class="branch-item" onclick="window.open('https://maps.google.com/?q=456+Nguyen+Van+Linh,+Quan+7,+HCM','_blank')">
+                <div class="branch-pin"></div>
+                <div class="branch-info">
+                    <span class="branch-tag"><i class="ri-map-pin-line"></i>TP. Hồ Chí Minh</span>
+                    <h4>Trung tâm Bảo hành HCM</h4>
+                    <address>456 Nguyễn Văn Linh, Quận 7, TP.HCM</address>
+                    <div class="branch-hotline"><i class="ri-phone-line"></i>1800 1234 (nhánh 2)</div>
+                </div>
+            </div>
+            <div class="branch-item" onclick="window.open('https://maps.google.com/?q=89+Nguyen+Thi+Minh+Khai,+Da+Nang','_blank')">
+                <div class="branch-pin"></div>
+                <div class="branch-info">
+                    <span class="branch-tag"><i class="ri-map-pin-line"></i>Đà Nẵng</span>
+                    <h4>Trung tâm Bảo hành ĐN</h4>
+                    <address>89 Nguyễn Thị Minh Khai, Hải Châu, Đà Nẵng</address>
+                    <div class="branch-hotline"><i class="ri-phone-line"></i>1800 1234 (nhánh 3)</div>
+                </div>
+            </div>
+            <div class="branch-item" onclick="window.open('https://maps.google.com/?q=234+Duong+30+Thang+4,+Can+Tho','_blank')">
+                <div class="branch-pin"></div>
+                <div class="branch-info">
+                    <span class="branch-tag"><i class="ri-map-pin-line"></i>Cần Thơ</span>
+                    <h4>Trung tâm Bảo hành CT</h4>
+                    <address>234 Đường 30/4, Ninh Kiều, Cần Thơ</address>
+                    <div class="branch-hotline"><i class="ri-phone-line"></i>1800 1234 (nhánh 4)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /content-wrap -->
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <span class="footer-brand-name">TNC Shop</span>
+            <p>Chuỗi cửa hàng đồ gia dụng thông minh hàng đầu Việt Nam. Cam kết sản phẩm chất lượng, giá cả hợp lý, dịch vụ tận tâm.</p>
+            <div style="margin-bottom:10px;font-size:12px;color:rgba(255,255,255,.35)">Đăng ký nhận ưu đãi độc quyền</div>
+            <div class="footer-nl">
+                <input type="email" placeholder="Email của bạn...">
+                <button onclick="alert('Cảm ơn bạn đã đăng ký!')">Đăng ký</button>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Sản phẩm</h4>
+            <ul>
+                <li><a href="Product.html?category=Nhà+bếp">Đồ dùng nhà bếp</a></li>
+                <li><a href="Product.html?category=Điện+gia+dụng">Điện gia dụng</a></li>
+                <li><a href="Product.html?category=Phòng+ngủ">Phòng ngủ</a></li>
+                <li><a href="Product.html?category=Phòng+khách">Phòng khách</a></li>
+                <li><a href="Product.html?category=Làm+vườn">Làm vườn</a></li>
+                <li><a href="Product.html?category=Lưu+trữ">Lưu trữ & Tổ chức</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Hỗ trợ</h4>
+            <ul>
+                <li><a href="#">Hướng dẫn mua hàng</a></li>
+                <li><a href="#">Chính sách đổi trả</a></li>
+                <li><a href="Guarantee.html">Chính sách bảo hành</a></li>
+                <li><a href="#">Giao hàng & Vận chuyển</a></li>
+                <li><a href="#">Câu hỏi thường gặp</a></li>
+                <li><a href="login.html">Đăng nhập / Đăng ký</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Về chúng tôi</h4>
+            <ul>
+                <li><a href="About.html">Giới thiệu TNC Shop</a></li>
+                <li><a href="#">Tin tức & Sự kiện</a></li>
+                <li><a href="#">Khách hàng thân thiết</a></li>
+                <li><a href="#">Tuyển dụng</a></li>
+                <li><a href="#">Chính sách bảo mật</a></li>
+                <li><a href="#">Điều khoản sử dụng</a></li>
+            </ul>
+        </div>
+    </div>
+    <div style="max-width:1280px;margin:0 auto">
+        <div class="footer-bottom">
+            <p>© 2025 TNC Shop · Đồ Gia Dụng Thông Minh. Bảo lưu mọi quyền.</p>
+            <div class="pay-badges">
+                <span class="pay-b">COD</span><span class="pay-b">BANKING</span>
+                <span class="pay-b">MOMO</span><span class="pay-b">VNPAY</span><span class="pay-b">VISA</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+        <h3>🛒 Giỏ hàng</h3>
+        <button class="cart-close" onclick="toggleCart()">×</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot" id="cartFoot"></div>
+</div>
+
+<!-- SCROLL TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ri-arrow-up-line"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    /* ===== SEARCH ===== */
+    function goSearch(){
+        const q=(document.getElementById('headerSearch').value||'').trim();
+        if(q) window.location.href='Product.html?q='+encodeURIComponent(q);
+        else window.location.href='Product.html';
+    }
+
+    /* ===== CART ===== */
+    let cart=JSON.parse(localStorage.getItem('tnc_cart')||'[]');
+
+    function toggleCart(){
+        const user=JSON.parse(localStorage.getItem('currentLogin')||'null');
+        if(!user){window.location.href='login.html';return;}
+        const d=document.getElementById('cartDrawer');
+        const o=document.getElementById('cartOverlay');
+        const show=!d.classList.contains('show');
+        d.classList.toggle('show',show);
+        o.classList.toggle('show',show);
+        document.body.style.overflow=show?'hidden':'';
+        if(show)renderCart();
+    }
+
+    function renderCart(){
+        const el=document.getElementById('cartItems');
+        const ft=document.getElementById('cartFoot');
+        if(!cart.length){
+            el.innerHTML='<div class="cart-empty"><i class="ri-shopping-cart-line"></i><p>Giỏ hàng trống</p></div>';
+            ft.innerHTML='';return;
+        }
+        el.innerHTML=cart.map((item,i)=>`
+      <div class="cart-item">
+        <div style="width:52px;height:52px;border-radius:7px;background:#f0eeea;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🏠</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">${Number(item.price).toLocaleString('vi-VN')}₫</div>
+          <div class="cart-item-qty">
+            <button class="cqb" onclick="updQ(${i},-1)">−</button>
+            <span class="cart-qty-val">${item.quantity}</span>
+            <button class="cqb" onclick="updQ(${i},1)">+</button>
+          </div>
+        </div>
+        <button class="cart-remove" onclick="rmCart(${i})"><i class="ri-delete-bin-line"></i></button>
+      </div>`).join('');
+        const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
+        ft.innerHTML=`<div class="cart-total"><span>Tổng cộng:</span><strong>${Number(total).toLocaleString('vi-VN')}₫</strong></div>
+      <button class="btn-checkout" onclick="alert('Tính năng đặt hàng sẽ được phát triển sớm!')"><i class="ri-flashlight-line me-2"></i>Đặt hàng ngay</button>`;
+    }
+
+    function updQ(i,d){cart[i].quantity=Math.max(1,cart[i].quantity+d);saveCart();updateCartCount();renderCart();}
+    function rmCart(i){cart.splice(i,1);saveCart();updateCartCount();renderCart();}
+    function saveCart(){localStorage.setItem('tnc_cart',JSON.stringify(cart));}
+
+    /* ===== CART COUNT ===== */
+    function getCustomerId(){
+        const user=JSON.parse(localStorage.getItem('currentLogin')||'null');
+        return user?(user.id||user.customerId||null):null;
+    }
+    async function updateCartCount(){
+        const cid=getCustomerId();
+        if(!cid){document.getElementById('cartCount').textContent='0';return;}
+        try{
+            const res=await fetch(`http://localhost:8080/api/cart/count/${cid}`);
+            if(res.ok){document.getElementById('cartCount').textContent=(await res.json())||0;return;}
+        }catch(e){}
+        document.getElementById('cartCount').textContent=
+            JSON.parse(localStorage.getItem('tnc_cart')||'[]').reduce((s,i)=>s+i.quantity,0);
+    }
+
+    /* ===== ACCOUNT MENU ===== */
+    function initAccountMenu(){
+        const user=JSON.parse(localStorage.getItem('currentLogin')||'null');
+        if(!user)return;
+        document.getElementById('userDisplay').textContent=user.username||'Tài khoản';
+        document.getElementById('menuLogin').style.display='none';
+        document.getElementById('menuRegister').style.display='none';
+        const role=(user.role||'').toUpperCase();
+        if(role==='ADMIN'){
+            document.getElementById('adminMenu').style.display='block';
+            document.getElementById('adminLogoutDivider').style.display='block';
+            document.getElementById('adminLogout').style.display='block';
+            document.getElementById('cartIcon').style.display='none';
+        }else if(role==='STAFF'){
+            document.getElementById('staffMenu').style.display='block';
+            document.getElementById('staffLogoutDivider').style.display='block';
+            document.getElementById('staffLogout').style.display='block';
+            document.getElementById('cartIcon').style.display='none';
+        }else{
+            document.getElementById('menuProfile').style.display='block';
+            document.getElementById('menuOrders').style.display='block';
+            document.getElementById('menuDividerLogout').style.display='block';
+            document.getElementById('menuLogout').style.display='block';
+        }
+    }
+
+    function logout(){
+        if(confirm('Bạn có chắc muốn đăng xuất?')){
+            localStorage.removeItem('currentLogin');
+            localStorage.removeItem('tnc_cart');
+            setTimeout(()=>window.location.href='index.html',400);
+        }
+    }
+
+    /* ===== ACCORDION ===== */
+    function toggleAcc(id){
+        const card=document.getElementById(id);
+        const isOpen=card.classList.contains('open');
+        document.querySelectorAll('.acc-card').forEach(c=>c.classList.remove('open'));
+        if(!isOpen)card.classList.add('open');
+    }
+
+    /* ===== WARRANTY LOOKUP ===== */
+    const MOCK_WARRANTIES={
+        'BH2026TNC98765':{product:'Nồi áp suất Smart Pro 6L',purchaseDate:'15/01/2026',expiry:'15/01/2027',status:'active',branch:'Hà Nội'},
+        'BH2025TNC12345':{product:'Quạt đứng Panasonic F-65SV',purchaseDate:'10/06/2024',expiry:'10/06/2025',status:'expired',branch:'TP.HCM'},
+        'BH2026TNC55500':{product:'Máy xay sinh tố Philips HR2056',purchaseDate:'01/03/2026',expiry:'01/03/2027',status:'active',branch:'Đà Nẵng'},
+    };
+
+    function checkWarrantyCode(){
+        const code=document.getElementById('warrantyCode').value.trim().toUpperCase();
+        const result=document.getElementById('lookupResult');
+        const formCard=document.getElementById('warrantyFormCard');
+        if(code.length<6){
+            result.className='lookup-result error show';
+            result.innerHTML=`<div class="result-header"><div class="result-icon err"><i class="ri-close-line"></i></div><div><div class="result-title">Mã không hợp lệ</div><div class="result-sub">Vui lòng nhập mã bảo hành đầy đủ (ít nhất 6 ký tự)</div></div></div>`;
+            formCard.classList.remove('show');return;
+        }
+        const info=MOCK_WARRANTIES[code];
+        if(info){
+            const isActive=info.status==='active';
+            result.className='lookup-result show';
+            result.innerHTML=`
+        <div class="result-header">
+          <div class="result-icon" style="background:${isActive?'var(--olive)':'var(--red)'}">
+            <i class="bi ${isActive?'bi-shield-check':'bi-clock-history'}"></i>
+          </div>
+          <div>
+            <div class="result-title">${isActive?' Còn hạn bảo hành':'⚠️ Hết hạn bảo hành'}</div>
+            <div class="result-sub">Tìm thấy thông tin bảo hành cho mã <strong>${code}</strong></div>
+          </div>
+        </div>
+        <div class="result-grid">
+          <div class="result-field"><label>Sản phẩm</label><span>${info.product}</span></div>
+          <div class="result-field"><label>Ngày mua</label><span>${info.purchaseDate}</span></div>
+          <div class="result-field"><label>Hạn bảo hành</label><span>${info.expiry}</span></div>
+          <div class="result-field"><label>Trạng thái</label><span class="${isActive?'active':'expired'}">${isActive?'🟢 Còn hiệu lực':'🔴 Đã hết hạn'}</span></div>
+          <div class="result-field"><label>Chi nhánh đăng ký</label><span>${info.branch}</span></div>
+        </div>
+        ${isActive?`<div style="margin-top:14px"><button onclick="openWarrantyForm('${code}','${info.product}')" style="background:var(--olive);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px"><i class="ri-tools-line"></i>Gửi yêu cầu bảo hành</button></div>`:'<p style="margin-top:12px;font-size:13px;color:var(--sub)">Sản phẩm đã hết hạn bảo hành. Vui lòng liên hệ hotline <strong>1800 1234</strong> để được tư vấn dịch vụ sửa chữa có phí.</p>'}`;
+            if(!isActive)formCard.classList.remove('show');
+        }else{
+            result.className='lookup-result error show';
+            result.innerHTML=`<div class="result-header"><div class="result-icon err"><i class="ri-search-line"></i></div><div><div class="result-title">Không tìm thấy mã bảo hành</div><div class="result-sub">Mã "<strong>${code}</strong>" không tồn tại trong hệ thống. Kiểm tra lại hoặc liên hệ hotline 1800 1234.</div></div></div>`;
+            formCard.classList.remove('show');
+        }
+        result.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+
+    function openWarrantyForm(code,product){
+        const formCard=document.getElementById('warrantyFormCard');
+        formCard.classList.add('show');
+        if(code)document.getElementById('fCode').value=code;
+        if(product)document.getElementById('fProduct').value=product;
+        setTimeout(()=>formCard.scrollIntoView({behavior:'smooth',block:'start'}),100);
+    }
+
+    function cancelForm(){
+        document.getElementById('warrantyFormCard').classList.remove('show');
+        window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function submitWarranty(){
+        const name=document.getElementById('fName').value.trim();
+        const phone=document.getElementById('fPhone1').value.trim();
+        const address=document.getElementById('fAddress').value.trim();
+        const product=document.getElementById('fProduct').value.trim();
+        const desc=document.getElementById('fDesc').value.trim();
+        if(!name||!phone||!address||!product||!desc){alert('Vui lòng điền đầy đủ các trường bắt buộc (*)');return;}
+        alert(` Yêu cầu bảo hành đã được gửi thành công!\n\nKhách hàng: ${name}\nSản phẩm: ${product}\n\nNhân viên TNC Shop sẽ liên hệ bạn trong vòng 24 giờ qua số ${phone}.\n\nXin cảm ơn!`);
+        document.getElementById('warrantyFormCard').classList.remove('show');
+        ['fName','fPhone1','fPhone2','fEmail','fAddress','fProduct','fDesc','fCode'].forEach(id=>document.getElementById(id).value='');
+    }
+
+    document.getElementById('warrantyCode').addEventListener('keydown',e=>{if(e.key==='Enter')checkWarrantyCode();});
+    window.addEventListener('scroll',()=>document.getElementById('scrollTop').classList.toggle('show',scrollY>400));
+    window.onload=()=>{initAccountMenu();updateCartCount();};
+>>>>>>> 931edeeeb1e324e527ae9e0feee350a772cd7ed6
+</script>
+</body>
+</html>
